@@ -9,3 +9,7 @@
 ## 2、[二叉树(Binary Tree)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree)
 
 ### 2.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree/Easy)
+
+## 3、[字符串(String)](https://github.com/GrubbyHunter/LeetCode/blob/master/String)
+
+### 3.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/String/Easy)
