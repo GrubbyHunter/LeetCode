@@ -18,7 +18,8 @@
 ## 解法
 
 > 这里先将其中一个数组`nums1`转成对象，然后对象的 key 就是数组中的数字  
-> 这样再遍历第二个数组`nums2`,判断`nums1`里面是否存在元素(`seen.hasOwnProperty(num)`)，存在的话在判断`nums1`里面是否也存在(`seen[num] > 0`)，都存在的话则保存起来
+> 这样再遍历第二个数组`nums2`,判断`nums1`里面是否存在元素(`seen.hasOwnProperty(num)`)，存在的话在判断`nums1`里面是否也存在(`seen[num] > 0`)，都存在的话则保存起来  
+> 这里虽然是没有嵌套遍历，但是`hasOwnProperty`相当于 for 循环，所以复杂度是 `O(m*n)`
 
 ```javascript
 /**
