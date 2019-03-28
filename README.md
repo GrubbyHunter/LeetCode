@@ -6,10 +6,14 @@
 
 ### 1.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/tree/master/Array/Easy)
 
-## 2、[二叉树(Binary Tree)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree)
+## 2、[字符串(String)](https://github.com/GrubbyHunter/LeetCode/blob/master/String)
 
-### 2.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree/Easy)
+### 2.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/String/Easy)
 
-## 3、[字符串(String)](https://github.com/GrubbyHunter/LeetCode/blob/master/String)
+## 3、[链表(List)](https://github.com/GrubbyHunter/LeetCode/blob/master/List)
 
-### 3.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/String/Easy)
+### 3.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/List/Easy)
+
+## 4、[二叉树(Binary Tree)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree)
+
+### 4.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree/Easy)
