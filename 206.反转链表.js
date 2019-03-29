@@ -39,12 +39,16 @@ var reverseList = function(head) {
   let currentNode = head.next
 
   while (currentNode) {
+    currentNode = currentNode.next
+
     if (!preNode) {
-      preNode = next
-    } else {
-      next.next = preNode
+      preNode = currentNode
     }
-    next = next.next
+
+    if (!nextNode) {
+      nextNode = currentNode.next
+    }
+    preNode
   }
   next
 }
