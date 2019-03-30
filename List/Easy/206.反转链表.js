@@ -34,25 +34,16 @@
  * @return {ListNode}
  */
 var reverseList = function(head) {
-  let preNode
-  let currentNode = head
+  let temp = null
   let newHead = null
-  if (!head) {
-    return
+
+  while (head != null) {
+    temp = head
+    head = head.next
+    temp.next = newHead
+
+    newHead = temp
   }
 
-  while (currentNode.next) {
-    if (!preNode) {
-      preNode = currentNode
-    }
-
-    let temp = currentNode.next
-    currentNode.next = preNode
-    currentNode = temp
-  }
-
-  head = currentNode
-  currentNode.next = preNode
-
-  return head
+  return newHead
 }
