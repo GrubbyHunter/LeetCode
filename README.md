@@ -14,7 +14,7 @@
 
 ### 3、[链表(List)](https://github.com/GrubbyHunter/LeetCode/blob/master/List)
 
-#### 3.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/List/Easy)
+#### 3.1  [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/List/Easy)
 
 ### 4、[二叉树(Binary Tree)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree/)
 
