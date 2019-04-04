@@ -1,0 +1,78 @@
+/*
+ * @lc app=leetcode.cn id=102 lang=javascript
+ *
+ * [102] 二叉树的层次遍历
+ *
+ * https://leetcode-cn.com/problems/binary-tree-level-order-traversal/description/
+ *
+ * algorithms
+ * Medium (54.76%)
+ * Total Accepted:    21.1K
+ * Total Submissions: 38.5K
+ * Testcase Example:  '[3,9,20,null,null,15,7]'
+ *
+ * 给定一个二叉树，返回其按层次遍历的节点值。 （即逐层地，从左到右访问所有节点）。
+ *
+ * 例如:
+ * 给定二叉树: [3,9,20,null,null,15,7],
+ *
+ * ⁠   3
+ * ⁠  / \
+ * ⁠ 9  20
+ * ⁠   /  \
+ * ⁠  15   7
+ *
+ *
+ * 返回其层次遍历结果：
+ *
+ * [
+ * ⁠ [3],
+ * ⁠ [9,20],
+ * ⁠ [15,7]
+ * ]
+ *
+ *
+ */
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var levelOrder = function(root) {
+  let array = []
+  let queue = []
+
+  if (!root) {
+    return []
+  }
+
+  queue.push(root)
+
+  while (queue.length > 0) {
+    let child = []
+    let length = queue.length
+
+    for (let i = 0; i < length; i++) {
+      let item = queue.shift()
+
+      if (item.val != null) {
+        child.push(item.val)
+      }
+
+      item.left && queue.push(item.left)
+      item.right && queue.push(item.right)
+    }
+
+    if (child.length > 0) {
+      array.push(child)
+    }
+  }
+
+  return array
+}
