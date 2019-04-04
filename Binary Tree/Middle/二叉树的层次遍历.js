@@ -40,7 +40,14 @@
  *     this.left = this.right = null;
  * }
  */
+
 /**
+ * 解法：
+ * 普通的BFS遍历二叉树虽然保证了层级的执行顺序，但是
+ * 没法将每一层级的元素放在一个数组里面，所以这里是嵌
+ * 套循环，里面的循环将当前层级的节点给消费掉
+ *
+ * 复杂度是O(n^2)
  * @param {TreeNode} root
  * @return {number[][]}
  */
@@ -56,8 +63,14 @@ var levelOrder = function(root) {
 
   while (queue.length > 0) {
     let child = []
+    // 这里是核心赋值，就是保存当前队列的长度
+    // 也就是当前队列保存的事当前层级的节点
+    // for循环里面虽然改变了队列的长度，但是依然只
+    // 消费length长度的节点
     let length = queue.length
 
+    // 消费当前层级节点，将每个节点的left和right、
+    // 又存入队列
     for (let i = 0; i < length; i++) {
       let item = queue.shift()
 
@@ -65,6 +78,7 @@ var levelOrder = function(root) {
         child.push(item.val)
       }
 
+      // 存入队列
       item.left && queue.push(item.left)
       item.right && queue.push(item.right)
     }
