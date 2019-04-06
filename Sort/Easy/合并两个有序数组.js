@@ -30,6 +30,9 @@
  *
  */
 /**
+ *
+ * 这里直接从后向前遍历一个m+n长度的数组，因为都是有序数组
+ * 所以可以直接判断条件然后给数组num1填充值
  * @param {number[]} nums1
  * @param {number} m
  * @param {number[]} nums2
