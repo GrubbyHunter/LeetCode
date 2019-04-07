@@ -12,12 +12,16 @@
 
 #### 2.2 [中等级(Medium)](https://github.com/GrubbyHunter/LeetCode/blob/master/String/Medium)
 
-### 3、[链表(List)](https://github.com/GrubbyHunter/LeetCode/blob/master/List)
+### 3、[动态规划(DP)](https://github.com/GrubbyHunter/LeetCode/blob/master/DP)
 
-#### 3.1  [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/List/Easy)
+#### 3.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/DP/Easy)
 
-### 4、[二叉树(Binary Tree)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree/)
+### 4、[链表(List)](https://github.com/GrubbyHunter/LeetCode/blob/master/List)
 
-#### 4.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree/Easy)
+#### 4.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/List/Easy)
 
-#### 4.2 [中等级(Medium)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree/Medium)
+### 5、[二叉树(Binary Tree)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree/)
+
+#### 5.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree/Easy)
+
+#### 5.2 [中等级(Medium)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree/Medium)
