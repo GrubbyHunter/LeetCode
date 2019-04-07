@@ -12,9 +12,9 @@
 
 #### 2.2 [中等级(Medium)](https://github.com/GrubbyHunter/LeetCode/blob/master/String/Medium)
 
-### 3、[动态规划(DP)](https://github.com/GrubbyHunter/LeetCode/blob/master/DP)
+### 3、[动态规划(DP)](https://github.com/GrubbyHunter/LeetCode/tree/master/Dynamic%20Programming)
 
-#### 3.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/DP/Easy)
+#### 3.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/tree/master/Dynamic%20Programming/Easy)
 
 ### 4、[链表(List)](https://github.com/GrubbyHunter/LeetCode/blob/master/List)
 
