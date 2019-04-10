@@ -25,3 +25,7 @@
 #### 5.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree/Easy)
 
 #### 5.2 [中等级(Medium)](https://github.com/GrubbyHunter/LeetCode/blob/master/Binary%20Tree/Medium)
+
+### 6、[数学问题(Math)](https://github.com/GrubbyHunter/LeetCode/tree/master/Math)
+
+#### 6.1 [简单级(Easy)](https://github.com/GrubbyHunter/LeetCode/tree/master/Math/Easy)
