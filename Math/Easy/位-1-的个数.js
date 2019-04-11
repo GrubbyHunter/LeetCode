@@ -52,6 +52,7 @@
  *
  */
 /**
+ * 进行二进制转换，然后去掉其中的0，剩下的就是1，直接获取长度就行了
  * @param {number} n - a positive integer
  * @return {number}
  */
