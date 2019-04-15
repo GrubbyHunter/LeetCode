@@ -48,7 +48,6 @@ var addTwoNumbers = function(l1, l2) {
   head = temp
 
   while (l1 || l2) {
-    debugger
     if (l1) {
       sum += l1.val
       l1 = l1.next
