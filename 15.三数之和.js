@@ -54,6 +54,9 @@ var threeSum = function(nums) {
   let first = null
   for (let i = 0; i < length; i++) {
     // 因为不能重复，所以首个元素一样的话需要去重
+    if (first == nums[i]) {
+      continue
+    }
 
     first = nums[i]
     let left = i + 1,
@@ -63,14 +66,26 @@ var threeSum = function(nums) {
       let sum = first + nums[left] + nums[right]
       if (sum == 0) {
         result.push([first, nums[left], nums[right]])
-        break
-      }
-      if (sum > 0) {
-        right--
-        continue
-      }
 
-      if (sum < 0) {
+        // 由于排过序，所以重复的值都在一起
+        // 一口气跳过了就不会有重复的值
+        while (left < right && nums[right] == nums[right - 1]) {
+          right--
+        }
+        while (left < right && nums[left] == nums[left + 1]) {
+          left++
+        }
+        left++
+        right--
+      } else if (sum > 0) {
+        while (left < right && nums[right] == nums[right - 1]) {
+          right--
+        }
+        right--
+      } else {
+        while (left < right && nums[left] == nums[left + 1]) {
+          left++
+        }
         left++
       }
     }
