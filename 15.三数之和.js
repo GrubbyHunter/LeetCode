@@ -36,7 +36,7 @@ var threeSum = function(nums) {
 
   // 首先给数组排序，使用冒泡排序，按照升序排列
   for (let i = length - 1; i > 0; i--) {
-    for (let j = 0; j < i - 1; j++) {
+    for (let j = 0; j < i; j++) {
       if (nums[j] > nums[j + 1]) {
         temp = nums[j]
         nums[j] = nums[j + 1]
@@ -49,7 +49,7 @@ var threeSum = function(nums) {
   // 将大于0和小于0的元素分别存入两个数组
   let before = []
   let after = []
-
+  let result = []
   for (let i = 0; i < length; i++) {
     if (nums[i] >= 0) {
       after.push(nums[i])
@@ -57,4 +57,32 @@ var threeSum = function(nums) {
       before.push(nums[i])
     }
   }
+  let first = null
+  for (let i = 0; i < before.length; i++) {
+    // 因为不能重复，所以首个元素一样的话需要去重
+    if (first == before[i]) {
+      continue
+    }
+
+    first = before[i]
+    let left = 0,
+      right = after.length - 1
+
+    while (left < right) {
+      let sum = first + after[left] + after[right]
+      if (sum == 0) {
+        result.push([first, after[left], after[right]])
+        break
+      }
+      if (sum > 0) {
+        right--
+        continue
+      }
+      if (sum < 0) {
+        left++
+      }
+    }
+  }
+
+  return result
 }
