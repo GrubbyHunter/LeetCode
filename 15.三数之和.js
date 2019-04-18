@@ -46,4 +46,15 @@ var threeSum = function(nums) {
   }
 
   console.log(nums)
+  // 将大于0和小于0的元素分别存入两个数组
+  let before = []
+  let after = []
+
+  for (let i = 0; i < length; i++) {
+    if (nums[i] >= 0) {
+      after.push(nums[i])
+    } else {
+      before.push(nums[i])
+    }
+  }
 }
