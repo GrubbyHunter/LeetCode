@@ -51,14 +51,18 @@ var search = function(nums, target) {
 
     // 在右边
     if (nums[middle] > target) {
-      if (nums[middle] > nums[right]) {
+      if (nums[middle] < nums[right]) {
         left = nums[middle]
+      } else {
       }
-
       return
     }
 
     // 在左边
+    if (nums[middle] > nums[left]) {
+      right = nums[middle]
+    } else {
+    }
   }
 
   return -1
