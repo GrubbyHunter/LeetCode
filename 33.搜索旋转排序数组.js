@@ -42,6 +42,10 @@ var search = function(nums, target) {
   let left = 0,
     right = nums.length - 1
 
+  if (nums.length == 1) {
+    return nums[0] == target ? 0 : -1
+  }
+
   while (left < right) {
     let middle = parseInt((left + right) / 2)
 
@@ -49,19 +53,42 @@ var search = function(nums, target) {
       return middle
     }
 
-    // 在右边
-    if (nums[middle] > target) {
-      if (nums[middle] < nums[right]) {
-        left = nums[middle]
-      } else {
-      }
-      return
+    // target == left
+    if (target == nums[left]) {
+      return left
     }
 
-    // 在左边
+    if (target == nums[right]) {
+      return right
+    }
+
+    if (middle == left || middle == right) {
+      return -1
+    }
+
+    // 左边是正常排序
     if (nums[middle] > nums[left]) {
-      right = nums[middle]
-    } else {
+      // target在左区间，正常二分查找
+      if (target > nums[left] && target < nums[middle]) {
+        right = middle - 1
+        continue
+      }
+
+      // target在右区间
+      left = middle + 1
+      continue
+    }
+
+    // 右边是正常排序
+    if (nums[middle] < nums[right]) {
+      // target在右区间，正常二分查找
+      if (target > nums[middle] && target < nums[right]) {
+        left = middle + 1
+        continue
+      }
+
+      // target在左区间
+      right = middle - 1
     }
   }
 
