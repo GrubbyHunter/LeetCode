@@ -40,29 +40,55 @@
  * @param {string} s
  * @return {number}
  */
+// var lengthOfLongestSubstring = function(s) {
+//   if (s && s.length <= 1) {
+//     return 1
+//   }
+//   let length = s.length,
+//     i = 0
+//   let max = 0
+//   debugger
+//   while (i < length) {
+//     let j = i
+//     let temp = 0
+//     let map = new Map()
+
+//     while (j < length) {
+//       if (!map.get(s[j])) {
+//         map.set(s[j], s[j])
+//         j++
+//         temp++
+//       } else {
+//         break
+//       }
+//     }
+//     max = max > temp ? max : temp
+//     i++
+//   }
+
+//   return max
+// }
 var lengthOfLongestSubstring = function(s) {
   if (s && s.length <= 1) {
     return 1
   }
   let length = s.length,
-    i = 0
+    i = 1
   let max = 0
-  debugger
-  while (i < length) {
-    let j = i
-    let temp = 0
-    let map = new Map()
+  let map = new Map()
+  let preIndex = 0
+  let size = 0
+  map.set(s[preIndex], 1)
 
-    while (j < length) {
-      if (!map.get(s[j])) {
-        map.set(s[j], s[j])
-        j++
-        temp++
-      } else {
-        break
-      }
+  while (i < length) {
+    if (map.has(s[i])) {
+      preIndex = Math.max(map.get(s[i]), preIndex)
     }
-    max = max > temp ? max : temp
+
+    map.set(s[i], i + 1)
+    size = i - preIndex + 1
+    max = Math.max(size, max)
+
     i++
   }
 
