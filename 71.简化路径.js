@@ -70,6 +70,7 @@ var simplifyPath = function(path) {
   let stack = []
   let result = ""
   while (i < array.length) {
+    i++
     if (array[i] == "." || !array[i]) {
       continue
     }
@@ -80,12 +81,10 @@ var simplifyPath = function(path) {
     }
 
     stack.push(array[i])
-
-    i++
   }
 
   for (let i = 0; i < stack.length; i++) {
     result += "/" + stack[i]
   }
-  return result
+  return result ? result : "/"
 }
