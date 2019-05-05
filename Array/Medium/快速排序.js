@@ -34,6 +34,7 @@ let quickSort = array => {
       arr[r] = temp
     }
 
+    // 完成遍历之后，l == r，这时候r与基准互换，拆分成左右两个数组
     //
     temp = arr[0]
     arr[0] = arr[r]
