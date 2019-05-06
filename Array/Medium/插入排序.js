@@ -1,21 +1,23 @@
 let array = [1, 6, 4, 7, 5, 9, 10, 4, 19, 2, 11, 8]
-
-let insertSort = array => {
-  let length = array.length
+//
+let insertSort = arr => {
+  let length = arr.length
   let temp
-
+  debugger
   for (let i = 1; i < length; i++) {
-    temp = array[i]
+    temp = arr[i]
     let j = i
-
-    while (temp < array[j - 1] && j > 0) {
+    // 将当前元素在之前排好序的数组里面找插入位置
+    while (temp < arr[j - 1] && j > 0) {
       // 找到需要插入的位置
-      array[j] = array[j - 1]
+      arr[j] = arr[j - 1]
       j--
     }
 
-    array[i] = temp
+    arr[j] = temp
   }
 
-  return array
+  return arr
 }
+
+insertSort(array)
