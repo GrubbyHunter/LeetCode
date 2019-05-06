@@ -1,5 +1,6 @@
 let array = [1, 6, 4, 7, 5, 9, 10, 4, 19, 2, 11, 8]
-//
+// 核心在于将数组从第一个元素进行排序，然后通过嵌套循环不断地将
+// 当前元素在已经排序好的数组中找到正确的位置
 let insertSort = arr => {
   let length = arr.length
   let temp
