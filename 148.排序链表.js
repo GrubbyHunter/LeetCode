@@ -21,5 +21,12 @@ var sortList = function(head) {
   let left = head.next
   let right = head.next
   let item = head.next
-  while (item) {}
+  let middle = item.val
+  while (item.next) {
+    while (right && right.val > middle) {
+      right = right.next
+    }
+
+    item = item.next
+  }
 }
