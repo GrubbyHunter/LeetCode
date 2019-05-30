@@ -35,7 +35,8 @@ let mergeSort = array => {
         newArr.push(left[l])
         l++
       }
-
+      
+      // 一个数组遍历完了，另一个没有遍历完，则直接把剩下的部分追加到尾部
       if (l == left.length && right.slice(r).length > 0) {
         return newArr.concat(right.slice(r))
       }
