@@ -8,52 +8,42 @@ let array = [1, 6, 4, 7, 5, 9, 10, 4, 19, 2, 11, 8]
  */
 let quickSort = array => {
   let length = array.length
-
-  let sort = arr => {
-    if (arr.length == 1) {
-      return arr
-    }
-
-    let l = 0,
-      r = arr.length - 1
-
-    if (l >= r) {
-      return arr
-    }
-
-    let item = arr[0]
-    let temp
-
-    while (l < r) {
-      //从右边开始找，找到比基准小的元素
-      while (arr[r] >= item && r > l) {
-        r--
-      }
-
-      //从左边开始找，找到比基准打的元素
-      while (arr[l] <= item && r > l) {
-        l++
-      }
-
-      // 然後互换，重复这个过程
-      temp = arr[l]
-      arr[l] = arr[r]
-      arr[r] = temp
-    }
-
-    // 完成遍历之后，l == r，这时候r与基准互换，拆分成左右两个数组
-    // 左边的元素都比基准小，右边的元素都比基准大，然后重复这个过程
-    temp = arr[0]
-    arr[0] = arr[r]
-    arr[r] = temp
-
-    let left = sort(arr.slice(0, r))
-    let right = sort(arr.slice(r + 1, length))
-
-    return left.concat(item).concat(right)
+  if (length <= 1) {
+    return array
   }
 
-  return sort(array)
+  // 先将第一个元素作为中心点临时存起来
+  let middle = array[0]
+  let left = 0,
+    right = length - 1
+
+  while (left < right) {
+    // 从右边开始找到比中心点小的数
+    while (array[right] >= middle && right > left) {
+      right--
+    }
+    array[left] = array[right]
+    // 因为right把left的位置占据了，所以left++使用下一个元素进行比较
+    right > left && left++
+
+    // 从左边开始找到比中心点大的数
+    while (array[left] <= middle && right > left) {
+      left++
+    }
+
+    array[right] = array[left]
+    // 因为left把right的位置占据了，所以right--使用上一个元素进行比较
+    right > left && right--
+  }
+
+  // 将中间点的值放入对应位置
+  array[right] = middle
+
+  let leftArr = array.slice(0, right)
+  let rightArr = array.slice(right + 1)
+  return quickSort(leftArr)
+    .concat([middle])
+    .concat(quickSort(rightArr))
 }
 
 quickSort(array)
