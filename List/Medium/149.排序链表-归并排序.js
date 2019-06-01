@@ -34,11 +34,17 @@
  */
 /**
  * @desc 排序链表，归并排序
-
+  1、使用快慢指针的方式找到需要分成两个子链表的中间点slow
+  2、如果slow的next为空的话，说明这个原始两边只有两个元素，直接比较大小互换val值直接返回
+  3、先将slow的next保存为right，然后将slow的next设置为空，这样就分成了以head和right开头的两个子链表
+  4、分成子链表之后合并链表，合并时候注意先将head的指向缓存起来
  * @param {ListNode} head
  * @return {ListNode}
  */
-var head = { val: 4, next: { val: 2, next: { val: 1, next: { val: 3 } } } }
+var head = {
+  val: -1,
+  next: { val: 5, next: { val: 3, next: { val: 4, next: { val: 0 } } } }
+}
 
 var sortList = function(head) {
   let slow = head
@@ -49,9 +55,9 @@ var sortList = function(head) {
   }
 
   // 使用快慢指针将链表分成两个子链表
-  while (quick) {
+  while (quick && quick.next) {
     slow = slow.next
-    quick = quick.next ? quick.next.next : quick.next
+    quick = quick.next.next
   }
 
   // 表示只剩下两个元素，直接交换链表的val，然后直接返回
@@ -68,12 +74,12 @@ var sortList = function(head) {
   // 这样就分成了两个链表
 
   let right = slow.next
-  slow.next = null
+  delete slow.next
   // 合并两个有序链表
   let mergeList = (list1, list2) => {
     let list = {}
-    let tempList = { next: null }
-
+    let tempList = {}
+    debugger
     if (!list1 || !list2) {
       return list1 || list2
     }
@@ -103,7 +109,7 @@ var sortList = function(head) {
       }
     }
 
-    return list
+    return list.next
   }
 
   let leftList = sortList(head)
