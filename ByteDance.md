@@ -85,8 +85,51 @@ let iteratorTree = tree => {
 
 5、找出其他所有的数都出现两次的数组中只出现一次的数。
 
+```javascript
+let findNum = array => {
+  let sum = 0
+  for (let i = 0, j = array.length; i < j; i++) {
+    sum = sum ^ array(i)
+  }
+
+  return sum
+}
+```
+
 6、翻转句子中的单词（如 hello world -- > olleh dlrow）
+
+```javascript
+let reverseWords = function(s) {
+  s = s.trim()
+  let sum = "",
+    temp = "",
+    isSpace = false
+
+  for (let i = s.length - 1; i >= 0; i--) {
+    if (isSpace && s[i] == " ") {
+      continue
+    }
+
+    isSpace = s[i] == " "
+
+    if (isSpace) {
+      sum = temp + " " + sum
+      temp = ""
+    } else {
+      temp += s[i]
+    }
+
+    if (i == 0) {
+      sum = temp + " " + sum
+    }
+  }
+
+  return sum.trim()
+}
+```
+
 7、有两个字符串，你只可以进行删除操作，问你最少进行多少次操作可以使两个字符串相等。例:sea,eat 需要两次删除操作
+
 这个简单，思路就是用动态规划求两个字符串的最大公共字串的长度。然后使用每一个字符串的长度减去公共子字符串的长度。
 那咱们再加一点，如果我想要知道每个字符串需要删除的字符是那些呢，
 那我们就需要求出最大公共字串具体是由什么字符构成的，思路也是动态规划。(很快就写完了)
