@@ -318,7 +318,25 @@ let mergeList = (head1, head2) => {
 }
 ```
 
-> 20、反转链表
+20、反转链表
+
+```javascript
+let reverseList = head => {
+  let newHead = null
+  let temp = null
+
+  while (head) {
+    temp = head
+    head = head.next
+    temp.next = newHead
+
+    newHead = temp
+  }
+
+  return newHead
+}
+```
+
 > 21、Minimum Window Substring
 > 22、调整一棵二叉树，调整后，要求所有节点的右子树的最大值大于左子树的最大值。
 > 23、Longest Increasing Path in a Matrix
