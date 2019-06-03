@@ -4,7 +4,7 @@
 > 这一题的思路是将数字数组的冒泡排序进行改造，数字可以直接进行比对，而字符串需要重写一个比对方法
 
 ```javascript
-var strArray = ['abc', 'abd', 'cbc', 'abc', 'adc', 'cdb']
+var strArray = ["abc", "abd", "cbc", "abc", "adc", "cdb"]
 let sortArray = array => {
   let compare = (aStr, bStr) => {
     let aLength = aStr.length,
@@ -101,26 +101,26 @@ let findNum = array => {
 ```javascript
 let reverseWords = function(s) {
   s = s.trim()
-  let sum = '',
-    temp = '',
+  let sum = "",
+    temp = "",
     isSpace = false
 
   for (let i = s.length - 1; i >= 0; i--) {
-    if (isSpace && s[i] == ' ') {
+    if (isSpace && s[i] == " ") {
       continue
     }
 
-    isSpace = s[i] == ' '
+    isSpace = s[i] == " "
 
     if (isSpace) {
-      sum = temp + ' ' + sum
-      temp = ''
+      sum = temp + " " + sum
+      temp = ""
     } else {
       temp += s[i]
     }
 
     if (i == 0) {
-      sum = temp + ' ' + sum
+      sum = temp + " " + sum
     }
   }
 
@@ -199,35 +199,44 @@ let findCount = str => {
 16、在一个长字符串中找一个子字符串是否存在，有，返回 index，没有，返回-1。子字符串要求连续，但不在乎内部字符的顺序
 
 > KMP
-> 17、n 个人，n 个座位，每个人都有自己的座位，问每个人都不坐自己座位的坐法有多少种
+
+17、n 个人，n 个座位，每个人都有自己的座位，问每个人都不坐自己座位的坐法有多少种
 
 > 动态规划 waiting
 
-> 18、给个有序数组，然后求元素平方后不重复的元素个数，例如[-10, -10, -5, 0, 1, 5, 8, 10]
+18、给个有序数组，然后求元素平方后不重复的元素个数，例如[-10, -8, 0, 1, 5, 6, 7]
+
+> 這裡使用兩個指針往中間掃描，如果有与上一個值不相等的情况则记录个数  
+> 注意这里的遍历条件 left 可以等于 right，一遍最后一个元素和上一个值进行比较
 
 ```javascript
 let getSquareSize = array => {
-  let left = 1
+  let left = 0
   let length = array.length
   let right = length - 1
+  let pre = Math.abs(array[0])
+  let count = 1
+  let abs = Math.abs
 
-  let temp = Math.pow(array[0], 2)
-  debugger
-  while (left < right) {
-    if (Math.pow(array[right], 2) == temp) {
-      length--
-      temp = Math.pow(array[right], 2)
-    }
+  while (left <= right) {
+    if (abs(array[left]) > abs(array[right])) {
+      if (pre != abs(array[left])) {
+        count++
+        pre = abs(array[left])
+      }
 
-    left--
-    if (Math.pow(array[left], 2) == temp) {
-      length--
-      temp = Math.pow(array[left], 2)
+      left++
+    } else {
+      if (pre != abs(array[right])) {
+        count++
+        pre = abs(array[right])
+      }
+
+      right--
     }
-    right--
   }
 
-  return length
+  return count
 }
 ```
 
