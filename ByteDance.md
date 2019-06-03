@@ -240,7 +240,84 @@ let getSquareSize = array => {
 }
 ```
 
-> 19、一个链表，假设第一个节点我们定为下标为 1，第二个为 2，那么下标为奇数的结点是升序排序，偶数的结点是降序排序，如何让整个链表有序
+19、一个链表，假设第一个节点我们定为下标为 1，第二个为 2，那么下标为奇数的结点是升序排序，偶数的结点是降序排序，如何让整个链表有序
+
+```javascript
+let getList = head => {
+  let { firstHead, secondHead } = splitList(head)
+  let newSecond = reverseList(secondHead)
+  return mergeList(firstHead, newSecond)
+}
+
+let splitList = head => {
+  let firstHead = head
+  let secondHead = head.next
+  let first = head,
+    second = head.next
+  // 拆分奇偶链表是使用第一个元素的next去比较
+  while (first && first.next) {
+    first.next = first.next ? first.next.next : null
+    first = first.next
+    second.next = second.next ? second.next.next : null
+    second = second.next
+  }
+
+  return {
+    firstHead,
+    secondHead
+  }
+}
+// 反转链表的精华是反转链表中的指针指向，比如a.next指向b，变成b.next指向a
+// 这里temp存放当前节点，newHead存放上一个节点
+// 1、temp记录当前节点，head = head.next 获取下一个节点，这里不能写在temp.next = newhead前面，防止指针被清空
+// 2、temp.next = newhead  当前节点的next指向上一个节点，newHead = temp设置新的上一个节点
+let reverseList = head => {
+  let newHead = null
+  let temp = null
+
+  while (head != null) {
+    temp = head
+    head = head.next
+
+    temp.next = newHead
+    newHead = temp
+  }
+
+  return newHead
+}
+
+let mergeList = (head1, head2) => {
+  let newHead = {}
+  let temp = {}
+
+  while (head1 && head2) {
+    if (!temp.next) {
+      newHead = temp
+    }
+
+    if (head1.val > head2.val) {
+      temp.next = head2
+      head2 = head2.next
+    } else {
+      temp.next = head1
+      head1 = head1.next
+    }
+
+    temp = temp.next
+
+    if (head1 && !head2) {
+      temp.next = head1
+    }
+
+    if (!head1 && head2) {
+      temp.next = head2
+    }
+  }
+
+  return newHead.next
+}
+```
+
 > 20、反转链表
 > 21、Minimum Window Substring
 > 22、调整一棵二叉树，调整后，要求所有节点的右子树的最大值大于左子树的最大值。
