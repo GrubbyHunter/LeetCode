@@ -339,7 +339,8 @@ let reverseList = head => {
 
 22、调整一棵二叉树，调整后，要求所有节点的右子树的最大值大于左子树的最大值。
 
-> 24、二叉树的镜面反转
+24、二叉树的镜面反转
+
 > 25、给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次
 
 ```javascript
@@ -360,7 +361,8 @@ let getList = head => {
 
 > 26、给定一个二叉树，原地将它展开为链表
 > 27、给定一棵二叉树，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值
-> 28、合并两个有序链表。递归和非递归的实现。
+
+28、合并两个有序链表。递归和非递归的实现。
 
 ```javascript
 let mergeList = (list1, list2) => {
@@ -416,9 +418,35 @@ let mergeList = (list1, list2) => {
 }
 ```
 
-> 29、一个双向链表排序
-> 30、是关于栈，手写实现 1 秒输出 1，2 秒输出 3，4 秒输出 2
-> 31、无序数组的中位数
+29、一个双向链表排序
+
+```javascript
+let sortList = head => {
+  // 最后一个元素为head的头指针指向的元素
+  let lastItem = head.pre
+  let begin = head
+
+  while (head && head != lastItem) {
+    let begin = head
+
+    while (begin.next && begin.next != lastItem) {
+      if (begin.val > begin.next.val) {
+        let temp = begin.val
+        begin.val = begin.next.val
+        begin.next.val = begin.val
+      }
+
+      begin = begin.next
+    }
+
+    lastItem = begin
+  }
+
+  return head
+}
+```
+
+30、无序数组的中位数
 
 面试题：
 1、输入 url 到实现返回网页的过程

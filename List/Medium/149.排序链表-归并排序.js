@@ -117,4 +117,5 @@ var sortList = function(head) {
 
   return mergeList(leftList, rightList)
 }
+
 sortList(head)
