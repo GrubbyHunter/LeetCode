@@ -337,14 +337,85 @@ let reverseList = head => {
 }
 ```
 
-> 21、Minimum Window Substring
-> 22、调整一棵二叉树，调整后，要求所有节点的右子树的最大值大于左子树的最大值。
-> 23、Longest Increasing Path in a Matrix
+22、调整一棵二叉树，调整后，要求所有节点的右子树的最大值大于左子树的最大值。
+
 > 24、二叉树的镜面反转
 > 25、给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次
+
+```javascript
+let getList = head => {
+  let result = head
+
+  while (head && head.next) {
+    if (head.val == head.next.val) {
+      head.next = head.next.next
+    } else {
+      head = head.next
+    }
+  }
+
+  return result
+}
+```
+
 > 26、给定一个二叉树，原地将它展开为链表
 > 27、给定一棵二叉树，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值
 > 28、合并两个有序链表。递归和非递归的实现。
+
+```javascript
+let mergeList = (list1, list2) => {
+  let newHead = {}
+  let tempHead = {}
+  while (list1 && list2) {
+    if (tempHead.next) {
+      newHead = tempHead
+    }
+
+    if (list1.val >= list2.val) {
+      tempHead.next = list2
+      list2 = list2.next
+    } else {
+      tempHead.next = list1
+      list1 = list1.next
+    }
+
+    tempHead = tempHead.next
+
+    if (list1 && !list2) {
+      tempHead.next = list1
+    }
+
+    if (list2 && !list1) {
+      tempHead.next = list2
+    }
+  }
+
+  return newHead
+}
+
+let mergeList = (list1, list2) => {
+  let temp
+  if (!list1) {
+    return list2
+  }
+
+  if (!list2) {
+    return list1
+  }
+
+  if (list1.val >= list2.val) {
+    temp = list2
+    list2 = list2.next
+  } else {
+    temp = list1
+    list1 = list1.next
+  }
+  temp.next = mergeList(list1, list2)
+
+  return temp
+}
+```
+
 > 29、一个双向链表排序
 > 30、是关于栈，手写实现 1 秒输出 1，2 秒输出 3，4 秒输出 2
 > 31、无序数组的中位数
