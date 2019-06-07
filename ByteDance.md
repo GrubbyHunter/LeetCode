@@ -4,7 +4,7 @@
 > 这一题的思路是将数字数组的冒泡排序进行改造，数字可以直接进行比对，而字符串需要重写一个比对方法
 
 ```javascript
-var strArray = ["abc", "abd", "cbc", "abc", "adc", "cdb"]
+var strArray = ['abc', 'abd', 'cbc', 'abc', 'adc', 'cdb']
 let sortArray = array => {
   let compare = (aStr, bStr) => {
     let aLength = aStr.length,
@@ -101,26 +101,26 @@ let findNum = array => {
 ```javascript
 let reverseWords = function(s) {
   s = s.trim()
-  let sum = "",
-    temp = "",
+  let sum = '',
+    temp = '',
     isSpace = false
 
   for (let i = s.length - 1; i >= 0; i--) {
-    if (isSpace && s[i] == " ") {
+    if (isSpace && s[i] == ' ') {
       continue
     }
 
-    isSpace = s[i] == " "
+    isSpace = s[i] == ' '
 
     if (isSpace) {
-      sum = temp + " " + sum
-      temp = ""
+      sum = temp + ' ' + sum
+      temp = ''
     } else {
       temp += s[i]
     }
 
     if (i == 0) {
-      sum = temp + " " + sum
+      sum = temp + ' ' + sum
     }
   }
 
@@ -362,7 +362,7 @@ let getList = head => {
 > 26、给定一个二叉树，原地将它展开为链表
 > 27、给定一棵二叉树，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值
 
-28、合并两个有序链表。递归和非递归的实现。
+> 28、合并两个有序链表。递归和非递归的实现。
 
 ```javascript
 let mergeList = (list1, list2) => {
@@ -418,7 +418,7 @@ let mergeList = (list1, list2) => {
 }
 ```
 
-29、一个双向链表排序
+> 29、一个双向链表排序
 
 ```javascript
 let sortList = head => {
@@ -447,6 +447,46 @@ let sortList = head => {
 ```
 
 30、无序数组的中位数
+
+```javascript
+let findMiddle = array => {
+  let length = array.length
+  let n = 0
+  if (length % 2 == 0) {
+    n = length / 2
+  } else {
+    n = length - 1 / 2
+  }
+
+  let minHeap = getMinHeap(array.slice(0, n + 1))
+}
+
+let getMinHeap = (array, tree) => {
+  let tree
+  let length = array.length,
+    i = 0
+
+  if (length == 0) {
+    return tree
+  }
+
+  let current = array.shift()
+  if (tree) return tree
+}
+
+let swap = (tree, current) => {
+  if (!tree) {
+    tree.val = current
+    return tree
+  }
+
+  if (current >= tree.val) {
+    if (tree.left && tree.right) {
+      let val = Math.min(tree.left.val.tree.right.val)
+    }
+  }
+}
+```
 
 面试题：
 1、输入 url 到实现返回网页的过程
