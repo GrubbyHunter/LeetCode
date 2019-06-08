@@ -4,7 +4,7 @@
 > 这一题的思路是将数字数组的冒泡排序进行改造，数字可以直接进行比对，而字符串需要重写一个比对方法
 
 ```javascript
-var strArray = ['abc', 'abd', 'cbc', 'abc', 'adc', 'cdb']
+var strArray = ["abc", "abd", "cbc", "abc", "adc", "cdb"]
 let sortArray = array => {
   let compare = (aStr, bStr) => {
     let aLength = aStr.length,
@@ -101,26 +101,26 @@ let findNum = array => {
 ```javascript
 let reverseWords = function(s) {
   s = s.trim()
-  let sum = '',
-    temp = '',
+  let sum = "",
+    temp = "",
     isSpace = false
 
   for (let i = s.length - 1; i >= 0; i--) {
-    if (isSpace && s[i] == ' ') {
+    if (isSpace && s[i] == " ") {
       continue
     }
 
-    isSpace = s[i] == ' '
+    isSpace = s[i] == " "
 
     if (isSpace) {
-      sum = temp + ' ' + sum
-      temp = ''
+      sum = temp + " " + sum
+      temp = ""
     } else {
       temp += s[i]
     }
 
     if (i == 0) {
-      sum = temp + ' ' + sum
+      sum = temp + " " + sum
     }
   }
 
@@ -461,17 +461,30 @@ let findMiddle = array => {
   let minHeap = getMinHeap(array.slice(0, n + 1))
 }
 
-let getMinHeap = (array, tree) => {
-  let tree
-  let length = array.length,
-    i = 0
+let getMinHeap = array => {
+  // 首先获取一棵普通二叉树
+  let getBinaryTree = array => {
+    let tree = {}
+    let current = array.shift()
 
-  if (length == 0) {
+    if (!current) {
+      return null
+    }
+
+    let length = array.length
+    tree.val = current
+    if (length == 0) {
+      return tree
+    }
+
+    let middle = Math.ceil(length / 2)
+    tree.left = getBinaryTree(array.slice(0, middle))
+    tree.right = getBinaryTree(array.slice(middle))
+
     return tree
   }
 
-  let current = array.shift()
-  if (tree) return tree
+  let tree
 }
 
 let swap = (tree, current) => {
@@ -482,7 +495,7 @@ let swap = (tree, current) => {
 
   if (current >= tree.val) {
     if (tree.left && tree.right) {
-      let val = Math.min(tree.left.val.tree.right.val)
+      let val = Math.min(tree.left.val, tree.right.val)
     }
   }
 }
