@@ -11,6 +11,8 @@
  * }
  */
 /**
+ * @desc 这个题可以理解为按照层级遍历，然后获取每个层级的最后一个节点
+ * 所以使用BFS进行遍历，然后拿到最后一个节点时候放入数组，同时将他自己和前面的元素进行删除
  * @param {TreeNode} root
  * @return {number[]}
  */
@@ -32,6 +34,7 @@ var rightSideView = function(root) {
 
       if (i == length - 1) {
         result.push(current.val)
+        //将他自己和前面的元素进行删除
         queue = queue.slice(i + 1)
       }
 
