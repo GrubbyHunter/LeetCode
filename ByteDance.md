@@ -374,7 +374,7 @@ var a = {
   right: {
     val: 5,
     left: { val: 6 },
-    right: { val: 6 }
+    right: { val: 7 }
   }
 }
 ```
@@ -398,6 +398,36 @@ let getList = head => {
 ```
 
 > 26、给定一个二叉树，原地将它展开为链表
+
+```javascript
+var flatten = function(root) {
+  let head,
+    temp = {}
+
+  if (!root || !root.val) {
+    return null
+  }
+
+  let getList = tree => {
+    if (!head) {
+      head = temp
+    }
+    if (tree) {
+      temp.val = tree.val
+      temp.next = {}
+      temp = temp.next
+    }
+
+    tree.left && getList(tree.left)
+    tree.right && getList(tree.right)
+  }
+
+  getList(root)
+
+  return head
+}
+```
+
 > 27、给定一棵二叉树，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值
 
 > 28、合并两个有序链表。递归和非递归的实现。
