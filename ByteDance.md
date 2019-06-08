@@ -339,7 +339,45 @@ let reverseList = head => {
 
 22、调整一棵二叉树，调整后，要求所有节点的右子树的最大值大于左子树的最大值。
 
+```javascript
+```
+
 24、二叉树的镜面反转
+
+```javascript
+let swapMirror = tree => {
+  let temp = tree.left
+  tree.left = tree.right
+  tree.right = temp
+
+  if (tree.left) {
+    swapMirror(tree.left)
+  } else {
+    delete tree.left
+  }
+
+  if (tree.right) {
+    swapMirror(tree.right)
+  } else {
+    delete tree.right
+  }
+
+  return tree
+}
+var a = {
+  val: 1,
+  left: {
+    val: 2,
+    left: { val: 3 },
+    right: { val: 4 }
+  },
+  right: {
+    val: 5,
+    left: { val: 6 },
+    right: { val: 6 }
+  }
+}
+```
 
 > 25、给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次
 
@@ -484,10 +522,10 @@ let getMinHeap = array => {
     return tree
   }
 
-  let tree
+  let tree = getBinaryTree(array)
 }
 
-let swap = (tree, current) => {
+let swapTreeVal = (tree, current) => {
   if (!tree) {
     tree.val = current
     return tree
