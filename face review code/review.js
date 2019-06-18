@@ -11,3 +11,20 @@ let flatten = array => {
 }
 
 flatten(arr)
+
+/**
+ *  @desc 实现深拷贝
+ **/
+let deepClone = obj => {
+  // 使用toString判断类型，因为，typeof区分不出数组，null，undefined和对象，instanceof也区分不出
+  // 使用for in遍历对象的属性，原型上的属性也能够遍历
+  let type = Object.prototype.toString.call(obj)
+  switch (type) {
+    case 1:
+      break
+  }
+  for (let key in obj) {
+    console.log(key)
+  }
+}
+deepClone(new Person())
