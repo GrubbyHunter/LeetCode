@@ -607,14 +607,46 @@ let swapTreeVal = (tree, current) => {
 }
 ```
 
-面试题：
-1、输入 url 到实现返回网页的过程
-2、tcp 三次握手，四次挥手
-3、假设 rtt（数据从两端一来一回） 100ms，那么从输入一个http://url到得到网页要多少时间
-4、http code，服务器状态 502 503 504 什么问题，怎么排查
-4、https
-5、get 和 post 有什么差别
-6、ES6 Promise、generator、async
+## Object.prototype.toString 检测对象类型
 
-java 部分：
-1、hashmap 底层是怎么实现的
+> 对象的 toString 方法被重写了，string 返回的是他的值，function 返回的是他的函数实现，所以不能直接用
+> toString 检测对象类型，而需要用原型属性上的 toString 去检测，这个方法没有被重写，返回的是对象的类型
+
+## instanceof 基于原型链进行检测是否属于某父类
+
+## Object.freeze 冻结对象
+
+```javascript
+var a = { x: 100 }
+Object.freeze(a)
+a.x = 200
+a.y = 300
+console.log(a.x) // 100
+console.log(a.y) // undefined
+```
+
+## Object.preventExtensions 也算冻结对象，防止扩展
+
+```javascript
+var a = { x: 100 }
+Object.preventExtensions(a)
+a.y = 300
+console.log(a.y) // undefined
+```
+
+## Object.defineProperty 限制不能被删除，不能被修改
+
+```javascript
+var foo = {}
+Object.defineProperty(foo, "y", {
+  value: 20,
+  writable: false, // 只读
+  configurable: false // 不可配置
+})
+
+// 不能修改
+foo.y = 200
+
+// 不能删除
+delete foo.y // false
+```
