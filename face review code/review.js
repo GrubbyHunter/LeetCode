@@ -19,12 +19,39 @@ let deepClone = obj => {
   // 使用toString判断类型，因为，typeof区分不出数组，null，undefined和对象，instanceof也区分不出
   // 使用for in遍历对象的属性，原型上的属性也能够遍历
   let type = Object.prototype.toString.call(obj)
+  let result = null
+
   switch (type) {
-    case 1:
+    case '[object String]':
+      result = obj
+      break
+    case '[object Number]':
+      result = obj
+      break
+    case '[object Boolean]':
+      result = obj
+      break
+    case '[object Date]':
+      result = new Date(obj.getTime())
+      break
+    case '[object Null]':
+      result = null
+      break
+    case '[object Undefined]':
+      result = undefined
+      break
+    case '[object Object]':
+      result = {}
+      for (let key in obj) {
+        result[key] = deepClone(obj[key])
+      }
+      break
+    case '[object Array]':
+      result = []
+      for (let item of obj) {
+        result.push(deepClone(item))
+      }
       break
   }
-  for (let key in obj) {
-    console.log(key)
-  }
+  return result
 }
-deepClone(new Person())
