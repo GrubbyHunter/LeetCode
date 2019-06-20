@@ -20,6 +20,7 @@ let deepClone = obj => {
   // 使用for in遍历对象的属性，原型上的属性也能够遍历
   let type = Object.prototype.toString.call(obj)
   let result = null
+  function F() {}
 
   switch (type) {
     case '[object String]':
@@ -42,8 +43,14 @@ let deepClone = obj => {
       break
     case '[object Object]':
       result = {}
+
+      F.prototype = obj.__proto__
+      result.__proto__ = new F()
+
       for (let key in obj) {
-        result[key] = deepClone(obj[key])
+        if (obj.hasOwnProperty(key)) {
+          result[key] = deepClone(obj[key])
+        }
       }
       break
     case '[object Array]':
