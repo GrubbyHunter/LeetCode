@@ -4,7 +4,7 @@
 > 这一题的思路是将数字数组的冒泡排序进行改造，数字可以直接进行比对，而字符串需要重写一个比对方法
 
 ```javascript
-var strArray = ["abc", "abd", "cbc", "abc", "adc", "cdb"]
+var strArray = ['abc', 'abd', 'cbc', 'abc', 'adc', 'cdb']
 let sortArray = array => {
   let compare = (aStr, bStr) => {
     let aLength = aStr.length,
@@ -101,26 +101,26 @@ let findNum = array => {
 ```javascript
 let reverseWords = function(s) {
   s = s.trim()
-  let sum = "",
-    temp = "",
+  let sum = '',
+    temp = '',
     isSpace = false
 
   for (let i = s.length - 1; i >= 0; i--) {
-    if (isSpace && s[i] == " ") {
+    if (isSpace && s[i] == ' ') {
       continue
     }
 
-    isSpace = s[i] == " "
+    isSpace = s[i] == ' '
 
     if (isSpace) {
-      sum = temp + " " + sum
-      temp = ""
+      sum = temp + ' ' + sum
+      temp = ''
     } else {
       temp += s[i]
     }
 
     if (i == 0) {
-      sum = temp + " " + sum
+      sum = temp + ' ' + sum
     }
   }
 
@@ -638,7 +638,7 @@ console.log(a.y) // undefined
 
 ```javascript
 var foo = {}
-Object.defineProperty(foo, "y", {
+Object.defineProperty(foo, 'y', {
   value: 20,
   writable: false, // 只读
   configurable: false // 不可配置
@@ -658,3 +658,16 @@ delete foo.y // false
 > js defer 和 async  
 > defer：异步加载，等到页面 dom 解析完成，也就是 DOMContentLoaded 触发时候执行 ，有顺序  
 > async:异步加载，加载完就执行，没有顺序
+
+### 浏览器地址栏从输入 url 到看到页面，这中间发生了什么
+
+> 1、输入内容，然后浏览器控制 tab 窗体的进程中的 UI 线程会先判断输入的内容是 url 地址还是查询参数  
+> 如果是查询参数，name 他会获取浏览器默认的搜索引擎，将查询参数拼接到搜索殷勤 url 后面，作为一个 url 处理
+
+> 2、UI 线程会调用网络线程(network thread)，网络线程经过 DNS 解析，获取 url 对应的服务器，使用 tcp 三次握手建立连接  
+> 然后发起 http 请求，network 线程会根据请求回来的响应里面的 content-type 等字段判断返回的文件格式，如果是 zip 或者其他  
+> 下载文件，那么直接交给下载管理器处理，如果是 html 文件，会交给渲染进程(render process)来处理，这时候也是浏览器 CORB 检测
+> 执行的阶段，保证敏感数据不会传递给渲染线程。
+
+> 3、渲染进程中主线程对 html 结构进行解析，碰到 link 标签或者是 img 标签使用 tab 窗体进程的网络线程(network thread)进行下载，  
+> 这样就没有阻塞 html 中 dom 树的解析，碰到 script 标签会在当前线程中进行下载资源并执行，dom 结构解析完成会生成 dom 树结构，这时候触发 document 的 DOMcontentloaded 事件，css 解析完成会生成 cssom 树结构，然后通过 dom 树和 cssom 树执行 dom 渲染，生成页面元素，知道触犯 window.onload 事件
