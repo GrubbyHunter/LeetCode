@@ -670,4 +670,4 @@ delete foo.y // false
 > 执行的阶段，保证敏感数据不会传递给渲染线程。
 
 > 3、渲染进程中主线程对 html 结构进行解析，碰到 link 标签或者是 img 标签使用 tab 窗体进程的网络线程(network thread)进行下载，  
-> 这样就没有阻塞 html 中 dom 树的解析，碰到 script 标签会在当前线程中进行下载资源并执行，dom 结构解析完成会生成 dom 树结构，这时候触发 document 的 DOMcontentloaded 事件，css 解析完成会生成 cssom 树结构，然后通过 dom 树和 cssom 树执行 dom 渲染，生成页面元素，知道触犯 window.onload 事件
+> 这样就没有阻塞 html 中 dom 树的解析，碰到 script 标签会在当前线程中进行下载资源并执行，dom 结构解析完成会生成 dom 树结构，这时候触发 document 的 DOMcontentloaded 事件(jquery.ready 方法就是监听的 DOMContentloaded 事件)，css 解析完成会生成 cssom 树结构，然后通过 dom 树和 cssom 树执行 dom 渲染，生成页面元素，知道触犯 window.onload 事件
