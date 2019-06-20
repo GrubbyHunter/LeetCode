@@ -650,3 +650,11 @@ foo.y = 200
 // 不能删除
 delete foo.y // false
 ```
+
+### css 加载
+
+> css 解析和 dom 解析是两个并行的过程，所以 css 资源下载不会阻塞后续 dom 的解析
+> dom 渲染需要依赖 dom 树和 cssom 树，所以 css 加载会阻塞 dom 渲染
+> js defer 和 async  
+> defer：异步加载，等到页面 dom 解析完成，也就是 DOMContentLoaded 触发时候执行 ，有顺序  
+> async:异步加载，加载完就执行，没有顺序
