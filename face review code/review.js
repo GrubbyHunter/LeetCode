@@ -22,31 +22,31 @@ let deepClone = obj => {
   let result = null
 
   switch (type) {
-    case '[object String]':
+    case "[object String]":
       result = obj
       break
-    case '[object Number]':
+    case "[object Number]":
       result = obj
       break
-    case '[object Boolean]':
+    case "[object Boolean]":
       result = obj
       break
-    case '[object Date]':
+    case "[object Date]":
       result = new Date(obj.getTime())
       break
-    case '[object Null]':
+    case "[object Null]":
       result = null
       break
-    case '[object Undefined]':
+    case "[object Undefined]":
       result = undefined
       break
-    case '[object Object]':
+    case "[object Object]":
       result = {}
       for (let key in obj) {
         result[key] = deepClone(obj[key])
       }
       break
-    case '[object Array]':
+    case "[object Array]":
       result = []
       for (let item of obj) {
         result.push(deepClone(item))
@@ -55,3 +55,38 @@ let deepClone = obj => {
   }
   return result
 }
+
+/**
+ * @desc 手动实现一个co函数
+ * 递归调用自身
+ */
+function* genFun() {
+  yield "first"
+  yield "second"
+  yield "third"
+}
+
+function co(fun) {
+  var ctx = this
+
+  return new Promise((resolve, reject) => {
+    if (typeof fun !== "function") {
+      return resolve(fun)
+    }
+
+    let genHandle = fun.call(ctx)
+
+    function next() {
+      let result = genHandle.next()
+      console.log(result.value, result.done)
+      if (result.done) {
+        resolve(result.value)
+        return
+      }
+      next()
+    }
+
+    next()
+  })
+}
+co(genFun)
