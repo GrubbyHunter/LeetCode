@@ -7,6 +7,12 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "run demo",
+      "program": "${workspaceFolder}\\face review code\\demo.js"
+    }
+    {
+      "type": "node",
+      "request": "launch",
       "name": "quickSort",
       "program": "${workspaceFolder}\\Array\\Medium\\快速排序.js"
     }
