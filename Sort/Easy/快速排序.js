@@ -6,6 +6,7 @@ let array = [1, 6, 4, 7, 5, 9, 10, 4, 19, 2, 11, 8]
  * 这里需要注意：
  * 分成两个数组的方法是使用头尾（左右）两个指针，依次找到比基准到的元素和比基准小的元素然后互换位置
  */
+
 let quickSort = array => {
   let length = array.length
   if (length <= 1) {
