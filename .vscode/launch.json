@@ -9,7 +9,13 @@
       "request": "launch",
       "name": "run demo",
       "program": "${workspaceFolder}\\face review code\\demo.js"
-    }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "run base64",
+      "program": "${workspaceFolder}\\face review code\\base64\\index.js"
+    },
     {
       "type": "node",
       "request": "launch",
