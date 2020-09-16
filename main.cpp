@@ -6,23 +6,29 @@ using namespace std;
 class Solution
 {
 public:
-  bool containsDuplicate(vector<int> &nums)
+  int removeDuplicates(vector<int> &nums)
   {
-    // unordered_set key是唯一的
-    unordered_set<int> set;
-    int size = nums.size();
-
-    for (int i = 0; i < size; i++)
+    if (nums.size() == 0)
     {
-      if (set.count(nums[i]) > 0)
-      {
-        return true;
-      }
-
-      set.insert(nums[i]);
+      return 0;
     }
 
-    return false;
+    int i = 0;
+    // 使用快慢指针，i为慢指针，j为快指针
+    // 如果相邻的两个元素相等，那么j一直往前走，i留在原地
+    // 碰到不相等的元素，那么将这个元素放在i元素后面的位置，所以要先i++再赋值
+    // 这么没有删除数组中的元素，只是把不同的元素移到了前面
+    // 因为题目强调 "你不需要考虑数组中超出新长度后面的元素"
+    for (int j = 1; j < nums.size(); j++)
+    {
+      if (nums[j] != nums[i])
+      {
+        i++;
+        nums[i] = nums[j];
+      }
+    }
+
+    return i + 1;
   }
 };
 
@@ -31,9 +37,9 @@ int main()
   vector<int> result;
   result.push_back(1);
   result.push_back(2);
+  result.push_back(2);
   result.push_back(3);
-  result.push_back(4);
   Solution so;
-  so.containsDuplicate(result);
+  so.removeDuplicates(result);
   return 0;
 }
