@@ -1,34 +1,49 @@
 #include <iostream>
 #include <unordered_set>
 #include <vector>
+#include <math.h>
+
 using namespace std;
 
 class Solution
 {
 public:
-  int removeDuplicates(vector<int> &nums)
+  bool isPalindrome(int x)
   {
-    if (nums.size() == 0)
+    int begin, end;
+
+    if (x < 0)
     {
-      return 0;
+      return false;
     }
 
-    int i = 0;
-    // 使用快慢指针，i为慢指针，j为快指针
-    // 如果相邻的两个元素相等，那么j一直往前走，i留在原地
-    // 碰到不相等的元素，那么将这个元素放在i元素后面的位置，所以要先i++再赋值
-    // 这么没有删除数组中的元素，只是把不同的元素移到了前面
-    // 因为题目强调 "你不需要考虑数组中超出新长度后面的元素"
-    for (int j = 1; j < nums.size(); j++)
+    int div = 1;
+    // 因为不使用string，这里的累积相乘相当于记录数字的位数
+    // 1234,div就等于1000
+    while (x / div >= 10)
     {
-      if (nums[j] != nums[i])
+      div *= 10;
+    }
+
+    while (x > 0)
+    {
+      // 头部数字
+      int left = x / div;
+      // 尾部数字
+      int right = x % 10;
+      // 不相等既不是回文数字
+      if (left != right)
       {
-        i++;
-        nums[i] = nums[j];
+        return false;
       }
+
+      // 相等的话，去掉头部数字和尾部数字，再比较中间的部分
+      x = (x % div) / 10;
+      // div的话除以100，相当于自动减两位
+      div /= 100;
     }
 
-    return i + 1;
+    return true;
   }
 };
 
@@ -40,6 +55,6 @@ int main()
   result.push_back(2);
   result.push_back(3);
   Solution so;
-  so.removeDuplicates(result);
+  so.isPalindrome(10022201);
   return 0;
 }
