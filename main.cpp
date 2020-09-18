@@ -8,42 +8,23 @@ using namespace std;
 class Solution
 {
 public:
-  bool isPalindrome(int x)
+  int findLengthOfLCIS(vector<int> &nums)
   {
-    int begin, end;
+    int maxSize = 1;
+    int currentMaxSize = 1;
 
-    if (x < 0)
+    if (nums.size() == 0)
     {
-      return false;
+      return 0;
     }
 
-    int div = 1;
-    // 因为不使用string，这里的累积相乘相当于记录数字的位数
-    // 1234,div就等于1000
-    while (x / div >= 10)
+    for (int i = 1; i < nums.size(); i++)
     {
-      div *= 10;
+      currentMaxSize = nums[i - 1] >= nums[i] ? 1 : currentMaxSize + 1;
+      maxSize = maxSize > currentMaxSize ? maxSize : currentMaxSize;
     }
 
-    while (x > 0)
-    {
-      // 头部数字
-      int left = x / div;
-      // 尾部数字
-      int right = x % 10;
-      // 不相等既不是回文数字
-      if (left != right)
-      {
-        return false;
-      }
-
-      // 相等的话，去掉头部数字和尾部数字，再比较中间的部分
-      x = (x % div) / 10;
-      // div的话除以100，相当于自动减两位
-      div /= 100;
-    }
-
-    return true;
+    return maxSize;
   }
 };
 
@@ -51,10 +32,11 @@ int main()
 {
   vector<int> result;
   result.push_back(1);
-  result.push_back(2);
-  result.push_back(2);
   result.push_back(3);
+  result.push_back(5);
+  result.push_back(4);
+  result.push_back(7);
   Solution so;
-  so.isPalindrome(10022201);
+  so.findLengthOfLCIS(result);
   return 0;
 }
