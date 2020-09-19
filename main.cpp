@@ -8,35 +8,36 @@ using namespace std;
 class Solution
 {
 public:
-  int findLengthOfLCIS(vector<int> &nums)
+  void moveZeroes(vector<int> &nums)
   {
-    int maxSize = 1;
-    int currentMaxSize = 1;
-
     if (nums.size() == 0)
     {
-      return 0;
+      return;
     }
+    int size = nums.size(), temp;
+    int j = 0;
 
-    for (int i = 1; i < nums.size(); i++)
+    for (int i = 0; i < size; i++)
     {
-      currentMaxSize = nums[i - 1] >= nums[i] ? 1 : currentMaxSize + 1;
-      maxSize = maxSize > currentMaxSize ? maxSize : currentMaxSize;
+      if (nums[i] != 0)
+      {
+        temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+        j++;
+      }
     }
-
-    return maxSize;
   }
 };
-
 int main()
 {
   vector<int> result;
+  result.push_back(0);
   result.push_back(1);
+  result.push_back(0);
   result.push_back(3);
-  result.push_back(5);
-  result.push_back(4);
-  result.push_back(7);
+  result.push_back(12);
   Solution so;
-  so.findLengthOfLCIS(result);
+  so.moveZeroes(result);
   return 0;
 }
