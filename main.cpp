@@ -2,31 +2,31 @@
 #include <unordered_set>
 #include <vector>
 #include <math.h>
+#include <climits>
 
 using namespace std;
-
 class Solution
 {
 public:
-  void moveZeroes(vector<int> &nums)
+  int reverse(int x)
   {
-    if (nums.size() == 0)
-    {
-      return;
-    }
-    int size = nums.size(), temp;
-    int j = 0;
+    int ans = 0;
 
-    for (int i = 0; i < size; i++)
+    while (x != 0)
     {
-      if (nums[i] != 0)
-      {
-        temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
-        j++;
-      }
+      int pop = x % 10;
+      // 超出范围校验
+      if (ans > INT_MAX / 10 || (ans == INT_MAX / 10 && pop > 7))
+        return 0;
+      // 超出范围校验
+      if (ans < INT_MIN / 10 || (ans == INT_MIN / 10 && pop < -8))
+        return 0;
+
+      ans = ans * 10 + pop;
+      x /= 10;
     }
+
+    return ans;
   }
 };
 int main()
@@ -38,6 +38,6 @@ int main()
   result.push_back(3);
   result.push_back(12);
   Solution so;
-  so.moveZeroes(result);
+  so.reverse(12345);
   return 0;
 }
