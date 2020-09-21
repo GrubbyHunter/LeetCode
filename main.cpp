@@ -5,30 +5,26 @@
 #include <climits>
 
 using namespace std;
+
 class Solution
 {
 public:
-  int reverse(int x)
+  int maxProfit(vector<int> &prices)
   {
-    int ans = 0;
-
-    while (x != 0)
+    int minPrice = prices[0], sum = 0;
+    for (int i = 1; i < prices.size(); i++)
     {
-      int pop = x % 10;
-      // 超出范围校验
-      if (ans > INT_MAX / 10 || (ans == INT_MAX / 10 && pop > 7))
-        return 0;
-      // 超出范围校验
-      if (ans < INT_MIN / 10 || (ans == INT_MIN / 10 && pop < -8))
-        return 0;
-
-      ans = ans * 10 + pop;
-      x /= 10;
+      if (prices[i] > minPrice)
+      {
+        sum += prices[i] - minPrice;
+      }
+      minPrice = prices[i];
     }
 
-    return ans;
+    return sum;
   }
 };
+
 int main()
 {
   vector<int> result;
@@ -38,6 +34,6 @@ int main()
   result.push_back(3);
   result.push_back(12);
   Solution so;
-  so.reverse(12345);
+  so.maxProfit(result);
   return 0;
 }

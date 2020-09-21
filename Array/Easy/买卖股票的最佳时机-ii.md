@@ -29,28 +29,23 @@
 > 这里其实就是找到数组里面所有升序的集合，让升序集合中的最大数减去最小数求差，然后把这些所有的差累加起来，就是收益  
 > 例如[1,3,7] ，实际上第一天麦第三天卖 7-1 = 6，也可以理解为(3-1)+(7-3) = 2
 
-```javascript
-/**
- * @param {number[]} prices
- * @return {number}
- */
-var maxProfit = function(prices) {
-  let length = prices.length;
-  let sum = 0,
-    min = prices[0];
-
-  if (length === 0) {
-    return 0;
-  }
-
-  for (let i = 1; i < length; i++) {
-    if (prices[i] >= min) {
-      sum += prices[i] - min;
+```c++
+class Solution
+{
+public:
+  int maxProfit(vector<int> &prices)
+  {
+    int minPrice = prices[0], sum = 0;
+    for (int i = 1; i < prices.size(); i++)
+    {
+      if (prices[i] > minPrice)
+      {
+        sum += prices[i] - minPrice;
+      }
+      minPrice = prices[i];
     }
 
-    min = prices[i];
+    return sum;
   }
-
-  return sum;
 };
 ```
