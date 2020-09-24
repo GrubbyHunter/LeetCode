@@ -9,35 +9,43 @@ using namespace std;
 class Solution
 {
 public:
-  void rotate(vector<int> &nums, int k)
+  vector<int> plusOne(vector<int> &digits)
   {
-    int temp = 0;
-    int size = nums.size();
-    // 这里防止K比数组的长度还大
-    k = k % size;
+    int size = digits.size();
+    int i = size - 1;
 
-    while (k > 0)
+    while (i >= 0)
     {
-      // 获取最后一个元素
-      temp = nums[size - 1];
-      // 删除最后一个元素
-      nums.pop_back();
-      // 最后一个元素插入到第一个元素的位置
-      nums.insert(nums.begin(), temp);
-      k--;
+      if (digits[i] == 9)
+      {
+        digits[i] = 0;
+        i--;
+      }
+      else
+      {
+        digits[i] += 1;
+        return digits;
+      }
     }
+
+    if (digits[0] == 0)
+    {
+      digits.insert(digits.begin(), 1);
+    }
+
+    return digits;
   }
 };
-;
+
 int main()
 {
   vector<int> result;
-  result.push_back(0);
+  result.push_back(9);
   result.push_back(1);
   result.push_back(0);
-  result.push_back(3);
-  result.push_back(12);
+  result.push_back(9);
+  result.push_back(9);
   Solution so;
-  so.rotate(result, 3);
+  so.plusOne(result);
   return 0;
 }
