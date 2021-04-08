@@ -8,66 +8,82 @@ using namespace std;
 class Solution
 {
 public:
-  vector<vector<int>> generateMatrix(int n)
+  // 反转函数
+  void reverse(string &s, int start, int end)
   {
-    // 初始化二维数组
-    vector<vector<int>> result(n, vector<int>(n, 0));
-
-    int startX = 0;   // 填充的起始横向位置
-    int startY = 0;   // 填充的起始竖向位置
-    int loop = n / 2; // 需要填充的圈数，例如 n = 3，则只需要填充一圈
-    int mid = n / 2;  // 中点的坐标[mid,mid]
-    int current = 1;  // 当前值，从1开始
-    int offset = 1;   // 每一圈循环，需要控制每一条边遍历的长度
-
-    int i, j;
-    // loop > 0 为循环不变量，只有还有剩余圈数，则表明填充依然能进行下去
-    while (loop > 0)
+    for (int i = start, j = end; i < j; i++, j--)
     {
-      i = startX;
-      j = startY;
+      int temp = s[i];
+      s[i] = s[j];
+      s[j] = temp;
+    }
+  }
+  void replaceSpace(string &s)
+  {
+    int fastIndex = 0;
+    int slowIndex = 0;
+    int size = s.size();
 
-      // 从左到右填充最上边，最后一个元素不填充
-      // startY + n = 需要填充的边长度 [起始位置startY，结束位置startY + n]
-      for (j = startY; j < startY + n - offset; j++)
-      {
-        result[i][j] = current++; // 这里使用current++是为了先赋值，在进行递增
-      }
-
-      // 从右上到右下填充最右边，最后一个元素不填充
-      for (i = startX; i < startX + n - offset; i++)
-      {
-        result[i][j] = current++;
-      }
-
-      // 从右下到左下填充最下边，最后一个元素不填充
-      // 此时startY在之前的遍历中已经达到最大，所以for循环第一个条件不需要赋值，只需要递减startY即可
-      for (; j > startY; j--)
-      {
-        result[i][j] = current++;
-      }
-
-      // 从左下到左上填充最左边，最后一个元素不填充
-      for (; i > startX; i--)
-      {
-        result[i][j] = current++;
-      }
-
-      startX++;
-      startY++;
-      // 填充完一圈之后offset+2，因为首尾和上下分别去掉了2个元素
-      offset += 2;
-      // 填充完一圈之后loop减少
-      loop--;
+    // 计算出字符串首部空格的位置，fastIndex定位到第一个不是空格的字符
+    while (size > 0 && fastIndex < size && s[fastIndex] == ' ')
+    {
+      fastIndex++;
     }
 
-    // 如果n不为偶数，则正中心的终点，需要单独处理处理
-    if (n % 2 != 0)
+    // 替换字符串首部和中间部分的空格
+    while (fastIndex < size)
     {
-      result[mid][mid] = current + 1;
+      // 字符串中出现连续空格，快指针继续向后移动，直到找到第一个非空格元素，移动到前面
+      if (fastIndex >= 1 && s[fastIndex] == ' ' && s[fastIndex - 1] == ' ')
+      {
+        fastIndex++;
+      }
+      else
+      {
+        // 正常替换
+        s[slowIndex] = s[fastIndex];
+        fastIndex++;
+        slowIndex++;
+      }
     }
 
-    return result;
+    //最终移动完成后slowIndex指向最后一个，如果最后一个是空格，remove掉尾部的空格
+    if (slowIndex > 1 && s[slowIndex - 1] == ' ')
+    {
+      s.resize(slowIndex - 1);
+    }
+    else
+    {
+      s.resize(slowIndex);
+    }
+  }
+  string reverseWords(string s)
+  {
+
+    int startIndex = 0;
+    int endIndex = 0;
+    // 首先将字符串中多余的空格去掉
+    replaceSpace(s);
+    // 获取最新的字符串长度
+    int size = s.size();
+    // 然后先反转整个字符串，the sky => yks eht
+    reverse(s, 0, size - 1);
+
+    while (endIndex < size)
+    {
+      while (s[endIndex] != ' ' && endIndex < size)
+      {
+        endIndex++;
+      }
+
+      // 反转单个单词
+      reverse(s, startIndex, endIndex - 1);
+      // 记录下一个单词的首部位置
+      endIndex++;
+      startIndex = endIndex;
+    }
+
+    return s;
   }
 };
 int main()
@@ -80,6 +96,6 @@ int main()
   result.push_back(4);
   result.push_back(3);
   Solution so;
-  so.generateMatrix(4);
+  so.reverseWords("  hello world  ");
   return 0;
 }
