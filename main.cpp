@@ -8,79 +8,46 @@ using namespace std;
 class Solution
 {
 public:
-  // 反转函数
-  void reverse(string &s, int start, int end)
+  string replaceSpace(string s)
   {
-    for (int i = start, j = end; i < j; i++, j--)
-    {
-      int temp = s[i];
-      s[i] = s[j];
-      s[j] = temp;
-    }
-  }
-  void replaceSpace(string &s)
-  {
-    int fastIndex = 0;
-    int slowIndex = 0;
+    int count = 0;
     int size = s.size();
-
-    // 计算出字符串首部空格的位置，fastIndex定位到第一个不是空格的字符
-    while (size > 0 && fastIndex < size && s[fastIndex] == ' ')
+    for (int i = 0; i < size; i++)
     {
-      fastIndex++;
+      if (s[i] == ' ')
+      {
+        count++;
+      }
     }
 
-    // 替换字符串首部和中间部分的空格
-    while (fastIndex < size)
+    // 计算替换完%20之后数组的长度，这里每个空格变成了%20
+    // 相当于每个空格就要多出2个元素的长度
+    int maxSize = size + count * 2;
+    s.resize(maxSize);
+    // 双指针从数组尾部向头部依次替换，保证不会动到前面的元素
+    // 如果头部向尾部进行替换，每改一次都需要动到后面元素的位置
+    int startIndex = maxSize - 1; // 填充后数组的最后一个元素作为慢指针
+    int endIndex = size - 1;      // 原始数组最后一个元素最为快指针
+
+    // 一直替换到第一个元素，因为startIndex -2 >= 0
+    while (startIndex >= 2 && endIndex >= 0)
     {
-      // 字符串中出现连续空格，快指针继续向后移动，直到找到第一个非空格元素，移动到前面
-      if (fastIndex >= 1 && s[fastIndex] == ' ' && s[fastIndex - 1] == ' ')
+      // 非空格的话，元素直接移动到后面
+      if (s[endIndex] != ' ')
       {
-        fastIndex++;
+        s[startIndex] = s[endIndex];
+        startIndex--;
+        endIndex--;
       }
       else
       {
-        // 正常替换
-        s[slowIndex] = s[fastIndex];
-        fastIndex++;
-        slowIndex++;
+        // 空格的话直接填充最近的三个位置，然后慢指针移动到第四个位置，同时快指针移动到下一个位置
+        s[startIndex] = '0';
+        s[startIndex - 1] = '2';
+        s[startIndex - 2] = '%';
+        startIndex -= 3;
+        endIndex--;
       }
-    }
-
-    //最终移动完成后slowIndex指向最后一个，如果最后一个是空格，remove掉尾部的空格
-    if (slowIndex > 1 && s[slowIndex - 1] == ' ')
-    {
-      s.resize(slowIndex - 1);
-    }
-    else
-    {
-      s.resize(slowIndex);
-    }
-  }
-  string reverseWords(string s)
-  {
-
-    int startIndex = 0;
-    int endIndex = 0;
-    // 首先将字符串中多余的空格去掉
-    replaceSpace(s);
-    // 获取最新的字符串长度
-    int size = s.size();
-    // 然后先反转整个字符串，the sky => yks eht
-    reverse(s, 0, size - 1);
-
-    while (endIndex < size)
-    {
-      while (s[endIndex] != ' ' && endIndex < size)
-      {
-        endIndex++;
-      }
-
-      // 反转单个单词
-      reverse(s, startIndex, endIndex - 1);
-      // 记录下一个单词的首部位置
-      endIndex++;
-      startIndex = endIndex;
     }
 
     return s;
@@ -96,6 +63,6 @@ int main()
   result.push_back(4);
   result.push_back(3);
   Solution so;
-  so.reverseWords("  hello world  ");
+  so.replaceSpace("he wo d");
   return 0;
 }
