@@ -2,49 +2,57 @@
 #include <string>
 
 using namespace std;
+struct ListNode
+{
+  int val;
+  ListNode *next;
+  ListNode() : val(0), next(nullptr) {}
+  ListNode(int x) : val(x), next(nullptr) {}
+  ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
 class Solution
 {
 public:
-  // 反转字符串函数
-  void reverseStr(string &s, int start, int end)
+  ListNode *removeElements(ListNode *head, int val)
   {
-
-    while (start < end)
+    if (head == NULL)
     {
-      int temp = s[start];
-      s[start] = s[end];
-      s[end] = temp;
-
-      start++;
-      end--;
+      return NULL;
     }
-  }
-  string reverseLeftWords(string s, int n)
-  {
-    int size = s.size();
-    // 首先将整个字符串反转
-    reverseStr(s, 0, size - 1);
-    // 然后将前面size - k个字符反转回来
-    reverseStr(s, 0, size - n - 1);
-    // 最后将后面k个字符反转回来
-    reverseStr(s, size - n, size - 1);
 
-    return s;
+    while (head != NULL && head->val == val)
+    {
+      head = head->next;
+    }
+
+    ListNode *current = head;
+
+    while (head != NULL && current->next != nullptr)
+    {
+      if (current->next->val == val)
+      {
+        current->next = current->next->next;
+      }
+      else
+      {
+        current = current->next;
+      }
+    }
+
+    return head;
   }
 };
 // @lc code=end
 
 int main()
 {
-  // vector<int> result;
-  // result.push_back(2);
-  // result.push_back(3);
-  // result.push_back(1);
-  // result.push_back(2);
-  // result.push_back(4);
-  // result.push_back(3);
+  // new 对象返回的是地址的引用，就是一个指针
+  // ListNode *head = new ListNode(7, new ListNode(7, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
+  //ListNode *head;
+  ListNode *head = new ListNode(7, new ListNode(7));
   Solution so;
-  string str1 = "abcdefg";
-  so.reverseLeftWords(str1, 2);
+  //string str1 = "abcdefg";
+  ListNode *head1 = so.removeElements(head, 7);
   return 0;
 }
