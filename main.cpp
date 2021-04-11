@@ -15,37 +15,37 @@ struct ListNode
 class Solution
 {
 public:
-  ListNode *removeNthFromEnd(ListNode *head, int n)
+  ListNode *detectCycle(ListNode *head)
   {
-    // 设置一个虚拟头指针
-    ListNode *dummyHead = new ListNode(0);
-    dummyHead->next = head;
+    ListNode *fast = head;
+    ListNode *slow = head;
 
-    ListNode *fast = dummyHead;
-    ListNode *slow = dummyHead;
-
-    // fast指针先走n+1步
-    while (n + 1 > 0 && fast)
+    while (fast && fast->next)
     {
-      fast = fast->next;
-      n--;
-    }
-
-    // 同时向后移动，直到fast到链表尾部
-    while (fast != nullptr)
-    {
-      fast = fast->next;
+      fast = fast->next->next;
       slow = slow->next;
+
+      // 快指针和慢指针相遇，表明有环
+      if (fast == slow)
+      {
+        ListNode *start = head; // 链表头部
+        ListNode *meet = slow;  // 相遇的那个节点
+
+        // 一个从链表头部开始走，一个从相遇节点开始走，每次走一步
+        // 遇到了即为环入口
+        while (start == meet)
+        {
+          start = start->next;
+          meet = meet->next;
+        }
+
+        return meet;
+      }
     }
 
-    // 此时的slow文第倒数n+1个节点
-    // 删除他的下一个节点，也就是倒数第n个节点
-    slow->next = slow->next->next;
-
-    return dummyHead->next;
+    return NULL;
   }
 };
-
 // @lc code=end
 
 int main()
