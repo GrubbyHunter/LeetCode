@@ -11,31 +11,41 @@ struct ListNode
   ListNode(int val, ListNode *nextNode) : val(val), next(nextNode) {}
 };
 
-// @lc code=start
+// @lc code=startclass Solution {
 class Solution
 {
 public:
-  ListNode *reverseList(ListNode *head)
+  ListNode *removeNthFromEnd(ListNode *head, int n)
   {
-    ListNode *pre = nullptr;
-    ListNode *current = head;
+    // 设置一个虚拟头指针
+    ListNode *dummyHead = new ListNode(0);
+    dummyHead->next = head;
 
-    while (current != nullptr)
+    ListNode *fast = dummyHead;
+    ListNode *slow = dummyHead;
+
+    // fast指针先走n+1步
+    while (n + 1 > 0 && fast)
     {
-      // 临时保存下一个元素
-      ListNode *temp = current->next;
-
-      // 当前元素的指针指向上一个元素
-      current->next = pre;
-      // 记录当前元素，下一次遍历时候使用
-      pre = current;
-      // 继续遍历下一个元素
-      current = temp;
+      fast = fast->next;
+      n--;
     }
 
-    return pre;
+    // 同时向后移动，直到fast到链表尾部
+    while (fast != nullptr)
+    {
+      fast = fast->next;
+      slow = slow->next;
+    }
+
+    // 此时的slow文第倒数n+1个节点
+    // 删除他的下一个节点，也就是倒数第n个节点
+    slow->next = slow->next->next;
+
+    return dummyHead->next;
   }
 };
+
 // @lc code=end
 
 int main()
@@ -43,8 +53,9 @@ int main()
   // new 对象返回的是地址的引用，就是一个指针
   // ListNode *head = new ListNode(7, new ListNode(7, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
   //ListNode *head;
-  ListNode *head = new ListNode(1, new ListNode(2, new ListNode(3)));
+  //ListNode *head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
+  ListNode *head = new ListNode(1);
   Solution so;
-  so.reverseList(head);
+  so.removeNthFromEnd(head, 1);
   return 0;
 }
