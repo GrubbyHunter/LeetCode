@@ -34,7 +34,7 @@ public:
       }
     }
 
-    for (auto iter = ransomMap.begin(); iter != ransomMap.end(); ++iter)
+    for (auto iter = ransomMap.begin(); iter != map.end(); ++iter)
     {
       if (iter->second > 0)
       {
