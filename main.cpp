@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <unordered_set>
+#include <unordered_map>
 
 using namespace std;
 
@@ -17,38 +18,28 @@ struct ListNode
 class Solution
 {
 public:
-  // 求和
-  int getSum(int n)
+  bool canConstruct(string ransomNote, string magazine)
   {
-    int sum = 0;
-
-    while (n > 0)
+    unordered_map<char, int> ransomMap;
+    for (char w : ransomNote)
     {
-      int singleNum = n % 10;
-      n = n / 10;
-      sum += singleNum * singleNum;
+      ransomMap[w]++;
     }
 
-    return sum;
-  }
-
-  bool isHappy(int n)
-  {
-    unordered_set<int> result;
-
-    int sum = getSum(n);
-    // 和 != 1，表示需要继续往下计算
-    while (sum != 1)
+    for (char w : magazine)
     {
-      // 和已经存在，说明之前已经生成过
-      // 一段循环之后继续生成这个结果，永远不可能是快乐数
-      if (result.find(sum) != result.end())
+      if (ransomMap.find(w) != ransomMap.end())
+      {
+        ransomMap[w]--;
+      }
+    }
+
+    for (auto iter = ransomMap.begin(); iter != ransomMap.end(); ++iter)
+    {
+      if (iter->second > 0)
       {
         return false;
       }
-      // 求和结果追加到set
-      result.insert(sum);
-      sum = getSum(sum);
     }
 
     return true;
@@ -64,6 +55,11 @@ int main()
   //ListNode *head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
   ListNode *head = new ListNode(1);
   Solution so;
-  so.isHappy(19);
+  vector<int> nums;
+  nums.push_back(2);
+  nums.push_back(3);
+  nums.push_back(4);
+  nums.push_back(7);
+  so.twoSum(nums, 9);
   return 0;
 }
