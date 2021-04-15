@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <stack>
 #include <unordered_set>
 #include <unordered_map>
 
@@ -15,80 +16,68 @@ struct ListNode
 };
 
 // @lc code=startclass Solution {
-class Solution
+class MyQueue
 {
 public:
-  vector<vector<int>> threeSum(vector<int> &nums)
+  stack<int> stIn;
+  stack<int> stOut;
+  /** Initialize your data structure here. */
+  MyQueue()
   {
-    vector<vector<int>> result;
-    // 先对数组进行快速排序
-    for (int i = 0; i < nums.size(); i++)
+  }
+
+  /** Push element x to the back of queue. */
+  void push(int x)
+  {
+    // 输入保存元素
+    stIn.push(x);
+    stack<int> temp = stIn;
+    // 生成新的stackOut栈
+    stack<int> newOut;
+
+    while (!temp.empty())
     {
-      for (int j = i; j < nums.size(); j++)
-      {
-        if (nums[i] > nums[j])
-        {
-          int temp = nums[i];
-          nums[i] = nums[j];
-          nums[j] = temp;
-        }
-      }
+      // out中反向保存元素
+      newOut.push(temp.top());
+      temp.pop();
     }
 
-    // nums[i] + nums[left] + nums[right] = 0
-    for (int i = 0; i < nums.size(); i++)
+    stOut = newOut;
+  }
+
+  /** Removes the element from in front of queue and returns that element. */
+  int pop()
+  {
+    // 记录需要返回的头部元素
+    int result = stOut.top();
+    // 移除头部元素
+    stOut.pop();
+
+    stack<int> temp = stOut;
+    // 生成新的stackIn栈
+    stack<int> newIn;
+
+    while (!temp.empty())
     {
-      // 第一个数大于0，则后面的数加起来更不可能 == 0，直接返回结果
-      if (nums[i] > 0)
-      {
-        return result;
-      }
-
-      // 正确去重方法
-      if (i > 0 && nums[i] == nums[i - 1])
-      {
-        continue;
-      }
-
-      int left = i + 1;
-      int right = nums.size() - 1;
-
-      while (left < right)
-      {
-        // 首先对指针的两边进行去重，比如0022，实际上找到的是中间的02作为左右指针的起始位置
-        while (right > left && nums[right] == nums[right - 1])
-          right--;
-        while (right > left && nums[left] == nums[left + 1])
-          left++;
-
-        if (nums[i] + nums[left] + nums[right] == 0)
-        {
-          // 符合条件
-          result.push_back({nums[i], nums[left], nums[right]});
-
-          // 找到之后继续对双指针去重
-          while (right > left && nums[right] == nums[right - 1])
-            right--;
-          while (right > left && nums[left] == nums[left + 1])
-            left++;
-          // 左右各自往中间走一步
-          left++;
-          right--;
-        }
-        else if (nums[i] + nums[left] + nums[right] < 0)
-        {
-          // sum<0，移动左边
-          left++;
-        }
-        else
-        {
-          // sum>0，移动右边
-          right--;
-        }
-      }
+      newIn.push(temp.top());
+      temp.pop();
     }
+
+    stIn = newIn;
 
     return result;
+  }
+
+  /** Get the front element. */
+  int peek()
+  {
+    return stOut.top();
+  }
+
+  /** Returns whether the queue is empty. */
+  bool empty()
+  {
+    return stOut.empty();
   }
 };
 // @lc code=end
@@ -100,9 +89,20 @@ int main()
   //ListNode *head;
   //ListNode *head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
   ListNode *head = new ListNode(1);
-  Solution so;
+  // Solution so;
+  MyQueue nq;
   vector<int> nums = {-2, 0, 0, 2, 2};
 
-  so.threeSum(nums);
+  nq.push(1);
+  nq.push(2);
+  nq.push(3);
+  nq.push(4);
+  nq.pop();
+  nq.push(5);
+  nq.pop();
+  nq.pop();
+  nq.pop();
+  nq.pop();
+
   return 0;
 }
