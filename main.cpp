@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <stack>
+#include <queue>
 #include <unordered_set>
 #include <unordered_map>
 
@@ -16,68 +17,56 @@ struct ListNode
 };
 
 // @lc code=startclass Solution {
-class MyQueue
+class MyStack
 {
 public:
-  stack<int> stIn;
-  stack<int> stOut;
+  queue<int> qStart;
+  queue<int> qEnd;
   /** Initialize your data structure here. */
-  MyQueue()
+  MyStack()
   {
   }
 
-  /** Push element x to the back of queue. */
+  /** Push element x onto stack. */
   void push(int x)
   {
-    // 输入保存元素
-    stIn.push(x);
-    stack<int> temp = stIn;
-    // 生成新的stackOut栈
-    stack<int> newOut;
-
-    while (!temp.empty())
-    {
-      // out中反向保存元素
-      newOut.push(temp.top());
-      temp.pop();
-    }
-
-    stOut = newOut;
+    qStart.push(x);
   }
 
-  /** Removes the element from in front of queue and returns that element. */
+  /** Removes the element on top of the stack and returns that element. */
   int pop()
   {
-    // 记录需要返回的头部元素
-    int result = stOut.top();
-    // 移除头部元素
-    stOut.pop();
+    int size = qStart.size();
 
-    stack<int> temp = stOut;
-    // 生成新的stackIn栈
-    stack<int> newIn;
-
-    while (!temp.empty())
+    // 遍历qStart，直到找到他的最后一个，最后一个不进行pop去除，直接返回
+    while (size > 1)
     {
-      newIn.push(temp.top());
-      temp.pop();
+      qEnd.push(qStart.front());
+      qStart.pop();
+      size--;
     }
 
-    stIn = newIn;
+    int result = qStart.front();
+    qStart = qEnd; // 重新将新队列赋值给qStart
 
+    // 清空que2
+    while (!qEnd.empty())
+    {
+      qEnd.pop();
+    }
     return result;
   }
 
-  /** Get the front element. */
-  int peek()
+  /** Get the top element. */
+  int top()
   {
-    return stOut.top();
+    return qStart.back();
   }
 
-  /** Returns whether the queue is empty. */
+  /** Returns whether the stack is empty. */
   bool empty()
   {
-    return stOut.empty();
+    return qStart.empty();
   }
 };
 // @lc code=end
@@ -90,19 +79,10 @@ int main()
   //ListNode *head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
   ListNode *head = new ListNode(1);
   // Solution so;
-  MyQueue nq;
+  MyStack st;
+  st.push(1);
+  st.push(2);
+  st.top();
   vector<int> nums = {-2, 0, 0, 2, 2};
-
-  nq.push(1);
-  nq.push(2);
-  nq.push(3);
-  nq.push(4);
-  nq.pop();
-  nq.push(5);
-  nq.pop();
-  nq.pop();
-  nq.pop();
-  nq.pop();
-
   return 0;
 }
