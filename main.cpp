@@ -17,56 +17,45 @@ struct ListNode
 };
 
 // @lc code=startclass Solution {
-class MyStack
+class Solution
 {
 public:
-  queue<int> qStart;
-  queue<int> qEnd;
-  /** Initialize your data structure here. */
-  MyStack()
+  string removeDuplicates(string S)
   {
-  }
+    stack<char> result;
 
-  /** Push element x onto stack. */
-  void push(int x)
-  {
-    qStart.push(x);
-  }
-
-  /** Removes the element on top of the stack and returns that element. */
-  int pop()
-  {
-    int size = qStart.size();
-
-    // 遍历qStart，直到找到他的最后一个，最后一个不进行pop去除，直接返回
-    while (size > 1)
+    for (char w : S)
     {
-      qEnd.push(qStart.front());
-      qStart.pop();
-      size--;
+      if (result.empty())
+      {
+        result.push(w);
+        continue;
+      }
+
+      if (result.top() == w)
+      {
+        result.pop();
+        continue;
+      }
+
+      result.push(w);
     }
 
-    int result = qStart.front();
-    qStart = qEnd; // 重新将新队列赋值给qStart
+    string S1 = "";
+    vector<char> cArr;
 
-    // 清空que2
-    while (!qEnd.empty())
+    while (!result.empty())
     {
-      qEnd.pop();
+      cArr.push_back(result.top());
+      result.pop();
     }
-    return result;
-  }
 
-  /** Get the top element. */
-  int top()
-  {
-    return qStart.back();
-  }
+    for (int i = cArr.size() - 1; i >= 0; i--)
+    {
+      S1 += cArr[i];
+    }
 
-  /** Returns whether the stack is empty. */
-  bool empty()
-  {
-    return qStart.empty();
+    return S1;
   }
 };
 // @lc code=end
@@ -78,11 +67,11 @@ int main()
   //ListNode *head;
   //ListNode *head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
   ListNode *head = new ListNode(1);
-  // Solution so;
-  MyStack st;
-  st.push(1);
-  st.push(2);
-  st.top();
-  vector<int> nums = {-2, 0, 0, 2, 2};
+  Solution so;
+  //MyStack st;
+  //st.push(1);
+  //st.push(2);
+  //st.top();
+  so.removeDuplicates("abbaca");
   return 0;
 }
