@@ -20,42 +20,49 @@ struct ListNode
 class Solution
 {
 public:
-  string removeDuplicates(string S)
+  int evalRPN(vector<string> &tokens)
   {
-    stack<char> result;
+    stack<int> st;
 
-    for (char w : S)
+    // 将第一个和第二个元素放入栈
+    st.push(atoi(tokens[0].c_str()));
+    st.push(atoi(tokens[1].c_str()));
+
+    for (int i = 2; i < tokens.size(); i++)
     {
-      if (result.empty())
+
+      if (tokens[i] != "+" && tokens[i] != "-" && tokens[i] != "*" && tokens[i] != "/")
       {
-        result.push(w);
+        st.push(atoi(tokens[i].c_str()));
         continue;
       }
 
-      if (result.top() == w)
+      int num2 = st.top();
+      st.pop();
+      int num1 = st.top();
+      st.pop();
+
+      int result;
+      if (tokens[i] == "+")
       {
-        result.pop();
-        continue;
+        result = num1 + num2;
       }
-
-      result.push(w);
+      else if (tokens[i] == "-")
+      {
+        result = num1 - num2;
+      }
+      else if (tokens[i] == "*")
+      {
+        result = num1 * num2;
+      }
+      else
+      {
+        result = num1 / num2;
+      }
+      st.push(result);
     }
 
-    string S1 = "";
-    vector<char> cArr;
-
-    while (!result.empty())
-    {
-      cArr.push_back(result.top());
-      result.pop();
-    }
-
-    for (int i = cArr.size() - 1; i >= 0; i--)
-    {
-      S1 += cArr[i];
-    }
-
-    return S1;
+    return st.top();
   }
 };
 // @lc code=end
