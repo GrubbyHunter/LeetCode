@@ -20,49 +20,58 @@ struct ListNode
 class Solution
 {
 public:
-  int evalRPN(vector<string> &tokens)
+  // 快排数组
+  void quickSort(vector<int> &result, unordered_map<int, int> map)
   {
-    stack<int> st;
-
-    // 将第一个和第二个元素放入栈
-    st.push(atoi(tokens[0].c_str()));
-    st.push(atoi(tokens[1].c_str()));
-
-    for (int i = 2; i < tokens.size(); i++)
+    for (int i = 0; i < result.size(); i++)
     {
+      for (int j = i; j < result.size(); j++)
+      {
 
-      if (tokens[i] != "+" && tokens[i] != "-" && tokens[i] != "*" && tokens[i] != "/")
-      {
-        st.push(atoi(tokens[i].c_str()));
-        continue;
+        if (map[result[i]] < map[result[j]])
+        {
+          int temp = result[i];
+          result[i] = result[j];
+          result[j] = temp;
+        }
       }
+    }
+  }
+  vector<int> topKFrequent(vector<int> &nums, int k)
+  {
+    // map统计元素和她出现的次数
+    unordered_map<int, int> map;
 
-      int num2 = st.top();
-      st.pop();
-      int num1 = st.top();
-      st.pop();
-
-      int result;
-      if (tokens[i] == "+")
+    for (int num : nums)
+    {
+      auto it = map.find(num);
+      if (it != map.end())
       {
-        result = num1 + num2;
-      }
-      else if (tokens[i] == "-")
-      {
-        result = num1 - num2;
-      }
-      else if (tokens[i] == "*")
-      {
-        result = num1 * num2;
+        map[num] = it->second + 1;
       }
       else
       {
-        result = num1 / num2;
+        map[num] = 1;
       }
-      st.push(result);
     }
 
-    return st.top();
+    // 记录结果的数组
+    vector<int> result;
+    // 遍历map
+    for (auto iter = map.begin(); iter != map.end(); ++iter)
+    {
+      result.push_back(iter->first);
+      // 快排数组
+      quickSort(result, map);
+
+      // 数组保持始终是k的长度
+      if (result.size() > k)
+      {
+        result.pop_back();
+      }
+    }
+
+    return result;
   }
 };
 // @lc code=end
