@@ -38,33 +38,26 @@ struct TreeNode
 class Solution
 {
 public:
-  // 前序遍历
-  vector<int> preorderTraversal(TreeNode *root)
+  // 中序遍历遍历
+  vector<int> result;
+  void perTraver(TreeNode *root, vector<int> &result)
   {
-    vector<int> result;
     if (root == nullptr)
     {
-      return result;
+      return;
     }
-
-    // 先遍历中间节点
-    result = {root->val};
-    vector<int> temp;
 
     // 遍历左子树
-    if (root->left != nullptr)
-    {
-      temp = preorderTraversal(root->left);
-      result.insert(result.end(), temp.begin(), temp.end());
-    }
-
+    perTraver(root->left, result);
+    // 遍历中间节点
+    result.push_back(root->val);
     // 遍历右子树
-    if (root->right != nullptr)
-    {
-      temp = preorderTraversal(root->right);
-      result.insert(result.end(), temp.begin(), temp.end());
-    }
-
+    perTraver(root->right, result);
+  }
+  // 前序遍历
+  vector<int> postorderTraversal(TreeNode *root)
+  {
+    perTraver(root, result);
     return result;
   }
 };
@@ -82,6 +75,6 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  so.preorderTraversal(head);
+  so.postorderTraversal(head);
   return 0;
 }
