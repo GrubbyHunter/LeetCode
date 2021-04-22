@@ -38,27 +38,25 @@ struct TreeNode
 class Solution
 {
 public:
-  // 中序遍历遍历
-  vector<int> result;
-  void perTraver(TreeNode *root, vector<int> &result)
+  vector<int> preorderTraversal(TreeNode *root)
   {
-    if (root == nullptr)
-    {
-      return;
-    }
+    stack<TreeNode *> st;
+    vector<int> result;
+    st.push(root);
 
-    // 遍历左子树
-    perTraver(root->left, result);
-    // 遍历中间节点
-    result.push_back(root->val);
-    // 遍历右子树
-    perTraver(root->right, result);
-  }
-  // 前序遍历
-  vector<int> postorderTraversal(TreeNode *root)
-  {
-    perTraver(root, result);
-    return result;
+    while (!st.empty())
+    {
+      TreeNode *temp = st.top();
+      st.pop();
+
+      if (temp != nullptr)
+      {
+        result.push_back(temp->val);
+      }
+      // 栈是先进后出，这里是要先遍历左节点，所以先push右节点
+      st.push(temp->right);
+      st.push(temp->left);
+    }
   }
 };
 // @lc code=end
@@ -75,6 +73,6 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  so.postorderTraversal(head);
+  so.preorderTraversal(head);
   return 0;
 }
