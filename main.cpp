@@ -38,34 +38,25 @@ struct TreeNode
 class Solution
 {
 public:
-  // 前序遍历
   vector<int> preorderTraversal(TreeNode *root)
   {
+    stack<TreeNode *> st;
     vector<int> result;
-    if (root == nullptr)
+    st.push(root);
+
+    while (!st.empty())
     {
-      return result;
+      TreeNode *temp = st.top();
+      st.pop();
+
+      if (temp != nullptr)
+      {
+        result.push_back(temp->val);
+      }
+      // 栈是先进后出，这里是要先遍历左节点，所以先push右节点
+      st.push(temp->right);
+      st.push(temp->left);
     }
-
-    // 先遍历中间节点
-    result = {root->val};
-    vector<int> temp;
-
-    // 遍历左子树
-    if (root->left != nullptr)
-    {
-      temp = preorderTraversal(root->left);
-      result.insert(result.end(), temp.begin(), temp.end());
-    }
-
-    // 遍历右子树
-    if (root->right != nullptr)
-    {
-      temp = preorderTraversal(root->right);
-      result.insert(result.end(), temp.begin(), temp.end());
-    }
-
-    return result;
   }
 };
 // @lc code=end
