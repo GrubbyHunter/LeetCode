@@ -38,33 +38,40 @@ struct TreeNode
 class Solution
 {
 public:
-  vector<int> postorderTraversal(TreeNode *root)
+  vector<vector<int>> levelOrder(TreeNode *root)
   {
-    stack<TreeNode *> st;
-    vector<int> result;
-    st.push(root);
+    vector<vector<int>> result;
+    queue<TreeNode *> que;
 
-    while (!st.empty())
+    if (root != nullptr)
     {
-      TreeNode *temp = st.top();
-      st.pop();
-
-      if (temp == nullptr)
-      {
-        continue;
-      }
-      result.push_back(temp->val);
-      st.push(temp->left);
-      st.push(temp->right);
+      que.push(root);
     }
 
-    int size = result.size();
-
-    for (int i = 0; i <= size / 2; i++)
+    while (!que.empty())
     {
-      int temp = result[i];
-      result[i] = result[size - 1 - i];
-      result[size - 1 - i] = temp;
+
+      vector<int> cur;
+      int size = que.size();
+
+      // 使用size，不用que.size，因为que被遍历pop之后，size会不断变化
+      for (int i = 0; i < size; i++)
+      {
+        TreeNode *node = que.front();
+        que.pop();
+        cur.push_back(node->val);
+
+        if (node->left)
+        {
+          que.push(node->left);
+        }
+
+        if (node->right)
+        {
+          que.push(node->right);
+        }
+      }
+      result.push_back(cur);
     }
 
     return result;
@@ -84,6 +91,6 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  so.postorderTraversal(head);
+  so.levelOrder(head);
   return 0;
 }
