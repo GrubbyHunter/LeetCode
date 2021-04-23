@@ -38,46 +38,42 @@ struct TreeNode
 class Solution
 {
 public:
-  vector<int> inorderTraversal(TreeNode *root)
+  vector<vector<int>> levelOrder(TreeNode *root)
   {
-    stack<TreeNode *> st;
-    TreeNode *temp; // 当前遍历的节点
-    vector<int> result;
+    vector<vector<int>> result;
+    queue<TreeNode *> que;
 
     if (root != nullptr)
     {
-      st.push(root);
+      que.push(root);
     }
 
-    while (!st.empty())
+    while (!que.empty())
     {
-      temp = st.top();
 
-      if (temp != nullptr)
+      vector<int> cur;
+      int size = que.size();
+
+      // 使用size，不用que.size，因为que被遍历pop之后，size会不断变化
+      for (int i = 0; i < size; i++)
       {
-        // 中序遍历，最后遍历右节点，所以右节点最先放入栈
-        if (temp->right)
+        TreeNode *node = que.front();
+        que.pop();
+        cur.push_back(node->val);
+
+        if (node->left)
         {
-          st.push(temp->right);
+          que.push(node->left);
         }
 
-        st.push(temp); // 放入中间节点吧
-        // 这里由于中间节点的判断条件是null，这里插入一个null表明获取到中间节点
-        st.push(nullptr);
-        // 放入左节点
-        if (temp->left)
+        if (node->right)
         {
-          st.push(temp->left);
+          que.push(node->right);
         }
       }
-      else
-      {
-        st.pop();        // 移除空节点
-        temp = st.top(); // 获取当前节点
-        result.push_back(temp->val);
-        st.pop(); // 遍历完节点后进行删除
-      }
+      result.push_back(cur);
     }
+
     return result;
   }
 };
@@ -95,6 +91,6 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  so.postorderTraversal(head);
+  so.levelOrder(head);
   return 0;
 }
