@@ -38,43 +38,28 @@ struct TreeNode
 class Solution
 {
 public:
-  vector<vector<int>> levelOrder(TreeNode *root)
+  TreeNode *invertTree(TreeNode *root)
   {
-    vector<vector<int>> result;
-    queue<TreeNode *> que;
-
+    queue<TreeNode *> qu;
     if (root != nullptr)
     {
-      que.push(root);
+      qu.push(root);
     }
 
-    while (!que.empty())
+    while (!qu.empty())
     {
+      TreeNode *cur = qu.front();
+      qu.pop();
 
-      vector<int> cur;
-      int size = que.size();
+      TreeNode *temp = cur->left;
+      cur->left = cur->right;
+      cur->right = temp;
 
-      // 使用size，不用que.size，因为que被遍历pop之后，size会不断变化
-      for (int i = 0; i < size; i++)
-      {
-        TreeNode *node = que.front();
-        que.pop();
-        cur.push_back(node->val);
-
-        if (node->left)
-        {
-          que.push(node->left);
-        }
-
-        if (node->right)
-        {
-          que.push(node->right);
-        }
-      }
-      result.push_back(cur);
+      qu.push(cur->left);
+      qu.push(cur->right);
     }
 
-    return result;
+    return root;
   }
 };
 // @lc code=end
