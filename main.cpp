@@ -40,17 +40,29 @@ class Solution
 public:
   int getLevel(TreeNode *root)
   {
-    if (root)
+    if (root == nullptr)
     {
       return 0;
     }
+    int leftDepth = getLevel(root->left);   // 左
+    int rightDepth = getLevel(root->right); // 右
+                                            // 中
+    // 当一个左子树为空，右不为空，这时并不是最低点
+    if (root->left == NULL && root->right != NULL)
+    {
+      return 1 + rightDepth;
+    }
+    // 当一个右子树为空，左不为空，这时并不是最低点
+    if (root->left != NULL && root->right == NULL)
+    {
+      return 1 + leftDepth;
+    }
 
-    int left = getLevel(root->left);
-    int right = getLevel(root->right);
-
-    return 1 + max(left, right);
+    int result = 1 + min(leftDepth, rightDepth);
+    return result;
   }
-  int maxDepth(TreeNode *root)
+
+  int minDepth(TreeNode *root)
   {
     return getLevel(root);
   }
@@ -69,6 +81,6 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  so.levelOrder(head);
+  so.minDepth(head);
   return 0;
 }
