@@ -38,32 +38,21 @@ struct TreeNode
 class Solution
 {
 public:
-  bool compare(TreeNode *left, TreeNode *right)
+  int getLevel(TreeNode *root)
   {
-    if (left == nullptr && right == nullptr)
+    if (root)
     {
-      return true;
+      return 0;
     }
 
-    if (left != nullptr && right != nullptr)
-    {
-      if (left->val != right->val)
-      {
-        return false;
-      }
-      return compare(left->left, right->right) && compare(left->right, right->left);
-    }
+    int left = getLevel(root->left);
+    int right = getLevel(root->right);
 
-    return false;
+    return 1 + max(left, right);
   }
-  bool isSymmetric(TreeNode *root)
+  int maxDepth(TreeNode *root)
   {
-    if (root == nullptr)
-    {
-      return true;
-    }
-
-    return compare(root->left, root->right);
+    return getLevel(root);
   }
 };
 // @lc code=end
