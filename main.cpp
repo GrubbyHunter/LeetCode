@@ -39,43 +39,28 @@ struct TreeNode
 class Solution
 {
 public:
-  vector<string> result;
-  void getPath(TreeNode *root, string rootVal)
+  int getSum(TreeNode *root, bool isLeft, int result)
   {
-    if (rootVal == "")
-    {
-      rootVal = to_string(root->val);
-    }
-    else
-    {
-      rootVal = rootVal + "->" + to_string(root->val);
-    }
 
-    if (root->left != nullptr)
-    {
-      getPath(root->left, rootVal);
-    }
-
-    if (root->right != nullptr)
-    {
-      getPath(root->right, rootVal);
-    }
-
-    if (root->left == nullptr && root->right == nullptr)
-    {
-      result.push_back(rootVal);
-    }
-  }
-  vector<string> binaryTreePaths(TreeNode *root)
-  {
     if (root == nullptr)
     {
       return result;
     }
 
-    getPath(root, "");
+    if (root->left == nullptr && root->right == nullptr && isLeft)
+    {
+      return result + root->val;
+    }
 
-    return result;
+    int left = getSum(root->left, true, result);
+    int right = getSum(root->right, false, result);
+
+    return result + left + right;
+  }
+  int sumOfLeftLeaves(TreeNode *root)
+  {
+    int sum = 0;
+    getSum(root, false, 0);
   }
 };
 // @lc code=end
