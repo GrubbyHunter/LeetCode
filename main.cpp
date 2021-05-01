@@ -39,28 +39,41 @@ struct TreeNode
 class Solution
 {
 public:
-  int getSum(TreeNode *root, bool isLeft, int result)
+  int findBottomLeftValue(TreeNode *root)
   {
+    int result;
+    queue<TreeNode *> qu;
 
-    if (root == nullptr)
+    if (root != nullptr)
     {
-      return result;
+      qu.push(root);
     }
 
-    if (root->left == nullptr && root->right == nullptr && isLeft)
+    while (!qu.empty())
     {
-      return result + root->val;
+      int size = qu.size();
+      bool notFind = true;
+
+      for (int i = 0; i < size; i++)
+      {
+        TreeNode *temp = qu.front();
+        qu.pop();
+
+        // 找到当前层级的最左边子节点
+        if (notFind && temp != nullptr)
+        {
+          result = temp->val;
+          notFind = false;
+        }
+        if (temp != nullptr)
+        {
+          qu.push(temp->left);
+          qu.push(temp->right);
+        }
+      }
     }
 
-    int left = getSum(root->left, true, result);
-    int right = getSum(root->right, false, result);
-
-    return result + left + right;
-  }
-  int sumOfLeftLeaves(TreeNode *root)
-  {
-    int sum = 0;
-    getSum(root, false, 0);
+    return result;
   }
 };
 // @lc code=end
@@ -68,7 +81,7 @@ public:
 int main()
 {
   // new 对象返回的是地址的引用，就是一个指针
-  TreeNode *head = new TreeNode(1, new TreeNode(2, nullptr, new TreeNode(5)), new TreeNode(3));
+  TreeNode *head = new TreeNode(2, new TreeNode(1), new TreeNode(3));
   //ListNode *head;
   //ListNode *head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
   Solution so;
@@ -77,6 +90,6 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  so.binaryTreePaths(head);
+  so.findBottomLeftValue(head);
   return 0;
 }
