@@ -39,38 +39,57 @@ struct TreeNode
 class Solution
 {
 public:
-  bool getSum(TreeNode *root, int result)
+  vector<vector<int>> allResult;
+  bool getSum(TreeNode *root, int sum, vector<int> result)
   {
-    bool left = false;
-    bool right = false;
-
-    // 叶子结点，同时和相等，满足条件
-    if (root->val == result && root->left == nullptr && root->right == nullptr)
+    // 当前节点已经能是叶子节点，而且和已经满足条件
+    if (sum == 0 && root->left == nullptr & root->right == nullptr)
     {
+      allResult.push_back(result);
       return true;
     }
 
-    // 减去当前节点的值，剩下的和
-    result = result - root->val;
     if (root->left != nullptr)
     {
-      left = getSum(root->left, result);
+      sum = sum - root->left->val;
+      result.push_back(root->left->val);
+      if (getSum(root->left, sum, result))
+      {
+        return true;
+      }
+
+      // 不满足条件，进行回溯
+      result.pop_back();
+      sum = sum + root->left->val;
     }
+
     if (root->right != nullptr)
     {
-      right = getSum(root->right, result);
+      sum = sum - root->right->val;
+      if (getSum(root->right, sum, result))
+      {
+        return true;
+      }
+      // 不满足条件，进行回溯
+      result.pop_back();
+      sum = sum + root->right->val;
     }
 
-    return left || right;
+    // 都不满足
+    return false;
   }
-  bool hasPathSum(TreeNode *root, int targetSum)
+  vector<vector<int>> pathSum(TreeNode *root, int targetSum)
   {
+    vector<int> result;
+
     if (root == nullptr)
     {
-      return false;
+      return allResult;
     }
+    result.push_back(root->val);
+    getSum(root, targetSum - root->val, result);
 
-    return getSum(root, targetSum);
+    return allResult;
   }
 };
 // @lc code=end
@@ -87,6 +106,6 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  so.hasPathSum(head, -5);
+  so.pathSum(head, -5);
   return 0;
 }
