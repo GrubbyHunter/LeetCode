@@ -41,27 +41,36 @@ class Solution
 public:
   bool getSum(TreeNode *root, int result)
   {
-    bool left = false;
-    bool right = false;
-
-    // 叶子结点，同时和相等，满足条件
-    if (root->val == result && root->left == nullptr && root->right == nullptr)
+    // 当前节点已经能是叶子节点，而且和已经满足条件
+    if (result == 0 && root->left == nullptr & root->right == nullptr)
     {
       return true;
     }
 
-    // 减去当前节点的值，剩下的和
-    result = result - root->val;
     if (root->left != nullptr)
     {
-      left = getSum(root->left, result);
-    }
-    if (root->right != nullptr)
-    {
-      right = getSum(root->right, result);
+      result = result - root->left->val;
+      if (getSum(root->left, result))
+      {
+        return true;
+      }
+      // 不满足条件，进行回溯
+      result = result + root->left->val;
     }
 
-    return left || right;
+    if (root->right != nullptr)
+    {
+      result = result - root->right->val;
+      if (getSum(root->right, result))
+      {
+        return true;
+      }
+      // 不满足条件，进行回溯
+      result = result + root->right->val;
+    }
+
+    // 都不满足
+    return false;
   }
   bool hasPathSum(TreeNode *root, int targetSum)
   {
@@ -70,7 +79,7 @@ public:
       return false;
     }
 
-    return getSum(root, targetSum);
+    return getSum(root, root->val - targetSum);
   }
 };
 // @lc code=end
