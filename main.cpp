@@ -39,41 +39,38 @@ struct TreeNode
 class Solution
 {
 public:
-  int findBottomLeftValue(TreeNode *root)
+  bool getSum(TreeNode *root, int result)
   {
-    int result;
-    queue<TreeNode *> qu;
+    bool left = false;
+    bool right = false;
 
-    if (root != nullptr)
+    // 叶子结点，同时和相等，满足条件
+    if (root->val == result && root->left == nullptr && root->right == nullptr)
     {
-      qu.push(root);
+      return true;
     }
 
-    while (!qu.empty())
+    // 减去当前节点的值，剩下的和
+    result = result - root->val;
+    if (root->left != nullptr)
     {
-      int size = qu.size();
-      bool notFind = true;
-
-      for (int i = 0; i < size; i++)
-      {
-        TreeNode *temp = qu.front();
-        qu.pop();
-
-        // 找到当前层级的最左边子节点
-        if (notFind && temp != nullptr)
-        {
-          result = temp->val;
-          notFind = false;
-        }
-        if (temp != nullptr)
-        {
-          qu.push(temp->left);
-          qu.push(temp->right);
-        }
-      }
+      left = getSum(root->left, result);
+    }
+    if (root->right != nullptr)
+    {
+      right = getSum(root->right, result);
     }
 
-    return result;
+    return left || right;
+  }
+  bool hasPathSum(TreeNode *root, int targetSum)
+  {
+    if (root == nullptr)
+    {
+      return false;
+    }
+
+    return getSum(root, targetSum);
   }
 };
 // @lc code=end
@@ -81,7 +78,7 @@ public:
 int main()
 {
   // new 对象返回的是地址的引用，就是一个指针
-  TreeNode *head = new TreeNode(2, new TreeNode(1), new TreeNode(3));
+  TreeNode *head = new TreeNode(-2, nullptr, new TreeNode(-3));
   //ListNode *head;
   //ListNode *head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
   Solution so;
@@ -90,6 +87,6 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  so.findBottomLeftValue(head);
+  so.hasPathSum(head, -5);
   return 0;
 }
