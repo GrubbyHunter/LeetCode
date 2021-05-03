@@ -39,57 +39,64 @@ struct TreeNode
 class Solution
 {
 public:
-  vector<vector<int>> allResult;
-  bool getSum(TreeNode *root, int sum, vector<int> result)
+  // 切割数组
+  TreeNode *traversal(vector<int> &inorder, vector<int> &postorder)
   {
-    // 当前节点已经能是叶子节点，而且和已经满足条件
-    if (sum == 0 && root->left == nullptr & root->right == nullptr)
+    if (postorder.size() == 0)
     {
-      allResult.push_back(result);
-      return true;
+      return nullptr;
     }
 
-    if (root->left != nullptr)
+    // 后续的最后一个节点为根节点
+    int middle = postorder.back();
+    TreeNode *root = new TreeNode(middle);
+
+    if (postorder.size() == 1)
     {
-      sum = sum - root->left->val;
-      result.push_back(root->left->val);
-      if (getSum(root->left, sum, result))
+      return root;
+    }
+    // 后序遍历舍弃掉中间的节点
+    postorder.pop_back();
+    int index;
+    int isLeft = true;
+    vector<int> inOrderLeft;
+    vector<int> inOrderRight;
+
+    // 分割中序遍历数组
+    for (index = 0; index < inorder.size(); index++)
+    {
+      if (inorder[index] == middle)
       {
-        return true;
+        isLeft = false;
+        continue;
       }
 
-      // 不满足条件，进行回溯
-      result.pop_back();
-      sum = sum + root->left->val;
-    }
-
-    if (root->right != nullptr)
-    {
-      sum = sum - root->right->val;
-      if (getSum(root->right, sum, result))
+      if (isLeft)
       {
-        return true;
+        inOrderLeft.push_back(inorder[index]);
       }
-      // 不满足条件，进行回溯
-      result.pop_back();
-      sum = sum + root->right->val;
+      else
+      {
+        inOrderRight.push_back(inorder[index]);
+      }
     }
+    vector<int> postOrderLeft(postorder.begin(), postorder.begin() + inOrderLeft.size());
+    vector<int> postOrderRight(postorder.begin() + inOrderLeft.size(), postorder.end());
 
-    // 都不满足
-    return false;
+    root->left = traversal(inOrderLeft, postOrderLeft);
+    root->right = traversal(inOrderRight, postOrderRight);
+
+    return root;
   }
-  vector<vector<int>> pathSum(TreeNode *root, int targetSum)
+
+  TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder)
   {
-    vector<int> result;
-
-    if (root == nullptr)
+    if (inorder.size() == 0 || postorder.size() == 0)
     {
-      return allResult;
+      return nullptr;
     }
-    result.push_back(root->val);
-    getSum(root, targetSum - root->val, result);
 
-    return allResult;
+    return traversal(inorder, postorder);
   }
 };
 // @lc code=end
@@ -106,6 +113,7 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  so.pathSum(head, -5);
+  vector<int> s1 = {1, 2, 3, 4}, s2 = {4, 3, 2, 1};
+  so.buildTree(s1, s2);
   return 0;
 }
