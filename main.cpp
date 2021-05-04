@@ -40,23 +40,23 @@ class Solution
 {
 public:
   // 切割数组
-  TreeNode *traversal(vector<int> &inorder, vector<int> &postorder)
+  TreeNode *traversal(vector<int> &preorder, vector<int> &inorder)
   {
-    if (postorder.size() == 0)
+    if (preorder.size() == 0)
     {
       return nullptr;
     }
 
-    // 后续的最后一个节点为根节点
-    int middle = postorder.back();
+    // 前序的第一个节点为根节点
+    int middle = preorder.front();
     TreeNode *root = new TreeNode(middle);
 
-    if (postorder.size() == 1)
+    if (preorder.size() == 1)
     {
       return root;
     }
-    // 后序遍历舍弃掉中间的节点
-    postorder.pop_back();
+    // 前序遍历舍弃掉中间的节点，也就是第一个节点
+
     int index;
     int isLeft = true;
     vector<int> inOrderLeft;
@@ -80,23 +80,39 @@ public:
         inOrderRight.push_back(inorder[index]);
       }
     }
-    vector<int> postOrderLeft(postorder.begin(), postorder.begin() + inOrderLeft.size());
-    vector<int> postOrderRight(postorder.begin() + inOrderLeft.size(), postorder.end());
+    // 使用中序遍历的左子树的节点数来切割前序遍历
+    int leftSize = inOrderLeft.size();
+    vector<int> preOrderLeft;
+    vector<int> preOrderRight;
 
-    root->left = traversal(inOrderLeft, postOrderLeft);
-    root->right = traversal(inOrderRight, postOrderRight);
+    // 分割前序遍历数组，前序的第一个位数为中间节点，所以要去掉
+    // index = 1，从第2个元素开始遍历
+    for (int i = 1; i < preorder.size(); i++)
+    {
+      if (i - 1 < leftSize)
+      {
+        preOrderLeft.push_back(preorder[i]);
+      }
+      else
+      {
+        preOrderRight.push_back(preorder[i]);
+      }
+    }
+
+    root->left = traversal(preOrderLeft, inOrderLeft);
+    root->right = traversal(preOrderRight, inOrderRight);
 
     return root;
   }
 
-  TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder)
+  TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder)
   {
-    if (inorder.size() == 0 || postorder.size() == 0)
+    if (preorder.size() == 0 || inorder.size() == 0)
     {
       return nullptr;
     }
 
-    return traversal(inorder, postorder);
+    return traversal(preorder, inorder);
   }
 };
 // @lc code=end
