@@ -39,36 +39,28 @@ struct TreeNode
 class Solution
 {
 public:
-  TreeNode *constructMaximumBinaryTree(vector<int> &nums)
+  TreeNode *mergeTrees(TreeNode *root1, TreeNode *root2)
   {
-    if (nums.size() == 0)
+    if (root1 == nullptr && root2 == nullptr)
     {
       return nullptr;
     }
-    if (nums.size() == 1)
+
+    if (root1 == nullptr)
     {
-      return new TreeNode(nums[0]);
-    }
-    int index = 0;
-    int middle = nums[0];
-    // 找到最大的元素和下标
-    for (int i = 1; i < nums.size(); i++)
-    {
-      if (middle < nums[i])
-      {
-        middle = nums[i];
-        index = i;
-      }
+      return root2;
     }
 
-    vector<int> left(nums.begin(), nums.begin() + index);
-    vector<int> right(nums.begin() + index + 1, nums.end());
-    TreeNode *root = new TreeNode(middle);
+    if (root2 == nullptr)
+    {
+      return root1;
+    }
 
-    root->left = constructMaximumBinaryTree(left);
-    root->right = constructMaximumBinaryTree(right);
+    root1->val += root2->val;
+    root1->left = mergeTrees(root1->left, root2->left);
+    root1->right = mergeTrees(root1->right, root2->right);
 
-    return root;
+    return root1;
   }
 };
 // @lc code=end
@@ -86,6 +78,6 @@ int main()
   //st.push(2);
   //st.top();
   vector<int> s1 = {1, 2, 3, 4}, s2 = {4, 3, 2, 1};
-  so.constructMaximumBinaryTree(s);
+  so.mergeTrees(head, head);
   return 0;
 }
