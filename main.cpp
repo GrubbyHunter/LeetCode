@@ -39,80 +39,36 @@ struct TreeNode
 class Solution
 {
 public:
-  // 切割数组
-  TreeNode *traversal(vector<int> &preorder, vector<int> &inorder)
+  TreeNode *constructMaximumBinaryTree(vector<int> &nums)
   {
-    if (preorder.size() == 0)
+    if (nums.size() == 0)
     {
       return nullptr;
     }
+    if (nums.size() == 1)
+    {
+      return new TreeNode(nums[0]);
+    }
+    int index = 0;
+    int middle = nums[0];
+    // 找到最大的元素和下标
+    for (int i = 1; i < nums.size(); i++)
+    {
+      if (middle < nums[i])
+      {
+        middle = nums[i];
+        index = i;
+      }
+    }
 
-    // 前序的第一个节点为根节点
-    int middle = preorder.front();
+    vector<int> left(nums.begin(), nums.begin() + index);
+    vector<int> right(nums.begin() + index + 1, nums.end());
     TreeNode *root = new TreeNode(middle);
 
-    if (preorder.size() == 1)
-    {
-      return root;
-    }
-    // 前序遍历舍弃掉中间的节点，也就是第一个节点
-
-    int index;
-    int isLeft = true;
-    vector<int> inOrderLeft;
-    vector<int> inOrderRight;
-
-    // 分割中序遍历数组
-    for (index = 0; index < inorder.size(); index++)
-    {
-      if (inorder[index] == middle)
-      {
-        isLeft = false;
-        continue;
-      }
-
-      if (isLeft)
-      {
-        inOrderLeft.push_back(inorder[index]);
-      }
-      else
-      {
-        inOrderRight.push_back(inorder[index]);
-      }
-    }
-    // 使用中序遍历的左子树的节点数来切割前序遍历
-    int leftSize = inOrderLeft.size();
-    vector<int> preOrderLeft;
-    vector<int> preOrderRight;
-
-    // 分割前序遍历数组，前序的第一个位数为中间节点，所以要去掉
-    // index = 1，从第2个元素开始遍历
-    for (int i = 1; i < preorder.size(); i++)
-    {
-      if (i - 1 < leftSize)
-      {
-        preOrderLeft.push_back(preorder[i]);
-      }
-      else
-      {
-        preOrderRight.push_back(preorder[i]);
-      }
-    }
-
-    root->left = traversal(preOrderLeft, inOrderLeft);
-    root->right = traversal(preOrderRight, inOrderRight);
+    root->left = constructMaximumBinaryTree(left);
+    root->right = constructMaximumBinaryTree(right);
 
     return root;
-  }
-
-  TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder)
-  {
-    if (preorder.size() == 0 || inorder.size() == 0)
-    {
-      return nullptr;
-    }
-
-    return traversal(preorder, inorder);
   }
 };
 // @lc code=end
@@ -130,6 +86,6 @@ int main()
   //st.push(2);
   //st.top();
   vector<int> s1 = {1, 2, 3, 4}, s2 = {4, 3, 2, 1};
-  so.buildTree(s1, s2);
+  so.constructMaximumBinaryTree(s);
   return 0;
 }
