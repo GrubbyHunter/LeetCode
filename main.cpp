@@ -39,28 +39,23 @@ struct TreeNode
 class Solution
 {
 public:
-  TreeNode *mergeTrees(TreeNode *root1, TreeNode *root2)
+  TreeNode *searchBST(TreeNode *root, int val)
   {
-    if (root1 == nullptr && root2 == nullptr)
+    if (root == nullptr)
     {
       return nullptr;
     }
 
-    if (root1 == nullptr)
+    if (root->val == val)
     {
-      return root2;
+      return root;
+    }
+    if (root->val > val)
+    {
+      return searchBST(root->left, val);
     }
 
-    if (root2 == nullptr)
-    {
-      return root1;
-    }
-
-    root1->val += root2->val;
-    root1->left = mergeTrees(root1->left, root2->left);
-    root1->right = mergeTrees(root1->right, root2->right);
-
-    return root1;
+    return searchBST(root->right, val);
   }
 };
 // @lc code=end
@@ -78,6 +73,6 @@ int main()
   //st.push(2);
   //st.top();
   vector<int> s1 = {1, 2, 3, 4}, s2 = {4, 3, 2, 1};
-  so.mergeTrees(head, head);
+  so.searchBST(head, 2);
   return 0;
 }
