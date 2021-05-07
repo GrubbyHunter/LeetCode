@@ -29,6 +29,7 @@ public:
         stack<TreeNode *> st;
         TreeNode *curr = root;
         int min = INT_MAX;
+
         // 迭代使用中序遍历二叉搜索树，这里也可以用递归
         // 利用二叉搜索树的特性，左中右的顺序遍历，始终是递增数组
         while (!st.empty() || curr != nullptr)
