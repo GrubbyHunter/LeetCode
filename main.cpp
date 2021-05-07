@@ -39,33 +39,33 @@ struct TreeNode
 class Solution
 {
 public:
-  void getVector(TreeNode *root, vector<int> &result)
+  int getMinimumDifference(TreeNode *root)
   {
-    if (root == nullptr)
-    {
-      return;
-    }
+    int preNum = INT_MAX;
+    stack<TreeNode *> st;
+    TreeNode *curr = root;
+    int min = INT_MAX;
 
-    getVector(root->left, result);
-    result.push_back(root->val);
-    getVector(root->right, result);
-  }
-  bool isValidBST(TreeNode *root)
-  {
-    vector<int> result;
-    // 前序遍历二叉树，将tree变成数组
-    getVector(root, result);
-
-    //如果数组是有序的，则是二叉搜索树
-    for (int i = 1; i < result.size(); i++)
+    while (!st.empty() || curr != nullptr)
     {
-      if (result[i - 1] >= result[i])
+      if (curr != nullptr)
       {
-        return false;
+        st.push(curr);
+        curr = curr->left;
+      }
+      else
+      {
+        curr = st.top();
+        st.pop();
+
+        int result = abs(preNum - curr->val);
+        min = min < result ? min : result;
+
+        preNum = curr->val;
+        curr = curr->right;
       }
     }
-
-    return true;
+    return min;
   }
 };
 // @lc code=end
@@ -74,9 +74,9 @@ int main()
 {
   // new 对象返回的是地址的引用，就是一个指针
   // TreeNode *head = new TreeNode(3, new TreeNode(1, new TreeNode(0), new TreeNode(2)), new TreeNode(5, new TreeNode(4), new TreeNode(6)));
-  //ListNode *head;
-  TreeNode *head = new TreeNode(1, new TreeNode(1), nullptr);
-  //ListNode *head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
+  // ListNode *head;
+  TreeNode *head = new TreeNode(1, new TreeNode(0), new TreeNode(48));
+  // ListNode *head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
   Solution so;
   vector<int> s = {};
   //MyStack st;
@@ -84,6 +84,6 @@ int main()
   //st.push(2);
   //st.top();
   vector<int> s1 = {1, 2, 3, 4}, s2 = {4, 3, 2, 1};
-  so.isValidBST(head);
+  so.getMinimumDifference(head);
   return 0;
 }
