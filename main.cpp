@@ -39,52 +39,33 @@ struct TreeNode
 class Solution
 {
 public:
-  vector<int> findMode(TreeNode *root)
+  TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
   {
-    vector<int> result;
-    TreeNode *curr = root;
-    int maxCount = 1;
-    int count = 1;
 
-    int preNum = INT_MAX;
-    stack<TreeNode *> st;
-
-    while (!st.empty() || curr != nullptr)
+    if (root == p || root == q || root == nullptr)
     {
-      if (curr != nullptr)
-      {
-        st.push(curr);
-        curr = curr->left;
-      }
-      else
-      {
-        curr = st.top();
-        st.pop();
-
-        if (curr->val == preNum)
-        {
-          count++;
-        }
-        else
-        {
-          count = 1;
-        }
-
-        if (count > maxCount)
-        {
-          maxCount = count;
-          result = {curr->val};
-        }
-        else if (count == maxCount)
-        {
-          result.push_back(curr->val);
-        }
-
-        preNum = curr->val;
-        curr = curr->right;
-      }
+      return root;
     }
-    return result;
+
+    TreeNode *left = lowestCommonAncestor(root->left, p, q);
+    TreeNode *right = lowestCommonAncestor(root->right, p, q);
+
+    if (left != nullptr && right != nullptr)
+    {
+      return root;
+    }
+    else if (left != nullptr && right == nullptr)
+    {
+      return left;
+    }
+    else if (left == nullptr && right != nullptr)
+    {
+      return right;
+    }
+    else
+    {
+      return nullptr;
+    }
   }
 };
 // @lc code=end
