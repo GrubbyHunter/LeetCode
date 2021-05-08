@@ -39,12 +39,15 @@ struct TreeNode
 class Solution
 {
 public:
-  int getMinimumDifference(TreeNode *root)
+  vector<int> findMode(TreeNode *root)
   {
+    vector<int> result;
+    TreeNode *curr = root;
+    int maxCount = 1;
+    int count = 1;
+
     int preNum = INT_MAX;
     stack<TreeNode *> st;
-    TreeNode *curr = root;
-    int min = INT_MAX;
 
     while (!st.empty() || curr != nullptr)
     {
@@ -58,14 +61,30 @@ public:
         curr = st.top();
         st.pop();
 
-        int result = abs(preNum - curr->val);
-        min = min < result ? min : result;
+        if (curr->val == preNum)
+        {
+          count++;
+        }
+        else
+        {
+          count = 1;
+        }
+
+        if (count > maxCount)
+        {
+          maxCount = count;
+          result = {curr->val};
+        }
+        else if (count == maxCount)
+        {
+          result.push_back(curr->val);
+        }
 
         preNum = curr->val;
         curr = curr->right;
       }
     }
-    return min;
+    return result;
   }
 };
 // @lc code=end
@@ -75,7 +94,7 @@ int main()
   // new 对象返回的是地址的引用，就是一个指针
   // TreeNode *head = new TreeNode(3, new TreeNode(1, new TreeNode(0), new TreeNode(2)), new TreeNode(5, new TreeNode(4), new TreeNode(6)));
   // ListNode *head;
-  TreeNode *head = new TreeNode(1, new TreeNode(0), new TreeNode(48));
+  TreeNode *head = new TreeNode(1, new TreeNode(2), new TreeNode(2));
   // ListNode *head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
   Solution so;
   vector<int> s = {};
@@ -84,6 +103,6 @@ int main()
   //st.push(2);
   //st.top();
   vector<int> s1 = {1, 2, 3, 4}, s2 = {4, 3, 2, 1};
-  so.getMinimumDifference(head);
+  so.findMode(head);
   return 0;
 }
