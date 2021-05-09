@@ -39,33 +39,46 @@ struct TreeNode
 class Solution
 {
 public:
+  TreeNode *lowestNode(TreeNode *root, int max, int min)
+  {
+    if (root == nullptr || root->val == min || root->val == max)
+    {
+      return root;
+    }
+
+    if (root->val < max && root->val > min)
+    {
+      return root;
+    }
+
+    if (root->val < min)
+    {
+      return lowestNode(root->right, max, min);
+    }
+    if (root->val > max)
+    {
+      return lowestNode(root->left, max, min);
+    }
+
+    return nullptr;
+  }
   TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
   {
+    int max;
+    int min;
 
-    if (root == p || root == q || root == nullptr)
+    if (p->val > q->val)
     {
-      return root;
-    }
-
-    TreeNode *left = lowestCommonAncestor(root->left, p, q);
-    TreeNode *right = lowestCommonAncestor(root->right, p, q);
-
-    if (left != nullptr && right != nullptr)
-    {
-      return root;
-    }
-    else if (left != nullptr && right == nullptr)
-    {
-      return left;
-    }
-    else if (left == nullptr && right != nullptr)
-    {
-      return right;
+      max = p->val;
+      min = q->val;
     }
     else
     {
-      return nullptr;
+      max = q->val;
+      min = p->val;
     }
+
+    return lowestNode(root, max, min);
   }
 };
 // @lc code=end
@@ -75,7 +88,7 @@ int main()
   // new 对象返回的是地址的引用，就是一个指针
   // TreeNode *head = new TreeNode(3, new TreeNode(1, new TreeNode(0), new TreeNode(2)), new TreeNode(5, new TreeNode(4), new TreeNode(6)));
   // ListNode *head;
-  TreeNode *head = new TreeNode(1, new TreeNode(2), new TreeNode(2));
+  TreeNode *head = new TreeNode(2, new TreeNode(1), new TreeNode(3));
   // ListNode *head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
   Solution so;
   vector<int> s = {};
@@ -84,6 +97,6 @@ int main()
   //st.push(2);
   //st.top();
   vector<int> s1 = {1, 2, 3, 4}, s2 = {4, 3, 2, 1};
-  so.findMode(head);
+  so.lowestCommonAncestor(head, new TreeNode(2), new TreeNode(3));
   return 0;
 }
