@@ -39,46 +39,54 @@ struct TreeNode
 class Solution
 {
 public:
-  TreeNode *lowestNode(TreeNode *root, int max, int min)
+  void handleBST(TreeNode *&root, int val, int isLeft)
   {
-    if (root == nullptr || root->val == min || root->val == max)
+    if (root == nullptr)
     {
-      return root;
+      root = new TreeNode(val);
+      return;
     }
 
-    if (root->val < max && root->val > min)
+    if (root->val > val)
     {
-      return root;
-    }
-
-    if (root->val < min)
-    {
-      return lowestNode(root->right, max, min);
-    }
-    if (root->val > max)
-    {
-      return lowestNode(root->left, max, min);
-    }
-
-    return nullptr;
-  }
-  TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
-  {
-    int max;
-    int min;
-
-    if (p->val > q->val)
-    {
-      max = p->val;
-      min = q->val;
+      if (isLeft)
+      {
+        handleBST(root->left, val, true);
+      }
+      else
+      {
+        root = new TreeNode(val, nullptr, root);
+      }
     }
     else
     {
-      max = q->val;
-      min = p->val;
+      if (isLeft)
+      {
+        root = new TreeNode(val, root, nullptr);
+      }
+      else
+      {
+        handleBST(root->right, val, false);
+      }
+    }
+  }
+  TreeNode *insertIntoBST(TreeNode *root, int val)
+  {
+    if (root == nullptr)
+    {
+      return root;
     }
 
-    return lowestNode(root, max, min);
+    if (root->val > val)
+    {
+      handleBST(root->left, val, true);
+    }
+    else
+    {
+      handleBST(root->right, val, false);
+    }
+
+    return root;
   }
 };
 // @lc code=end
@@ -97,6 +105,6 @@ int main()
   //st.push(2);
   //st.top();
   vector<int> s1 = {1, 2, 3, 4}, s2 = {4, 3, 2, 1};
-  so.lowestCommonAncestor(head, new TreeNode(2), new TreeNode(3));
+  so.insertIntoBST(head, 3);
   return 0;
 }
