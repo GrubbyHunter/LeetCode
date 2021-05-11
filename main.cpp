@@ -39,52 +39,52 @@ struct TreeNode
 class Solution
 {
 public:
-  void handleBST(TreeNode *&root, int val, int isLeft)
+  TreeNode *deleteNode(TreeNode *root, int key)
   {
-    if (root == nullptr)
-    {
-      root = new TreeNode(val);
-      return;
-    }
-
-    if (root->val > val)
-    {
-      if (isLeft)
-      {
-        handleBST(root->left, val, true);
-      }
-      else
-      {
-        root = new TreeNode(val, nullptr, root);
-      }
-    }
-    else
-    {
-      if (isLeft)
-      {
-        root = new TreeNode(val, root, nullptr);
-      }
-      else
-      {
-        handleBST(root->right, val, false);
-      }
-    }
-  }
-  TreeNode *insertIntoBST(TreeNode *root, int val)
-  {
+    // 没有找到，直接返回空指针
     if (root == nullptr)
     {
       return root;
     }
 
-    if (root->val > val)
+    if (root->val > key)
     {
-      handleBST(root->left, val, true);
+      root->left = deleteNode(root->left, key);
     }
-    else
+    else if (root->val < key)
     {
-      handleBST(root->right, val, false);
+      root->right = deleteNode(root->right, key);
     }
+
+    // root->val == key 找到这个节点
+    // 左右都为空，直接移除这个节点，置为空指针
+    if (root->left == nullptr && root->right == nullptr)
+    {
+      return nullptr;
+    }
+    // 左子树不为空，右子树为空
+    if (root->left != nullptr && root->right == nullptr)
+    {
+      return root->left;
+    }
+
+    // 右子树不为空，左子树为空
+    if (root->right != nullptr && root->left == nullptr)
+    {
+      return root->right;
+    }
+
+    // 左右子树都不为空，找右子树最左面的节点
+    TreeNode *cur = root->right;
+    while (cur->left != nullptr)
+    {
+      cur = cur->left;
+    }
+    // 把要删除的节点的左子树作为右子树的最下面节点的左子树进行接入
+    // 理解这一句，非常重要
+    cur->left == root->left;
+    // 右子树作为新的节点进行返回
+    root = root->right;
 
     return root;
   }
@@ -105,6 +105,6 @@ int main()
   //st.push(2);
   //st.top();
   vector<int> s1 = {1, 2, 3, 4}, s2 = {4, 3, 2, 1};
-  so.insertIntoBST(head, 3);
+  so.deleteNode(head, 3);
   return 0;
 }
