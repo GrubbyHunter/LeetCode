@@ -17,6 +17,7 @@ using namespace std;
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
 class Solution
 {
 public:
@@ -64,9 +65,11 @@ public:
             }
             // 把要删除的节点的左子树作为右子树的最下面节点的左子树进行接入
             // 理解这一句，非常重要
-            cur->left == root->left;
+            cur->left = root->left;
             // 右子树作为新的节点进行返回
             root = root->right;
+
+            return root;
         }
         return root;
     }
