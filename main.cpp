@@ -39,55 +39,82 @@ struct TreeNode
 class Solution
 {
 public:
-  TreeNode *deleteNode(TreeNode *root, int key)
+  TreeNode *findMiddleRoot(TreeNode *root, int low, int high)
   {
-    // 没有找到，直接返回空指针
     if (root == nullptr)
+    {
+      return nullptr;
+    }
+
+    if (root->val >= low && root->val <= high)
     {
       return root;
     }
-
-    if (root->val > key)
+    if (root->val < low)
     {
-      root->left = deleteNode(root->left, key);
+      return findMiddleRoot(root->right, low, high);
     }
-    else if (root->val < key)
+
+    return findMiddleRoot(root->left, low, high);
+  }
+  void trimLeftTree(TreeNode *&root, int low)
+  {
+    if (root == nullptr)
     {
-      root->right = deleteNode(root->right, key);
+      return;
+    }
+
+    if (root->val > low)
+    {
+      trimLeftTree(root->left, low);
+    }
+    else if (root->val < low)
+    {
+      root = root->right;
+      trimLeftTree(root, low);
     }
     else
     {
-      // root->val == key 找到这个节点
-      // 左右都为空，直接移除这个节点，置为空指针
-      if (root->left == nullptr && root->right == nullptr)
-      {
-        return nullptr;
-      }
-      // 左子树不为空，右子树为空
-      if (root->left != nullptr && root->right == nullptr)
-      {
-        return root->left;
-      }
-
-      // 右子树不为空，左子树为空
-      if (root->right != nullptr && root->left == nullptr)
-      {
-        return root->right;
-      }
-
-      // 左右子树都不为空，找右子树最左面的节点
-      TreeNode *cur = root->right;
-      while (cur->left != nullptr)
-      {
-        cur = cur->left;
-      }
-      cur->left = root->left;
-      TreeNode *newNode = root->right;
-      newNode->left = nullptr;
-      // 右子树作为新的节点进行返回
-      return root->right;
+      root->left = nullptr;
     }
-    return root;
+  }
+  void trimRightTree(TreeNode *&root, int high)
+  {
+    if (root == nullptr)
+    {
+      return;
+    }
+
+    if (root->val < high)
+    {
+      trimRightTree(root->right, high);
+    }
+    else if (root->val > high)
+    {
+      root = root->left;
+      trimRightTree(root, high);
+    }
+    else
+    {
+      root->right = nullptr;
+    }
+  }
+  TreeNode *trimBST(TreeNode *root, int low, int high)
+  {
+    // 首先先确定中间根节点的位置
+    TreeNode *middleRoot = findMiddleRoot(root, low, high);
+
+    if (middleRoot == nullptr)
+    {
+      return nullptr;
+    }
+
+    // 修剪左子树
+    trimLeftTree(middleRoot->left, low);
+    // 修建右子树
+    trimRightTree(middleRoot->right, high);
+
+    return middleRoot;
   }
 };
 // @lc code=end
@@ -97,7 +124,7 @@ int main()
   // new 对象返回的是地址的引用，就是一个指针
   // TreeNode *head = new TreeNode(3, new TreeNode(1, new TreeNode(0), new TreeNode(2)), new TreeNode(5, new TreeNode(4), new TreeNode(6)));
   // ListNode *head;
-  TreeNode *head = new TreeNode(5, new TreeNode(3, new TreeNode(2), new TreeNode(4)), new TreeNode(6, nullptr, new TreeNode(7)));
+  TreeNode *head = new TreeNode(3, new TreeNode(2, new TreeNode(1), nullptr), new TreeNode(4));
   // ListNode *head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
   Solution so;
   vector<int> s = {};
@@ -106,6 +133,6 @@ int main()
   //st.push(2);
   //st.top();
   vector<int> s1 = {1, 2, 3, 4}, s2 = {4, 3, 2, 1};
-  so.deleteNode(head, 3);
+  so.trimBST(head, 2, 4);
   return 0;
 }
