@@ -36,85 +36,29 @@ struct TreeNode
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
   TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+
 class Solution
 {
 public:
-  TreeNode *findMiddleRoot(TreeNode *root, int low, int high)
+  TreeNode *sortedArrayToBST(vector<int> &nums)
   {
-    if (root == nullptr)
+    if (nums.size() == 0)
     {
       return nullptr;
     }
 
-    if (root->val >= low && root->val <= high)
+    if (nums.size() == 1)
     {
-      return root;
+      return new TreeNode(nums[0]);
     }
-    if (root->val < low)
-    {
-      return findMiddleRoot(root->right, low, high);
-    }
+    int size = nums.size();
+    int middle = size / 2;
 
-    return findMiddleRoot(root->left, low, high);
-  }
-  void trimLeftTree(TreeNode *&root, int low)
-  {
-    if (root == nullptr)
-    {
-      return;
-    }
+    vector<int> left(nums.begin(), nums.begin() + middle);
+    // +1过滤掉middle节点
+    vector<int> right(nums.begin() + middle + 1, nums.end());
 
-    if (root->val > low)
-    {
-      trimLeftTree(root->left, low);
-    }
-    else if (root->val < low)
-    {
-      root = root->right;
-      trimLeftTree(root, low);
-    }
-    else
-    {
-      root->left = nullptr;
-    }
-  }
-  void trimRightTree(TreeNode *&root, int high)
-  {
-    if (root == nullptr)
-    {
-      return;
-    }
-
-    if (root->val < high)
-    {
-      trimRightTree(root->right, high);
-    }
-    else if (root->val > high)
-    {
-      root = root->left;
-      trimRightTree(root, high);
-    }
-    else
-    {
-      root->right = nullptr;
-    }
-  }
-  TreeNode *trimBST(TreeNode *root, int low, int high)
-  {
-    // 首先先确定中间根节点的位置
-    TreeNode *middleRoot = findMiddleRoot(root, low, high);
-
-    if (middleRoot == nullptr)
-    {
-      return nullptr;
-    }
-
-    // 修剪左子树
-    trimLeftTree(middleRoot->left, low);
-    // 修建右子树
-    trimRightTree(middleRoot->right, high);
-
-    return middleRoot;
+    return new TreeNode(nums[middle], sortedArrayToBST(left), sortedArrayToBST(right));
   }
 };
 // @lc code=end
