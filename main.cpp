@@ -40,25 +40,20 @@ struct TreeNode
 class Solution
 {
 public:
-  TreeNode *sortedArrayToBST(vector<int> &nums)
+  int sum;
+  TreeNode *convertBST(TreeNode *root)
   {
-    if (nums.size() == 0)
+    // 使用反向中序遍历，也就是右->中->左的形式
+    if (root == nullptr)
     {
       return nullptr;
     }
 
-    if (nums.size() == 1)
-    {
-      return new TreeNode(nums[0]);
-    }
-    int size = nums.size();
-    int middle = size / 2;
-
-    vector<int> left(nums.begin(), nums.begin() + middle);
-    // +1过滤掉middle节点
-    vector<int> right(nums.begin() + middle + 1, nums.end());
-
-    return new TreeNode(nums[middle], sortedArrayToBST(left), sortedArrayToBST(right));
+    root->right = convertBST(root->right); // right
+    sum += root->val;                      //累计计算sum
+    root->val = sum;                       // middle
+    root->left = convertBST(root->left);   //left
+    return root;
   }
 };
 // @lc code=end
