@@ -23,7 +23,11 @@ public:
         }
 
         // 这里的循环是横向遍历，将n的数组每个值一次跟后面的元素组合
-        for (int i = startIndex; i <= n; i++)
+        // for (int i = startIndex; i <= n; i++)
+        // 已经选了的元素个数path.size()
+        // 集合还剩元素个数 k - path.size()
+        // 那么遍历从
+        for (int i = startIndex; i <= n - (k - path.size()) + 1; i++)
         {
             // 第i个元素
             path.push_back(i);
