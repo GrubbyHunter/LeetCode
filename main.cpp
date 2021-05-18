@@ -42,38 +42,33 @@ class Solution
 public:
   vector<vector<int>> result;
   vector<int> path;
-  void findPath(int n, int k, int startIndex)
+  void findResult(int k, int n, int startIndex, int sum)
   {
-    // 数组中的元素数量达到k个，则满足条件，递归停止，并将结果添加到最后的结果集
-    if (path.size() == k)
+    if (sum == n && path.size() == k)
     {
       result.push_back(path);
       return;
     }
 
-    // 这里的循环是横向遍历，将n的数组每个值一次跟后面的元素组合
-    // for (int i = startIndex; i <= n; i++)
-    // 已经选了的元素个数path.size()
-    // 集合还剩元素个数 k - path.size()
-    // 那么遍历从
-    for (int i = startIndex; i <= n - (k - path.size()) + 1; i++)
+    if (sum > n)
     {
-      // 第i个元素
-      path.push_back(i);
-      // 以及它后面的元素i+1，进行组合
-      findPath(n, k, i + 1);
-      // 组合完之后进行回溯，将i推出数组，开始统计下一个元素的组合情况
-      path.pop_back();
-    }
-  }
-  vector<vector<int>> combine(int n, int k)
-  {
-    if (n == 0 || k == 0)
-    {
-      return result;
+      return;
     }
 
-    findPath(n, k, 1);
+    for (int i = startIndex; i <= 9; i++)
+    {
+      path.push_back(i);
+      sum += i;
+
+      findResult(k, n, i + 1, sum);
+
+      path.pop_back();
+      sum -= i;
+    }
+  }
+  vector<vector<int>> combinationSum3(int k, int n)
+  {
+    findResult(k, n, 1, 0);
     return result;
   }
 };
@@ -93,6 +88,6 @@ int main()
   //st.push(2);
   //st.top();
   vector<int> s1 = {1, 2, 3, 4}, s2 = {4, 3, 2, 1};
-  so.combine(4, 2);
+  so.combinationSum3(3, 7);
   return 0;
 }
