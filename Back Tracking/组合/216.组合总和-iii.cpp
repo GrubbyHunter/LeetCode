@@ -23,7 +23,11 @@ public:
             return;
         }
 
-        for (int i = startIndex; i <= 9; i++)
+        // 这里进行修剪
+        // path中有path.size()个数，那么还剩 k - path.size()个数
+        // k = 4 ，startIndex = 1时候，  9 - (k - path.size()) + 1 = 6
+        // 也就是说需要在[1,6]这个区间进行遍历，起始位置startIndex超过6的话，后面的元素加起来都不到k个，4个
+        for (int i = startIndex; i <= 9 - (k - path.size()) + 1; i++)
         {
             path.push_back(i);
             sum += i;

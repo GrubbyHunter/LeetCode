@@ -55,7 +55,7 @@ public:
       return;
     }
 
-    for (int i = startIndex; i <= 9; i++)
+    for (int i = startIndex; i <= 9 - (k - path.size()) + 1; i++)
     {
       path.push_back(i);
       sum += i;
