@@ -40,35 +40,38 @@ struct TreeNode
 class Solution
 {
 public:
-  vector<vector<int>> result;
-  vector<int> path;
-  void findResult(int k, int n, int startIndex, int sum)
+  vector<string> result;
+  string s;
+  // 数据源map,使用map是为了每次方便取值
+  vector<string> stringArr = {
+      "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+  void findCombinations(string digits, int startIndex)
   {
-    if (sum == n && path.size() == k)
+    if (s.size() == digits.size())
     {
-      result.push_back(path);
+      result.push_back(s);
       return;
     }
 
-    if (sum > n)
+    int digit = digits[startIndex] - '0'; // 将index指向的数字转为int
+    // 当前正在遍历的按键字符串
+    string letter = stringArr[digit];
+
+    for (int i = 0; i < letter.size(); i++)
     {
-      return;
-    }
-
-    for (int i = startIndex; i <= 9 - (k - path.size()) + 1; i++)
-    {
-      path.push_back(i);
-      sum += i;
-
-      findResult(k, n, i + 1, sum);
-
-      path.pop_back();
-      sum -= i;
+      s.push_back(letter[i]);
+      findCombinations(digits, startIndex + 1);
+      s.pop_back();
     }
   }
-  vector<vector<int>> combinationSum3(int k, int n)
+  vector<string> letterCombinations(string digits)
   {
-    findResult(k, n, 1, 0);
+    if (digits.size() == 0)
+    {
+      return result;
+    }
+    // 需要进行暴力搜索的数据源
+    findCombinations(digits, 0);
     return result;
   }
 };
@@ -88,6 +91,6 @@ int main()
   //st.push(2);
   //st.top();
   vector<int> s1 = {1, 2, 3, 4}, s2 = {4, 3, 2, 1};
-  so.combinationSum3(3, 7);
+  so.letterCombinations("234");
   return 0;
 }
