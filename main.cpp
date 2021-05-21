@@ -3,6 +3,7 @@
 #include <string>
 #include <stack>
 #include <queue>
+#include <algorithm>
 #include <unordered_set>
 #include <unordered_map>
 #include <math.h>
@@ -42,8 +43,7 @@ class Solution
 public:
   vector<vector<int>> result;
   vector<int> current;
-  int sum;
-  void findVector(vector<int> &candidates, int target, int startIndex)
+  void findVector(vector<int> &candidates, int sum, int target, int startIndex, vector<bool> &used)
   {
     if (sum > target)
     {
@@ -57,18 +57,30 @@ public:
 
     for (int i = startIndex; i < candidates.size(); i++)
     {
+
+      if (i > 0 && candidates[i] == candidates[i - 1] && !used[i - i])
+      {
+        continue;
+      }
+
       current.push_back(candidates[i]);
       sum += candidates[i];
-      findVector(candidates, target, i);
+      used[i] = true;
+      findVector(candidates, sum, target, i + 1, used);
+      used[i] = false;
       current.pop_back();
       sum -= candidates[i];
     }
   }
-  vector<vector<int>> combinationSum(vector<int> &candidates, int target)
+  vector<vector<int>> combinationSum2(vector<int> &candidates, int target)
   {
+    vector<bool> used(candidates.size(), false);
+    sort(candidates.begin(), candidates.end());
+    findVector(candidates, 0, target, 0, used);
     return result;
   }
 };
+
 // @lc code=end
 
 int main()
@@ -84,7 +96,7 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  vector<int> s1 = {1, 2, 3, 4}, s2 = {4, 3, 2, 1};
-  so.letterCombinations("234");
+  vector<int> s1 = {1, 3, 2, 4}, s2 = {4, 3, 2, 1};
+  so.combinationSum2(s1, 3);
   return 0;
 }
