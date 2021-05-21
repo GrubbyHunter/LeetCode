@@ -47,6 +47,7 @@
     "hash_map": "cpp",
     "map": "cpp",
     "unordered_set": "cpp",
-    "climits": "cpp"
+    "climits": "cpp",
+    "queue": "cpp"
   }
 }
