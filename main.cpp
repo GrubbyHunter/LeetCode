@@ -41,46 +41,34 @@ struct TreeNode
 class Solution
 {
 public:
-  vector<vector<int>> result;
-  vector<int> current;
-  void findVector(vector<int> &candidates, int sum, int target, int startIndex, vector<bool> &used)
+  vector<vector<int>> result; // 存放结果
+  vector<int> list;
+  void backtracking(vector<int> &nums, int startIndex)
   {
-    if (sum > target)
+    if (startIndex >= nums.size() - 1)
     {
-      return;
-    }
-    if (sum == target)
-    {
-      result.push_back(current);
+      result.push_back(list);
       return;
     }
 
-    for (int i = startIndex; i < candidates.size(); i++)
+    for (int i = startIndex; i < nums.size(); i++)
     {
-
-      if (i > 0 && candidates[i] == candidates[i - 1] && !used[i - i])
-      {
-        continue;
-      }
-
-      current.push_back(candidates[i]);
-      sum += candidates[i];
-      used[i] = true;
-      findVector(candidates, sum, target, i + 1, used);
-      used[i] = false;
-      current.pop_back();
-      sum -= candidates[i];
+      list.push_back(nums[i]);
+      backtracking(nums, startIndex + 1);
+      list.pop_back();
     }
   }
-  vector<vector<int>> combinationSum2(vector<int> &candidates, int target)
+  vector<vector<int>> subsets(vector<int> &nums)
   {
-    vector<bool> used(candidates.size(), false);
-    sort(candidates.begin(), candidates.end());
-    findVector(candidates, 0, target, 0, used);
+    if (nums.size() == 0)
+    {
+      return result;
+    }
+    backtracking(nums, 0);
+
     return result;
   }
 };
-
 // @lc code=end
 
 int main()
@@ -96,7 +84,7 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  vector<int> s1 = {1, 3, 2, 4}, s2 = {4, 3, 2, 1};
-  so.combinationSum2(s1, 3);
+  vector<int> s1 = {1, 2, 3}, s2 = {4, 3, 2, 1};
+  so.subsets(s1);
   return 0;
 }
