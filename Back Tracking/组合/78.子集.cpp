@@ -13,7 +13,7 @@ public:
     void backtracking(vector<int> &nums, int startIndex)
     {
         result.push_back(path);
-        // 可不写
+        // 可不写，因为startIndex超过数组长度时候，循环本身也结束了
         if (startIndex >= nums.size())
         {
             return;
@@ -22,7 +22,8 @@ public:
         for (int i = startIndex; i < nums.size(); i++)
         {
             path.push_back(nums[i]);
-            backtracking(nums, startIndex + 1);
+            // 这里是i+1
+            backtracking(nums, i + 1);
             path.pop_back();
         }
     }
