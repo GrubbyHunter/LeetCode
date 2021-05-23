@@ -42,30 +42,33 @@ class Solution
 {
 public:
   vector<vector<int>> result; // 存放结果
-  vector<int> list;
-  void backtracking(vector<int> &nums, int startIndex)
+  vector<int> path;
+  void backtracking(vector<int> &nums, int startIndex, vector<bool> used)
   {
-    if (startIndex >= nums.size() - 1)
-    {
-      result.push_back(list);
-      return;
-    }
+    result.push_back(path);
 
     for (int i = startIndex; i < nums.size(); i++)
     {
-      list.push_back(nums[i]);
-      backtracking(nums, startIndex + 1);
-      list.pop_back();
+      if (i > 0 && nums[i - 1] == nums[i] && used == false)
+      {
+        continue;
+      }
+
+      path.push_back(nums[i]);
+      used[i] = true;
+      // 这里是i+1
+      backtracking(nums, i + 1, used);
+      used[i] = false;
+      path.pop_back();
     }
   }
-  vector<vector<int>> subsets(vector<int> &nums)
+  vector<vector<int>> subsetsWithDup(vector<int> &nums)
   {
-    if (nums.size() == 0)
-    {
-      return result;
-    }
-    backtracking(nums, 0);
 
+    vector<bool> used(nums.size(), false);
+    // 首先把给nums排序，让其相同的元素都挨在一起。
+    sort(nums.begin(), nums.end());
+    backtracking(nums, 0, used);
     return result;
   }
 };
