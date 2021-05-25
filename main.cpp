@@ -43,32 +43,45 @@ class Solution
 public:
   vector<vector<int>> result; // 存放结果
   vector<int> path;
-  void backtracking(vector<int> &nums, int startIndex, vector<bool> used)
+  void backtracking(vector<int> &nums, vector<bool> used)
   {
-    result.push_back(path);
-
-    for (int i = startIndex; i < nums.size(); i++)
+    if (path.size() == nums.size())
     {
-      if (i > 0 && nums[i - 1] == nums[i] && used == false)
+      result.push_back(path);
+      return;
+    }
+
+    for (int i = 0; i < nums.size(); i++)
+    {
+      if (used[i])
       {
         continue;
       }
 
+      if (path.size() > 0)
+      {
+        int num = path.back();
+        if (num == nums[i] && used[i] == false)
+        {
+          continue;
+        }
+      }
+
       path.push_back(nums[i]);
       used[i] = true;
-      // 这里是i+1
-      backtracking(nums, i + 1, used);
+      backtracking(nums, used);
       used[i] = false;
       path.pop_back();
     }
   }
-  vector<vector<int>> subsetsWithDup(vector<int> &nums)
+  vector<vector<int>> permuteUnique(vector<int> &nums)
   {
-
     vector<bool> used(nums.size(), false);
+
     // 首先把给nums排序，让其相同的元素都挨在一起。
     sort(nums.begin(), nums.end());
-    backtracking(nums, 0, used);
+    backtracking(nums, used);
+
     return result;
   }
 };
@@ -87,7 +100,7 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  vector<int> s1 = {1, 2, 3}, s2 = {4, 3, 2, 1};
-  so.subsets(s1);
+  vector<int> s1 = {1, 1, 2}, s2 = {4, 3, 2, 1};
+  so.permuteUnique(s1);
   return 0;
 }
