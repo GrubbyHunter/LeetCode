@@ -41,48 +41,12 @@ struct TreeNode
 class Solution
 {
 public:
-  vector<vector<int>> result; // 存放结果
-  vector<int> path;
-  void backtracking(vector<int> &nums, vector<bool> used)
+  vector<string> result;
+  void backtracking()
   {
-    if (path.size() == nums.size())
-    {
-      result.push_back(path);
-      return;
-    }
-
-    for (int i = 0; i < nums.size(); i++)
-    {
-      if (used[i])
-      {
-        continue;
-      }
-
-      if (path.size() > 0)
-      {
-        int num = path.back();
-        if (num == nums[i] && used[i] == false)
-        {
-          continue;
-        }
-      }
-
-      path.push_back(nums[i]);
-      used[i] = true;
-      backtracking(nums, used);
-      used[i] = false;
-      path.pop_back();
-    }
   }
-  vector<vector<int>> permuteUnique(vector<int> &nums)
+  vector<string> findItinerary(vector<vector<string>> &tickets)
   {
-    vector<bool> used(nums.size(), false);
-
-    // 首先把给nums排序，让其相同的元素都挨在一起。
-    sort(nums.begin(), nums.end());
-    backtracking(nums, used);
-
-    return result;
   }
 };
 // @lc code=end
@@ -101,6 +65,6 @@ int main()
   //st.push(2);
   //st.top();
   vector<int> s1 = {1, 1, 2}, s2 = {4, 3, 2, 1};
-  so.permuteUnique(s1);
+  so.findItinerary(null);
   return 0;
 }
