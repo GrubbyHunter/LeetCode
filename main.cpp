@@ -41,11 +41,7 @@ struct TreeNode
 class Solution
 {
 public:
-  vector<string> result;
-  void backtracking()
-  {
-  }
-  vector<string> findItinerary(vector<vector<string>> &tickets)
+  int findContentChildren(vector<int> &g, vector<int> &s)
   {
   }
 };
@@ -65,6 +61,6 @@ int main()
   //st.push(2);
   //st.top();
   vector<int> s1 = {1, 1, 2}, s2 = {4, 3, 2, 1};
-  so.findItinerary(null);
+  so.findContentChildren(s1, s2);
   return 0;
 }
