@@ -43,6 +43,34 @@ class Solution
 public:
   int findContentChildren(vector<int> &g, vector<int> &s)
   {
+    sort(g.begin(), g.end());
+    sort(s.begin(), s.end());
+    int num = 0;
+
+    if (s.size() == 0)
+    {
+      return num;
+    }
+
+    int min = s[0];
+    int index = s.size();
+
+    for (int i = g.size() - 1; i >= 0; i--)
+    {
+      if (index < 1)
+      {
+        break;
+      }
+
+      int max = s[index - 1];
+      if (g[i] <= max && g[i] >= min)
+      {
+        num++;
+        index--;
+      }
+    }
+
+    return num;
   }
 };
 // @lc code=end
@@ -60,7 +88,7 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  vector<int> s1 = {1, 1, 2}, s2 = {4, 3, 2, 1};
+  vector<int> s1 = {1, 2, 3}, s2 = {3};
   so.findContentChildren(s1, s2);
   return 0;
 }
