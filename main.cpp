@@ -41,36 +41,25 @@ struct TreeNode
 class Solution
 {
 public:
-  int findContentChildren(vector<int> &g, vector<int> &s)
+  int wiggleMaxLength(vector<int> &nums)
   {
-    sort(g.begin(), g.end());
-    sort(s.begin(), s.end());
-    int num = 0;
-
-    if (s.size() == 0)
+    int result = 1;
+    int preDiff = 0;
+    int curDiff = 0;
+    for (int i = 1; i < nums.size(); i++)
     {
-      return num;
-    }
-
-    int min = s[0];
-    int index = s.size();
-
-    for (int i = g.size() - 1; i >= 0; i--)
-    {
-      if (index < 1)
+      // i-1这个元素和下一个元素i的差
+      curDiff = nums[i] - nums[i - 1];
+      // 如果中间的数 - 上一个数大于0 同时 下一个数 - 中间的数小于0，中间的数在波峰，满足条件
+      // 中间的数 - 上一个数小于于0 同时 下一个数 - 中间的数大于0，中间的数在波谷，满足条件
+      if ((curDiff > 0 && preDiff <= 0) || (curDiff < 0 && preDiff >= 0))
       {
-        break;
-      }
-
-      int max = s[index - 1];
-      if (g[i] <= max && g[i] >= min)
-      {
-        num++;
-        index--;
+        result++;
+        preDiff = curDiff;
       }
     }
 
-    return num;
+    return result;
   }
 };
 // @lc code=end
@@ -88,7 +77,7 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  vector<int> s1 = {1, 2, 3}, s2 = {3};
-  so.findContentChildren(s1, s2);
+  vector<int> s1 = {1, 7, 4, 9, 2, 5}, s2 = {3};
+  so.wiggleMaxLength(s1);
   return 0;
 }
