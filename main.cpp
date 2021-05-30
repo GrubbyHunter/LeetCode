@@ -41,25 +41,29 @@ struct TreeNode
 class Solution
 {
 public:
-  int wiggleMaxLength(vector<int> &nums)
+  int maxSubArray(vector<int> &nums)
   {
-    int result = 1;
-    int preDiff = 0;
-    int curDiff = 0;
-    for (int i = 1; i < nums.size(); i++)
+    int sum = INT32_MIN;
+    int currentSum = 0;
+
+    for (int i = 0; i < nums.size(); i++)
     {
-      // i-1这个元素和下一个元素i的差
-      curDiff = nums[i] - nums[i - 1];
-      // 如果中间的数 - 上一个数大于0 同时 下一个数 - 中间的数小于0，中间的数在波峰，满足条件
-      // 中间的数 - 上一个数小于于0 同时 下一个数 - 中间的数大于0，中间的数在波谷，满足条件
-      if ((curDiff > 0 && preDiff <= 0) || (curDiff < 0 && preDiff >= 0))
+      currentSum += nums[i];
+      // 当前和 大于 目前统计到的最大和
+      if (currentSum > sum)
       {
-        result++;
-        preDiff = curDiff;
+        sum = currentSum;
+      }
+
+      // 当前和小于0，则加上下一个元素，会将与下一个元素的和变小
+      // 重置当前值，将当前和设置为0，从下一个位置重新开始计算
+      if (currentSum <= 0)
+      {
+        currentSum = 0;
       }
     }
 
-    return result;
+    return sum;
   }
 };
 // @lc code=end
@@ -77,7 +81,7 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
-  vector<int> s1 = {1, 7, 4, 9, 2, 5}, s2 = {3};
-  so.wiggleMaxLength(s1);
+  vector<int> s1 = {-2, 1, -3, 4, -1, 2, 1, -5, 4}, s2 = {3};
+  so.maxSubArray(s1);
   return 0;
 }
