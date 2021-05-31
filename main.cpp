@@ -41,26 +41,24 @@ struct TreeNode
 class Solution
 {
 public:
-  int maxSubArray(vector<int> &nums)
+  int maxProfit(vector<int> &prices)
   {
-    int sum = INT32_MIN;
-    int currentSum = 0;
-
-    for (int i = 0; i < nums.size(); i++)
+    if (prices.size() == 0)
     {
-      currentSum += nums[i];
-      // 当前和 大于 目前统计到的最大和
-      if (currentSum > sum)
+      return 0;
+    }
+    int sum = 0;
+    int prePrice = prices[0];
+
+    for (int i = 1; i < prices.size(); i++)
+    {
+      int result = prices[i] - prePrice;
+      if (result > 0)
       {
-        sum = currentSum;
+        sum += result;
       }
 
-      // 当前和小于0，则加上下一个元素，会将与下一个元素的和变小
-      // 重置当前值，将当前和设置为0，从下一个位置重新开始计算
-      if (currentSum <= 0)
-      {
-        currentSum = 0;
-      }
+      prePrice = prices[i];
     }
 
     return sum;
