@@ -41,27 +41,32 @@ struct TreeNode
 class Solution
 {
 public:
-  int maxProfit(vector<int> &prices)
+  bool canJump(vector<int> &nums)
   {
-    if (prices.size() == 0)
+    if (nums.size() == 1)
     {
-      return 0;
+      return true;
     }
-    int sum = 0;
-    int prePrice = prices[0];
+    int size = nums.size();
+    int cover = 0;
 
-    for (int i = 1; i < prices.size(); i++)
+    for (int i = 0; i <= cover; i++)
     {
-      int result = prices[i] - prePrice;
-      if (result > 0)
+      // 当前元素能跳动的范围是他本身的下标+他的值
+      // 比如第三个元素为5，name他能跳到 3+5 = 8
+      if (nums[i] + i > cover)
       {
-        sum += result;
+        cover = nums[i] + i;
       }
 
-      prePrice = prices[i];
+      // cover覆盖的范围已经能到最后一个元素，则能跳到最后
+      if (cover >= size - 1)
+      {
+        return true;
+      }
     }
 
-    return sum;
+    return false;
   }
 };
 // @lc code=end
@@ -80,6 +85,6 @@ int main()
   //st.push(2);
   //st.top();
   vector<int> s1 = {-2, 1, -3, 4, -1, 2, 1, -5, 4}, s2 = {3};
-  so.maxSubArray(s1);
+  so.canJump(s1);
   return 0;
 }
