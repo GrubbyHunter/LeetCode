@@ -41,32 +41,40 @@ struct TreeNode
 class Solution
 {
 public:
-  bool canJump(vector<int> &nums)
+  // 排序函数，使用绝对值就行排序
+  static bool cmp(int a, int b)
   {
-    if (nums.size() == 1)
-    {
-      return true;
-    }
+    return abs(a) > abs(b);
+  }
+  int largestSumAfterKNegations(vector<int> &nums, int k)
+  {
+    int sum = 0;
     int size = nums.size();
-    int cover = 0;
+    // 先通过绝对值排序
+    sort(nums.begin(), nums.end(), cmp);
 
-    for (int i = 0; i <= cover; i++)
+    for (int i = 0; i < size; i++)
     {
-      // 当前元素能跳动的范围是他本身的下标+他的值
-      // 比如第三个元素为5，name他能跳到 3+5 = 8
-      if (nums[i] + i > cover)
+      // 优先将加大的负数转为正，同时消费k的数量：k--
+      if (nums[i] < 0 && k != 0)
       {
-        cover = nums[i] + i;
+        k--;
+        nums[i] = abs(nums[i]);
       }
 
-      // cover覆盖的范围已经能到最后一个元素，则能跳到最后
-      if (cover >= size - 1)
-      {
-        return true;
-      }
+      sum += nums[i];
     }
 
-    return false;
+    // 如果k依然存在，k是偶数，结果不变
+    // k是奇数
+    if (k % 2 != 0)
+    {
+      // 需要先减掉最后一个数
+      sum -= nums[size - 1];
+      // 然后将最后一个数的反向值
+      sum -= nums[size - 1];
+    }
+    return sum;
   }
 };
 // @lc code=end
