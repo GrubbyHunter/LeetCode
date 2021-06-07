@@ -41,39 +41,14 @@ struct TreeNode
 class Solution
 {
 public:
-  int canCompleteCircuit(vector<int> &gas, vector<int> &cost)
+  static bool cmp(const vector<int> a, const vector<int> b)
   {
-    int curSum = 0;
-    int min = INT_MAX; // 从起点出发，油箱里的油量最小值
-
-    for (int i = 0; i < cost.size(); i++)
-    {
-      curSum += gas[i] - cost[i];
-
-      if (min > curSum)
-      {
-        min = curSum;
-      }
-    }
-
-    if (curSum < 0)
-    {
-      return -1;
-    }
-    if (min >= 0)
-    {
-      return 0;
-    }
-
-    for (int i = cost.size() - 1; i > 0; i--)
-    {
-      if (gas[i] - cost[i] - min >= 0)
-      {
-        return i;
-      }
-    }
-
-    return -1;
+    if (a[0] == b[0])
+      return a[1] < b[1];
+    return a[0] > b[0];
+  }
+  vector<vector<int>> reconstructQueue(vector<vector<int>> &people)
+  {
   }
 };
 // @lc code=end
