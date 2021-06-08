@@ -49,6 +49,20 @@ public:
   }
   vector<vector<int>> reconstructQueue(vector<vector<int>> &people)
   {
+    // 先通过身高对数组进行排序
+    sort(people.begin(), people.end(), cmp);
+    vector<vector<int>> que;
+
+    for (int i = 0; i < people.size(); i++)
+    {
+      // 需要插入到people的下标位置
+      int index = people[i][1];
+
+      // 插入到index位置，由于
+      que.insert(que.begin() + index, people[i]);
+    }
+
+    return que;
   }
 };
 // @lc code=end
@@ -66,7 +80,8 @@ int main()
   //st.push(1);
   //st.push(2);
   //st.top();
+
   vector<int> s1 = {-2, 1, -3, 4, -1, 2, 1, -5, 4}, s2 = {3};
-  so.canJump(s1);
+  so.reconstructQueue();
   return 0;
 }
