@@ -5,23 +5,31 @@
  */
 
 // @lc code=start
-function searchInsert(nums: number[], target: number): number {
-  //  * @desc 思路：时间复杂度要求O(log n)，那么采用二分查找
-  let mid = Math.floor(nums.length / 2)
-  if (nums.length === 0) {
-    return 1
+function removeElement(nums: number[], val: number): number {
+  let left = 0
+  let right = nums.length - 1
+
+  while (left < right) {
+    while (nums[left] !== val) {
+      left++
+    }
+
+    while (nums[right] === val) {
+      right--
+    }
+
+    let temp = nums[left]
+    nums[left] = nums[right]
+    nums[right] = temp
+
+    left++
+    right--
   }
 
-  if (target < nums[mid]) {
-    return searchInsert(nums.slice(0, mid), target)
-  } else if (target > nums[mid]) {
-    return mid + 1 + searchInsert(nums.slice(mid + 1), target)
-  } else {
-    return mid
-  }
+
+  return left + 1
 };
-
-let result = searchInsert([1, 3, 5, 6], 7)
+let result = removeElement([3, 2, 2, 3], 3)
 
 // @lc code=end
 
