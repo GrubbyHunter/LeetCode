@@ -9,7 +9,6 @@ function minSubArrayLen(target: number, nums: number[]): number {
   let left = 0
   let right = 0
   let minSize = Number.MAX_VALUE
-
   let sum = 0
 
   // 使用双指针，外侧先移动又指针
@@ -22,14 +21,16 @@ function minSubArrayLen(target: number, nums: number[]): number {
       // 当前区间的元素个数
       let size = right - left + 1
       sum = sum - nums[left]
+      // 比较当前是否是最小长度，是的话就记录
       minSize = minSize > size ? size : minSize
+      // 移动左指针
       left++
+      // 总长度减1
       size--
     }
-
   }
-
-  return min
+  // 当前如果minSize 依然是最大值，说明没有适合的区间，直接返回0
+  return minSize ===Number.MAX_VALUE ?0:minSize
 };
 let result = minSubArrayLen(7, [2, 3, 1, 2, 4, 3])
 
