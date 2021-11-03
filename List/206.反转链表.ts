@@ -1,22 +1,28 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=206 lang=typescript
  *
- * [35] 搜索插入位置
+ * [206] 反转链表
  */
-class ListNode {
-  val: number
-  next: ListNode | null
-  constructor(val?: number, next?: ListNode | null) {
-    this.val = (val === undefined ? 0 : val)
-    this.next = (next === undefined ? null : next)
-  }
-}
+
+// @lc code=start
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
 
 function reverseList(head: ListNode | null): ListNode | null {
   if (!head || !head.next) {
     return head
   }
 
+  // pre记录上一个节点，所以，这里以null开始
   let pre = null
   let current = head
 
@@ -29,11 +35,11 @@ function reverseList(head: ListNode | null): ListNode | null {
     current = current.next
   }
 
+  // 遍历到最后一个节点跳出循环，手动赋值最后一个节点到表头
   let firstNode = head
   head = new ListNode(current.val, firstNode)
 
   return head
 };
-reverseList(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, null))))))
 // @lc code=end
 
