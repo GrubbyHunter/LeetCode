@@ -32,7 +32,7 @@ function getListLen(head: ListNode | null): number {
   return len
 }
 function getIntersectionNode(headA: ListNode | null, headB: ListNode | null): ListNode | null {
-  // 由于交汇处要求节点相同，不管是值相同
+  // 由于交汇处要求节点相同，不仅是值相同
   // 这就意味着交汇处后面的所有节点都相同
   // 所交汇处到两个链表结尾的长度是一样的
   // 这里我们可以先计算两个链表的长度
