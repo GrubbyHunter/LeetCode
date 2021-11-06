@@ -1,17 +1,26 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=160 lang=typescript
  *
- * [35] 搜索插入位置
+ * [160] 相交链表
  */
-class ListNode {
-  val: number
-  next: ListNode | null
-  constructor(val?: number, next?: ListNode | null) {
-    this.val = (val === undefined ? 0 : val)
-    this.next = (next === undefined ? null : next)
-  }
-}
 
+// @lc code=start
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+/**
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
+ */
 function getListLen(head: ListNode | null): number {
   let len = 0, cur = head
 
@@ -54,9 +63,5 @@ function getIntersectionNode(headA: ListNode | null, headB: ListNode | null): Li
   return curA
 }
 
-getIntersectionNode(
-  new ListNode(4, new ListNode(1, new ListNode(8, new ListNode(4, new ListNode(5, null)))))
-  , new ListNode(5, new ListNode(0, new ListNode(1, new ListNode(8, new ListNode(4, new ListNode(5, null))))))
-)
 // @lc code=end
 
