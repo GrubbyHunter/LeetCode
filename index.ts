@@ -12,47 +12,17 @@ class ListNode {
   }
 }
 
-function getListLen(head: ListNode | null): number {
-  let len = 0, cur = head
-
-  while (cur) {
-    len++
-    cur = cur.next
-  }
-
-  return len
-}
 function getIntersectionNode(headA: ListNode | null, headB: ListNode | null): ListNode | null {
-  // 由于交汇处要求节点相同，不管是值相同
-  // 这就意味着交汇处后面的所有节点都相同
-  // 所交汇处到两个链表结尾的长度是一样的
-  // 这里我们可以先计算两个链表的长度
-  let curA = headA, curB = headB,
-    lenA = getListLen(headA),
-    lenB = getListLen(headB)
-
-  if (lenA < lenB) {
-    // ES6解构，这里等同于
-    // A和B的值互换
-    [curA, curB] = [curB, curA];
-    [lenA, lenB] = [lenB, lenA];
-  }
-  // lenA - lenB为长度差
-  let i = lenA - lenB;
-  // name较长的那个链表可以先走i步，从第i不开始比较节点
-  while (i-- > 0) {
-    curA = curA.next || null
-  }
-
-  // 这里A和B长度一样，所以判断条件只要一个不为空即可
-  // 同时由于节点的指向要求一致
-  // 这里不需要比较值，直接比较两个节点是否相同即可
-  while (curA && curA !== curB) {
-    curA = curA.next
-    curB = curB.next
+  let curA = headA, curB = headB
+  // 两个两边都走了A+B的长度
+  while (curA !== curB) {
+    // 这里A链表走完了，就跳到B链表上走
+    curA = curA ? curA.next : headB
+    curB = curB ? curB.next : headA
   }
   return curA
 }
+
 
 getIntersectionNode(
   new ListNode(4, new ListNode(1, new ListNode(8, new ListNode(4, new ListNode(5, null)))))
