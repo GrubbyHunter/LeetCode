@@ -3,38 +3,35 @@
  *
  * [35] 搜索插入位置
  */
-function isHappy(n: number): boolean {
-  // sum是下一次拆分进行平方的原始数据
-  // 所以这里使用Object记录sum是否出现过，出现贵的话就会陷入死循环，一定不是快乐树
-  let result: any = {}
-  let sum = 0
+function fourSumCount(nums1: number[], nums2: number[], nums3: number[], nums4: number[]): number {
+  let count: number = 0
+  let map: any = {}
 
-  while (!result[n] || result[n] === 1) {
-    while (n > 9) {
-      let temp = n % 10
-      n = Math.floor(n / 10)
-      sum += Math.pow(temp, 2)
+  for (let i = 0; i < nums1.length; i++) {
+    for (let j = 0; j < nums2.length; j++) {
+      let result = nums1[i] + nums2[j]
+
+      if (!map[result]) {
+        map[result] = 1
+      } else {
+        map[result] = map[result] + 1
+      }
     }
-    sum += Math.pow(n, 2)
-
-    if (sum === 1) {
-      return true
-    }
-
-    if (result[sum] === 1) {
-      result[sum] = 2
-    } else {
-      result[sum] = 1
-    }
-
-    n = sum
-    sum = 0
   }
 
+  for (let i = 0; i < nums3.length; i++) {
+    for (let j = 0; j < nums4.length; j++) {
+      let result = 0 - nums3[i] - nums4[j]
 
-  return false
+      if (map[result]) {
+        count = count + map[result]
+      }
+    }
+  }
+
+  return count
 };
 
-isHappy(19);
+fourSumCount([0], [0], [0], [0]);
 // @lc code=end
 
