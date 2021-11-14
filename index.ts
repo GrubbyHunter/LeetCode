@@ -3,35 +3,35 @@
  *
  * [35] 搜索插入位置
  */
-function fourSumCount(nums1: number[], nums2: number[], nums3: number[], nums4: number[]): number {
-  let count: number = 0
-  let map: any = {}
-
-  for (let i = 0; i < nums1.length; i++) {
-    for (let j = 0; j < nums2.length; j++) {
-      let result = nums1[i] + nums2[j]
-
-      if (!map[result]) {
-        map[result] = 1
-      } else {
-        map[result] = map[result] + 1
-      }
+function replaceSpace(s: string): string {
+  let strArr = s.split("")
+  let count = 0
+  // 先遍历一次计算字符串中的空格数量
+  for (let i = 0; i < strArr.length; i++) {
+    if (strArr[i] === " ") {
+      count++
     }
   }
 
-  for (let i = 0; i < nums3.length; i++) {
-    for (let j = 0; j < nums4.length; j++) {
-      let result = 0 - nums3[i] - nums4[j]
+  let left = strArr.length - 1
+  let right = strArr.length + 2 * count - 1
 
-      if (map[result]) {
-        count = count + map[result]
-      }
+  while (left < right) {
+    if (strArr[left] === " ") {
+      strArr[right] = "0"
+      strArr[right - 1] = "2"
+      strArr[right - 2] = "%"
+      right = right - 3
+    } else {
+      [strArr[left], strArr[right]] = [strArr[right], strArr[left]]
+      right--
     }
-  }
+    left--
 
-  return count
+  }
+  return strArr.join("")
 };
+const arr = replaceSpace("we are happy.");
 
-fourSumCount([0], [0], [0], [0]);
 // @lc code=end
 
