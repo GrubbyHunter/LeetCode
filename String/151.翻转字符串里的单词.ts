@@ -1,11 +1,13 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=151 lang=typescript
  *
- * [35] 搜索插入位置
+ * [151] 翻转字符串里的单词
  */
+
+// @lc code=start
 function reverseWords(s: string): string {
   // 首先去掉多余的空格
-  let arr: any = s.split("")
+  let arr = s.split("")
   let slow = 1
   let fast = 1
 
@@ -27,8 +29,8 @@ function reverseWords(s: string): string {
   s = arr.slice(0, slow).join("").trim()
   arr = s.split("")
 
-  // 反转单个单词
-  const reverseStr = (strArr: string[], left: number, right: number) => {
+  // 反转单个单词函数
+  const reverseStr = (strArr: string[], left, right) => {
     while (left < right) {
       [strArr[left], strArr[right]] = [strArr[right], strArr[left]]
       left++
@@ -36,22 +38,24 @@ function reverseWords(s: string): string {
     }
   }
 
-  // 真个语句反转一遍
+  // 先整个语句反转一遍
   reverseStr(arr, 0, arr.length - 1)
 
   let currentIndex = 0
+
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] === " ") {
+      // 语句中的每个单词翻转一边
       reverseStr(arr, currentIndex, i - 1)
+      // 记录当前单词的起始位置，空格之后的位置
       currentIndex = i + 1
     }
   }
 
+  // 翻转完成，由于最后一个单词没翻转，再单独翻转一下
   reverseStr(arr, currentIndex, arr.length - 1)
 
   return arr.join("")
 };
-const arr = reverseWords("a good   example");
-
 // @lc code=end
 
