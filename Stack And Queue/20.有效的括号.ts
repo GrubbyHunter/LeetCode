@@ -1,8 +1,10 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=20 lang=typescript
  *
- * [35] 搜索插入位置
+ * [20] 有效的括号
  */
+
+// @lc code=start
 function isValid(s: string): boolean {
   // 此题适合用栈来处理，使用js中的数组模拟栈的行为
   let stack = []
@@ -40,14 +42,11 @@ function isValid(s: string): boolean {
         }
         stack.pop()
         break
-      default:
-        break
+      default: break
     }
   }
 
   return stack.length === 0
 };
-const arr = isValid("()[]{}");
-
 // @lc code=end
 
