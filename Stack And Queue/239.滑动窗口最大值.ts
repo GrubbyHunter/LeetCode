@@ -1,11 +1,13 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=239 lang=typescript
  *
- * [35] 搜索插入位置
+ * [239] 滑动窗口最大值
  */
+
+// @lc code=start
 function maxSlidingWindow(nums: number[], k: number): number[] {
   // 使用队列记录区间内的最大值，同时降序排列，这样队列每次弹出的头部就是区间的最大值
-  let queue: any = [Number.MIN_VALUE]
+  let queue: any = [Number.MIN_SAFE_INTEGER]
   let result = []
   let left = 1, right = k - 1
   let i = 0
@@ -14,6 +16,9 @@ function maxSlidingWindow(nums: number[], k: number): number[] {
   // 说明下，这里如果当前值超过队列最大值，会将队列前面的所有值移除
   // 因为在这个最大值移除滑动窗口前，他会一直是这个滑动窗口的最大值
   // 前面的值可以忽略不计
+  // 这里实际上更适合用升序，吧最大值放在模拟数组的尾部
+  // 这样每次删除只处理数组的尾部元素就行
+  // 为了模拟栈的行为方便理解，才放在头部处理
   let findIndex = (num: number): void => {
     // 大于队列最大值(队列的第一个)
     if (num > queue[0]) {
@@ -61,7 +66,5 @@ function maxSlidingWindow(nums: number[], k: number): number[] {
 
   return result
 };
-const arr = maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3);
-
 // @lc code=end
 
