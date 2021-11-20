@@ -1,8 +1,10 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=347 lang=typescript
  *
- * [35] 搜索插入位置
+ * [347] 前 K 个高频元素
  */
+
+// @lc code=start
 function topKFrequent(nums: number[], k: number): number[] {
   let map: any = {}
   // 构建一个小根堆，这里使用小根堆是为了方便每次拿头部元素来比较
@@ -53,18 +55,22 @@ function topKFrequent(nums: number[], k: number): number[] {
     do {
       let left = 2 * index + 1, right = 2 * index + 2
       let leftCount = map[heap[left]] || -1, rightCount = map[heap[right]] || -1
-
+      // 没有左右节点，直接返回
       if (leftCount === -1 && rightCount === -1) {
         break
       }
+      // 记录当前节点
       let current = index
+      // 左节点不存在
       if (leftCount === -1 && rightCount !== -1) {
         childCount = rightCount
         index = right
       } else if (leftCount !== -1 && rightCount === -1) {
+        // 右节点不存在
         childCount = leftCount
         index = left
       } else {
+        // 两个节点都存在，跟小的那个节点比较
         if (leftCount < rightCount) {
           childCount = leftCount
           // 找到正确的位置，跳出循环
@@ -75,7 +81,7 @@ function topKFrequent(nums: number[], k: number): number[] {
         }
       }
 
-      // 交换
+      // 比他的子节点大，跟子节点交换，这里currnet为当前节点，index由于重新赋值过了，所以他是子节点
       if (indexCount >= childCount) {
         [heap[current], heap[index]] = [heap[index], heap[current]]
       }
@@ -102,7 +108,5 @@ function topKFrequent(nums: number[], k: number): number[] {
 
   return heap
 };
-const arr = topKFrequent([5, 2, 5, 3, 5, 3, 1, 1, 3], 2);
-
 // @lc code=end
 
