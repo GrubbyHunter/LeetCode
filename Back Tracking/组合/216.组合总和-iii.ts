@@ -1,14 +1,22 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=216 lang=typescript
  *
- * [35] 搜索插入位置
+ * [216] 组合总和 III
  */
+
+// @lc code=start
 function combinationSum3(k: number, n: number): number[][] {
   let result: any = []
 
   const backTracking = (arr: number[], start: number, currentSum: number) => {
     if (currentSum === n && arr.length === k) {
       result.push([...arr])
+      return
+    }
+    // 剪枝操作：
+    // 1、如果当前和+下一个需要计算的 > 总和
+    // 2、当前数量已经大于等于k
+    if (currentSum + start > n || arr.length > k - 1) {
       return
     }
 
@@ -26,7 +34,5 @@ function combinationSum3(k: number, n: number): number[][] {
   backTracking([], 1, 0)
   return result
 };
-const arr = combinationSum3(3, 7)
-
 // @lc code=end
 
