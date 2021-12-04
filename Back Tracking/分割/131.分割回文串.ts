@@ -1,11 +1,13 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=131 lang=typescript
  *
- * [35] 搜索插入位置
+ * [131] 分割回文串
  */
+
+// @lc code=start
 function partition(s: string): string[][] {
-  let result: any = []
-  const arrStr: any = s.split("")
+  let result = []
+  const arrStr = s.split("")
   const size = arrStr.length
 
   if (size === 0) {
@@ -27,7 +29,8 @@ function partition(s: string): string[][] {
   }
   const backTracking = (arr: string[], start: number) => {
     // 切割到最后一个，收集结果
-    if (start === size - 2) {
+    // 这里最后一个可能是前面所有的，所有不是i-1判断最后一个
+    if (start === size) {
       result.push([...arr])
       return
     }
@@ -50,7 +53,5 @@ function partition(s: string): string[][] {
 
   return result
 };
-partition("aab")
-
 // @lc code=end
 
