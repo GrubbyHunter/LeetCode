@@ -19,9 +19,11 @@ function subsets(nums: number[]): number[][] {
   nums = nums.sort((a, b) => a - b)
   const backTracking = (arr: number[], start: number) => {
     result.push([...arr])
-    if (startIndex >= nums.size()) {
-      return;
-    }
+    // 这里的终止条件是start 大于数组长度
+    // 但是实际上start就不会超过数组长度，所以忽略终止条件
+    // if (start >= nums.length) {
+    //   return;
+    // }
     for (let i = start; i < nums.length; i++) {
       arr.push(nums[i])
       backTracking(arr, i + 1)
