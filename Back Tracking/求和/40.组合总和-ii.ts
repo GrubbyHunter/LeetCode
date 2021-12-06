@@ -8,7 +8,7 @@
 function combinationSum2(candidates: number[], target: number): number[][] {
   const result = []
 
-  const backTracking = (sum: number, arr: number[], start: number, used: any) => {
+  const backTracking = (sum: number, arr: number[], start: number) => {
     if (sum === target) {
       result.push([...arr])
       return
@@ -17,7 +17,7 @@ function combinationSum2(candidates: number[], target: number): number[][] {
     if (sum > target) {
       return
     }
-
+    const used: any = {}
     // 剪枝操作
     for (let i = start; i < candidates.length && target >= candidates[i] + sum; i++) {
       // 如果当前元素等于上一个元素，同时上一个元素没有被使用，则跳过此元素，以免发生重复
@@ -30,18 +30,16 @@ function combinationSum2(candidates: number[], target: number): number[][] {
       arr.push(candidates[i])
       // 记录当前元素被使用
       used[i] = true
-
-      backTracking(sum, arr, i + 1, used)
+      backTracking(sum, arr, i + 1)
 
       // 回溯操作
-      used[i] = false
       sum -= candidates[i]
       arr.pop()
     }
   }
 
   candidates = candidates.sort((a, b) => a - b)
-  backTracking(0, [], 0, {})
+  backTracking(0, [], 0)
 
   return result
 };
