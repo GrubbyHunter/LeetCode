@@ -1,20 +1,19 @@
 /*
- * @lc app=leetcode.cn id=46 lang=typescript
+ * @lc app=leetcode.cn id=47 lang=typescript
  *
- * [46] 全排列
+ * [47] 全排列 II
  */
 
 // @lc code=start
-function permute(nums: number[]): number[][] {
+function permuteUnique(nums: number[]): number[][] {
   const result: any = []
   const length = nums.length
-  const used: any = {}
+  const used = {}
   if (length === 0) {
     return result
   }
 
-  const backTracking = (arr: number[]) => {
-    // 满足长度，退出
+  const backTracking = (arr) => {
     if (arr.length === length) {
       result.push([...arr])
       return
@@ -26,12 +25,6 @@ function permute(nums: number[]): number[][] {
         continue
       }
 
-      // 如果当前元素和前一个相同，name把他取出来和把前一个元素取出来
-      // 跟后面元素组成的排列结果是一样的，这时候需要去重
-      if (i > 0 && nums[i] === nums[i - 1]) {
-        continue
-      }
-
       arr.push(nums[i])
       used[i] = true
       backTracking(arr)
@@ -39,8 +32,10 @@ function permute(nums: number[]): number[][] {
       arr.pop()
     }
   }
-
+  // 先对数据排序，方便去重
+  nums.sort((a, b) => a - b)
   backTracking([])
+
   return result
 };
 // @lc code=end
