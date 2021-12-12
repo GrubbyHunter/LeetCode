@@ -1,8 +1,10 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=53 lang=typescript
  *
- * [35] 搜索插入位置
+ * [53] 最大子数组和
  */
+
+// @lc code=start
 function maxSubArray(nums: number[]): number {
   let maxSum = Number.MIN_SAFE_INTEGER
   let currnetSum = 0
@@ -22,7 +24,5 @@ function maxSubArray(nums: number[]): number {
 
   return maxSum
 };
-maxSubArray([-1, 1])
-
 // @lc code=end
 
