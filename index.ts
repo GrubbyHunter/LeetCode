@@ -3,26 +3,35 @@
  *
  * [35] 搜索插入位置
  */
-function maxSubArray(nums: number[]): number {
-  let maxSum = Number.MIN_SAFE_INTEGER
-  let currnetSum = 0
-  // 如果连续的区间为负数，那么他与下一个数相加，肯定会拉低和
-  // 所以需要放弃，如果一个区间相加变成了负数，那么需要从i+1重新开始统计
-  for (let i = 0; i < nums.length; i++) {
-    currnetSum = currnetSum + nums[i]
+function jump(nums: number[]): number {
+  let count = 0
+  let startIndex = 0
+  let endIndex = 0
 
-    if (currnetSum > maxSum) {
-      maxSum = currnetSum
-    }
-    // maxSum记录钱买最大的数就好了，如果前面的和为负数，需要重置为0
-    if (currnetSum <= 0) {
-      currnetSum = 0
-    }
+
+  if (nums.length === 1) {
+    return 0
   }
 
-  return maxSum
+  while (endIndex < nums.length - 1) {
+    let i = startIndex
+    let j = endIndex
+
+    for (; i <= j; i++) {
+      let coverIndex = nums[i] + i
+
+      if (coverIndex > endIndex) {
+        endIndex = coverIndex
+      }
+    }
+
+    startIndex = j + 1
+    count++
+  }
+
+  return count + 1
 };
-maxSubArray([-1, 1])
+jump([1, 2, 1, 1, 1])
 
 // @lc code=end
 
