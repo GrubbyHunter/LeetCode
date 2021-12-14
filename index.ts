@@ -3,35 +3,42 @@
  *
  * [35] 搜索插入位置
  */
-function jump(nums: number[]): number {
-  let count = 0
-  let startIndex = 0
-  let endIndex = 0
+function largestSumAfterKNegations(nums: number[], k: number): number {
+  let sum = 0
+  let minNumber = Number.MAX_SAFE_INTEGER
+  // 首先升序排序树组
+  nums.sort((a, b) => a - b)
 
+  for (let i = 0; i < nums.length; i++) {
+    // 对小于0的数改变为正数
+    if (nums[i] < 0) {
+      if (k > 0) {
+        nums[i] = -nums[i]
+        k--
+      }
 
-  if (nums.length === 1) {
-    return 0
-  }
-
-  while (endIndex < nums.length - 1) {
-    let i = startIndex
-    let j = endIndex
-
-    for (; i <= j; i++) {
-      let coverIndex = nums[i] + i
-
-      if (coverIndex > endIndex) {
-        endIndex = coverIndex
+      minNumber = nums[i]
+    } else if (nums[i] === 0) {
+      minNumber = 0
+      if (k > 0) {
+        k = 0
+      }
+    } else {
+      // k还剩奇数次
+      if (k % 2 !== 0) {
+        if (minNumber > nums[i]) {
+          minNumber = nums[i]
+        }
+        sum -= minNumber * 2
+        k = 0
       }
     }
 
-    startIndex = j + 1
-    count++
+    sum += nums[i]
   }
 
-  return count + 1
+  return sum
 };
-jump([1, 2, 1, 1, 1])
-
+largestSumAfterKNegations([2, -3, -1, 5, -4], 2)
 // @lc code=end
 
