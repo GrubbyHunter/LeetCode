@@ -3,34 +3,37 @@
  *
  * [35] 搜索插入位置
  */
-function canCompleteCircuit(gas: number[], cost: number[]): number {
-  let currentSum = 0
+function candy(ratings: number[]): number {
+  let sum = 1
+  let preValue = 1
+  let preNum = ratings[0]
+  let preContinuityIndex = 0
 
+  for (let i = 1; i < ratings.length; i++) {
+    let currentValue
 
-  for (let i = 0; i < gas.length; i++) {
-    let index = i
-
-    for (let j = 0; j < gas.length; j++) {
-
-      if (currentSum + gas[index] < cost[index]) {
-        currentSum = 0
-        break
+    if (ratings[i] > preNum) {
+      currentValue = preValue + 1
+    } else {
+      if (ratings[i] === preNum) {
+        preContinuityIndex = i
       }
-      currentSum += gas[index] - cost[index]
 
-      if (index === gas.length - 1) {
-        index = 0
-      } else {
-        index++
-      }
-      if (j === gas.length - 1) {
-        return index
-      }
+      currentValue = preValue > 1 ? 1 : 0
     }
+
+    if (currentValue === 0) {
+      sum += (i - preContinuityIndex) * 1
+      currentValue = 1
+    }
+
+    sum += currentValue
+    preValue = currentValue
+    preNum = ratings[i]
   }
 
-  return -1
+  return sum
 };
-canCompleteCircuit([1, 2, 3, 4, 5], [3, 4, 5, 1, 2])
+candy([1, 0, 2])
 // @lc code=end
 
