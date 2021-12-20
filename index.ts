@@ -3,27 +3,24 @@
  *
  * [35] 搜索插入位置
  */
-function findMinArrowShots(points: number[][]): number {
-  let count = 0
-  // 将起始坐标从小到大排序
-  points.sort((a, b) => a[0] - b[0])
+function eraseOverlapIntervals(intervals: number[][]): number {
+  let count = 1
 
-  let min = Number.MAX_SAFE_INTEGER, max = Number.MIN_SAFE_INTEGER
+  intervals.sort((a: number[], b: number[]): number => {
+    return a[1] - b[1]
+  })
 
-  for (let i = 0; i < points.length; i++) {
-    if (points[i][0] > max || points[i][1] < min) {
-      min = points[i][0]
-      max = points[i][1]
+  let end = intervals[0][1]
+  for (let i = 1; i < intervals.length; i++) {
+
+    if (end <= intervals[i][0]) {
+      end = intervals[i][0]
       count++
-      continue
     }
-
-    min = points[i][0] >= min ? points[i][0] : min
-    max = points[i][1] <= max ? points[i][1] : max
   }
 
-  return count
+  return intervals.length - count
 };
-findMinArrowShots([[10, 16], [2, 8], [1, 6], [7, 12]])
+eraseOverlapIntervals([[-52, 31], [-73, -26], [82, 97], [-65, -11], [-62, -49], [95, 99], [58, 95], [-31, 49], [66, 98], [-63, 2], [30, 47], [-40, -26]])
 // @lc code=end
 
