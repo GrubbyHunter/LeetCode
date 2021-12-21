@@ -1,8 +1,10 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=763 lang=typescript
  *
- * [35] 搜索插入位置
+ * [763] 划分字母区间
  */
+
+// @lc code=start
 function partitionLabels(s: string): number[] {
   let str = s.split("")
   let map: any = {}
@@ -13,7 +15,7 @@ function partitionLabels(s: string): number[] {
     if (!map[str[i]]) {
       map[str[i]] = {
         start: i,
-        end: i
+        end: i // 这里如果字母只出现一次，起始位置相同
       }
     } else {
       map[str[i]].end = i
@@ -36,17 +38,20 @@ function partitionLabels(s: string): number[] {
 
   for (let i = 1; i < arr.length; i++) {
     // arr[i][0] > start
+    // 单签右边界小于上一个边界，在范围内
     if (arr[i][1] < end) {
       continue
     }
 
+    // 左边小于边界，右边大于边界，设置新边界
     if (arr[i][1] > end && arr[i][0] < end) {
       end = arr[i][1]
       continue
     }
 
+    // 左边大于边际，设置新区间
     if (arr[i][0] > end) {
-      // 记录分割点
+      // 记录分割点，分割点为上一个区间的右节点
       splitIndex.push(end)
       end = arr[i][1]
     }
@@ -56,6 +61,7 @@ function partitionLabels(s: string): number[] {
   let resultArr = []
 
   let startIndex = -1
+  // 通过分割点计算长度
   for (let i = 0; i < splitIndex.length; i++) {
     resultArr.push(splitIndex[i] - startIndex)
     startIndex = splitIndex[i]
@@ -64,6 +70,5 @@ function partitionLabels(s: string): number[] {
   resultArr.push(s.length - startIndex - 1)
   return resultArr
 };
-partitionLabels("ababcbacadefegdehijhklij")
 // @lc code=end
 
