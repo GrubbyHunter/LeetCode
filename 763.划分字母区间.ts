@@ -1,8 +1,10 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=763 lang=typescript
  *
- * [35] 搜索插入位置
+ * [763] 划分字母区间
  */
+
+// @lc code=start
 function partitionLabels(s: string): number[] {
   let str = s.split("")
   let map: any = {}
@@ -36,6 +38,7 @@ function partitionLabels(s: string): number[] {
 
   for (let i = 1; i < arr.length; i++) {
     // arr[i][0] > start
+    // 新的
     if (arr[i][1] < end) {
       continue
     }
@@ -56,6 +59,7 @@ function partitionLabels(s: string): number[] {
   let resultArr = []
 
   let startIndex = -1
+  // 保存长度
   for (let i = 0; i < splitIndex.length; i++) {
     resultArr.push(splitIndex[i] - startIndex)
     startIndex = splitIndex[i]
@@ -64,6 +68,5 @@ function partitionLabels(s: string): number[] {
   resultArr.push(s.length - startIndex - 1)
   return resultArr
 };
-partitionLabels("ababcbacadefegdehijhklij")
 // @lc code=end
 
