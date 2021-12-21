@@ -1,8 +1,10 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=763 lang=typescript
  *
- * [35] 搜索插入位置
+ * [763] 划分字母区间
  */
+
+// @lc code=start
 function partitionLabels(s: string): number[] {
   let str = s.split("")
   let result: any = []
@@ -18,6 +20,7 @@ function partitionLabels(s: string): number[] {
 
   for (let i = 0; i < str.length; i++) {
     // left到i这个范围内出现的字符最远边界
+    // right为之前的最远变边界，map中记录当前i的最远边界
     // 不用担心范围内有更远的边界，有的话会用max取值拓宽边界
     right = Math.max(right, map[str[i]])
 
@@ -30,6 +33,5 @@ function partitionLabels(s: string): number[] {
 
   return result
 };
-partitionLabels("ababcbacadefegdehijhklij")
 // @lc code=end
 
