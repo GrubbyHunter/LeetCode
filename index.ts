@@ -3,22 +3,46 @@
  *
  * [35] 搜索插入位置
  */
-function maxProfit(prices: number[], fee: number): number {
-  let sum = 0
-  let buy = Number.MAX_SAFE_INTEGER
+class TreeNode {
+  val: number
+  left: TreeNode | null
+  right: TreeNode | null
+  constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+    this.val = (val === undefined ? 0 : val)
+    this.left = (left === undefined ? null : left)
+    this.right = (right === undefined ? null : right)
+  }
+}
+function minCameraCover(root: TreeNode | null): number {
+  let count = 0
 
-  for (let i = 0; i < prices.length - 1; i++) {
-    // 上次买的价格，跟当前需要出的钱(当前价格+税)比，取最低值
-    buy = Math.min(prices[i] + fee, buy)
-    if (prices[i + 1] > buy) {
-      // 有盈余，统计数量
-      sum += prices[i + 1] - buy
-      buy = prices[i + 1]
+  let findNodeLight = (node: TreeNode | null): boolean => {
+    if (!node) {
+      return false
     }
+
+    if (!node.left && !node.right) {
+      return false
+    }
+
+    let leftResult = findNodeLight(node.left)
+
+    let rightResult = findNodeLight(node.right)
+
+    if (leftResult || rightResult) {
+
+      return false
+    }
+
+    count++
+    return true
   }
 
-  return sum
+  findNodeLight(root)
+
+  return count
 };
 
+minCameraCover(new TreeNode(0, new TreeNode(0, new TreeNode(0), new TreeNode(0)), null))
 // @lc code=end
 
