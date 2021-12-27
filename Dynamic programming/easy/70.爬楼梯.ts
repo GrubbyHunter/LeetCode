@@ -9,6 +9,7 @@ function climbStairs(n: number): number {
   let dp = [1, 2]
 
   // 这里不使用递归，直接用数组，减少内存占用
+  // 递归每次都会从n=1开始计算，直接超时
   for (let i = 2; i < n; i++) {
     // i-1再走一步到达i
     // i-2 再走两步到达i
