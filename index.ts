@@ -3,46 +3,25 @@
  *
  * [35] 搜索插入位置
  */
-class TreeNode {
-  val: number
-  left: TreeNode | null
-  right: TreeNode | null
-  constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
-    this.val = (val === undefined ? 0 : val)
-    this.left = (left === undefined ? null : left)
-    this.right = (right === undefined ? null : right)
-  }
-}
-function minCameraCover(root: TreeNode | null): number {
-  let count = 0
+function uniquePaths(m: number, n: number): number {
+  // 使用map是为了避免引用传递，生成都是独立的对象
+  // 生成一个m行n列，并且每个元素都是1的二维数组
+  let dp = new Array(m).fill(1).map(() => new Array(n).fill(1))
 
-  let findNodeLight = (node: TreeNode | null): boolean => {
-    if (!node) {
-      return false
+  let i = 1
+  while (i < m) {
+    let j = 1
+
+    while (j < n) {
+      dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+      j++
     }
-
-    if (!node.left && !node.right) {
-      return false
-    }
-
-    let leftResult = findNodeLight(node.left)
-
-    let rightResult = findNodeLight(node.right)
-
-    if (leftResult || rightResult) {
-
-      return false
-    }
-
-    count++
-    return true
+    i++
   }
 
-  findNodeLight(root)
 
-  return count
+  return dp[m - 1][n - 1]
 };
-
-minCameraCover(new TreeNode(0, new TreeNode(0, new TreeNode(0), new TreeNode(0)), null))
+uniquePaths(3, 7)
 // @lc code=end
 
