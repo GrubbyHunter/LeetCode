@@ -1,8 +1,10 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=63 lang=typescript
  *
- * [35] 搜索插入位置
+ * [63] 不同路径 II
  */
+
+// @lc code=start
 function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
   let m = obstacleGrid.length
   let n = obstacleGrid[0].length
@@ -33,7 +35,7 @@ function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
   for (let i = 1; i < m; i++) {
     for (let j = 1; j < n; j++) {
       if (obstacleGrid[i][j] === 1) {
-        // 碰到障碍物，直接设置为0
+        // 碰到障碍物，直接设置为0，这句可不写，因为之前初始化时候就是0
         dp[i][j] = 0
         continue
       }
@@ -41,9 +43,8 @@ function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
       dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
     }
   }
+
   return dp[m - 1][n - 1]
 };
-
-uniquePathsWithObstacles([[1, 0]])
 // @lc code=end
 
