@@ -23,6 +23,8 @@ function integerBreak(n: number): number {
       //         保存最大的那个
       // 例如 n = 4 ，那么取，1*3，1*dp[3]，这个dp[3]相当于1*1*1 和1*2，都包含进去了
       dp[i] = Math.max(dp[i], j * (i - j), j * dp[i - j])
+      // 这里两个数相乘和两个以上的数相乘，其实同属于一种情况 dp[j] * dp[i - j]
+      // 但是n是从2开始的，没法初始化dp[1]的值，所以拆分为两种
     }
   }
 
