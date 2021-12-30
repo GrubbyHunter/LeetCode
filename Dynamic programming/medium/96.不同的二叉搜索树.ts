@@ -1,12 +1,14 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=96 lang=typescript
  *
- * [35] 搜索插入位置
+ * [96] 不同的二叉搜索树
  */
+
+// @lc code=start
 function numTrees(n: number): number {
-  let dp: any = new Array(n + 1).fill(0)
+  let dp = new Array(n + 1).fill(0)
   // dp[n]定义为n个数能形成的二叉搜索树总数
-  dp[0] = 1
+  dp[0] = 1 // 这里由于下面是相乘计算所以dp[0]=1，表示左边或者右边没有节点情况，只统计另一边的数量即可
   dp[1] = 1
   dp[2] = 2
 
@@ -26,7 +28,5 @@ function numTrees(n: number): number {
 
   return dp[n]
 };
-
-numTrees(3)
 // @lc code=end
 
