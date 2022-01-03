@@ -3,32 +3,38 @@
  *
  * [35] 搜索插入位置
  */
-function rob(nums: number[]): number {
-  if (nums.length === 1) {
-    return nums[0]
+function maxProfit(prices: number[]): number {
+  let arr: any = []
+  let sum = 0
+
+  for (let i = 1; i < prices.length; i++) {
+    if (prices[i] > prices[i - 1]) {
+      sum += prices[i] - prices[i - 1]
+    } else {
+      if (sum > 0) {
+        arr.push(sum)
+        sum = 0
+      }
+
+    }
   }
 
-  let dp: any = new Array(nums.length).fill(0)
-  let max = 0
-  dp[0] = nums[0]
-  dp[1] = Math.max(nums[1], nums[0])
-
-  for (let i = 2; i < nums.length - 1; i++) {
-    dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1])
+  if (sum > 0) {
+    arr.push(sum)
   }
 
-  max = dp[nums.length - 2]
-  dp = new Array(nums.length).fill(0)
-  dp[0] = 0
-  dp[1] = nums[1]
+  arr.sort((a: number, b: number) => b - a)
 
-  for (let i = 2; i < nums.length; i++) {
-    dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1])
+  if (arr.length === 0) {
+    return 0
   }
 
-  return Math.max(max, dp[nums.length - 1])
+  if (arr.length === 1) {
+    return arr[0]
+  }
+
+  return arr[1] + arr[0]
 };
 
-rob([4, 1, 2, 7, 5, 3, 1])
 // @lc code=end
 
