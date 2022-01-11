@@ -1,8 +1,10 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=1143 lang=typescript
  *
- * [35] 搜索插入位置
+ * [1143] 最长公共子序列
  */
+
+// @lc code=start
 function longestCommonSubsequence(text1: string, text2: string): number {
   let arr1: string[] = text1.split("");
   let arr2: string[] = text2.split("");
@@ -22,5 +24,4 @@ function longestCommonSubsequence(text1: string, text2: string): number {
   }
   return dp[arr1.length][arr2.length];
 }
-longestCommonSubsequence("abade", "ace");
 // @lc code=end
