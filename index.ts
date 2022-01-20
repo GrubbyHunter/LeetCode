@@ -4,34 +4,31 @@
  * [35] 搜索插入位置
  */
 function countSubstrings(s: string): number {
-  // 判断是否是会问字符串
-  let isSubstring = (s: string) => {
-    let left = 0;
-    let right = s.length - 1;
+  // dp的定义为下标i到下标j的字符串是否是回文字符串
+  let dp = new Array(s.length)
+    .fill(false)
+    .map(() => new Array(s.length).fill(false));
+  let result = 0;
 
-    while (left < right) {
-      if (s[left] !== s[right]) {
-        return false;
+  for (let i = s.length - 1; i >= 0; i--) {
+    for (let j = i; j < s.length; j++) {
+      if (s[i] !== s[j]) {
+        dp[i][j] = false;
+      } else {
+        if (j - i <= 1) {
+          dp[i][j] = true;
+        } else {
+          dp[i][j] = dp[i + 1][j - 1];
+        }
       }
-      left++;
-      right--;
-    }
-    return true;
-  };
 
-  let dp = new Array(s.length).fill(0);
-  dp[0] = 1;
-
-  for (let i = 1; i < s.length; i++) {
-    for (let j = 0; j <= i; j++) {
-      if (isSubstring(s.substring(j, i + 1))) {
-        dp[i] += 1;
+      if (dp[i][j]) {
+        result++;
       }
     }
-    dp[i] += dp[i - 1];
   }
 
-  return dp[dp.length - 1];
+  return result;
 }
-countSubstrings("abc");
+countSubstrings("fdsklf");
 // @lc code=end
