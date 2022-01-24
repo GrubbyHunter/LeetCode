@@ -1,8 +1,10 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=494 lang=typescript
  *
- * [35] 搜索插入位置
+ * [494] 目标和
  */
+
+// @lc code=start
 function findTargetSumWays(nums: number[], target: number): number {
   let sum = 0;
   for (let i = 0; i < nums.length; i++) {
@@ -32,6 +34,8 @@ function findTargetSumWays(nums: number[], target: number): number {
   // 初始化第一行：第一个元素就等于当前容量，那么第一个元素，能够填满left容量背包的方式有1种
   for (let j = 0; j <= left; j++) {
     if (nums[0] === j) {
+      // 这里如果是[0,0,0,0,0,0,0,0,1]，那么需要在当前存在次数的基础上+1
+      // 所以不是等于，而是 + 1
       dp[0][j] += 1;
     }
   }
@@ -44,7 +48,7 @@ function findTargetSumWays(nums: number[], target: number): number {
         dp[i][j] = dp[i - 1][j];
       } else {
         // 容量大于当前元素
-        // 种数 = 不需要nums[i]就可填满背包的情况 + 需要nums[i]填满背包的情况
+        // 种数 = 不需要nums[i]就可填满背包的情况数量 + 需要nums[i]填满背包的情况数量
         dp[i][j] = dp[i - 1][j] + dp[i - 1][j - nums[i]];
       }
     }
@@ -52,5 +56,4 @@ function findTargetSumWays(nums: number[], target: number): number {
 
   return dp[nums.length - 1][left];
 }
-findTargetSumWays([0, 0, 0, 0, 0, 0, 0, 0, 1], 1);
 // @lc code=end
