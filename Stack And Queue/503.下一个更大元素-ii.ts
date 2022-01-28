@@ -1,14 +1,22 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=503 lang=typescript
  *
- * [35] 搜索插入位置
+ * [503] 下一个更大元素 II
  */
+
+// @lc code=start
 function nextGreaterElements(nums: number[]): number[] {
   let signleStack = [0];
-  let result = [];
+  // 初始化数组所有元素为-1
+  // 因为最后遍历完成，stack中肯定剩一个最大数的下标
+  // 这里不用再单独给他这个下标赋值
+  // 同事如果数组所有数都相等，那么不会进入循环，每个元素都不存在比它大的数，都是-1，直接可以返回
+  let result = new Array(nums.length).fill(-1);
 
+  // 循环数组，相当于数组走两遍，所有nums.length要乘以2
   for (let i = 1; i < nums.length * 2; i++) {
     // 当前元素找到正确的位置
+    // 这里面所有的下标i都要求余数 %nums.length，避免下标越界
     while (
       signleStack.length > 0 &&
       nums[i % nums.length] > nums[signleStack[signleStack.length - 1]]
@@ -23,9 +31,7 @@ function nextGreaterElements(nums: number[]): number[] {
     signleStack.push(i % nums.length);
   }
 
-  let lastIndex = signleStack[0];
-  result[lastIndex] = -1;
   return result;
 }
-nextGreaterElements([1, 2, 1]);
+
 // @lc code=end
