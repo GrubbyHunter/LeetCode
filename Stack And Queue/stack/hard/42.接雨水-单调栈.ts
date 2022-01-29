@@ -1,8 +1,10 @@
 /*
- * @lc app=leetcode.cn id=35 lang=typescript
+ * @lc app=leetcode.cn id=42 lang=typescript
  *
- * [35] 搜索插入位置
+ * [42] 接雨水
  */
+
+// @lc code=start
 function trap(height: number[]): number {
   let singleStack = [0];
   let result = 0;
@@ -25,15 +27,15 @@ function trap(height: number[]): number {
         height[i] > height[singleStack[singleStack.length - 1]]
       ) {
         // 栈顶元素下标
-        let index: any = singleStack.pop();
+        let middleIndex: any = singleStack.pop();
         // 取出栈顶元素后，保证栈不为空，也就是栈的左边还有值，这样左右两边能把中间包住，才能蓄水
         if (singleStack.length > 0) {
-          // 宽度为当前元素下标到栈顶元素下标的距离
-          let w = i - index - 1;
+          // 宽度为当前元素（右边挡板）下标到栈顶元素（左边挡板）下标的距离
+          let w = i - singleStack[singleStack.length - 1] - 1;
           // 高度为左右两边中较矮的将去当前栈顶元素高度
           let h =
             Math.min(height[i], height[singleStack[singleStack.length - 1]]) -
-            height[index];
+            height[middleIndex];
           // 计算体积
           result += w * h;
         }
