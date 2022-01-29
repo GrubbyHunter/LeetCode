@@ -3,46 +3,38 @@
  *
  * [35] 搜索插入位置
  */
+/*
+ * @lc app=leetcode.cn id=42 lang=typescript
+ *
+ * [42] 接雨水
+ */
+
+// @lc code=start
 function trap(height: number[]): number {
-  let singleStack = [0];
-  let result = 0;
-
-  for (let i = 1; i < height.length; i++) {
-    let topIndex = singleStack[singleStack.length - 1];
-    // 小于栈顶元素，则继续push进降序单调栈
-    if (height[i] < height[topIndex]) {
-      singleStack.push(i);
-    } else if (height[i] < height[topIndex]) {
-      // 等于栈顶元素，现将栈顶元素下标推出
-      singleStack.pop();
-      // 将新的下标推入，因为计算宽度时候会使用下标，相当于更新下标（宽度）
-      singleStack.push(i);
-    } else {
-      // 大于栈顶元素，则栈顶元素的前一个元素和栈顶元素，再加上当前元素，形成一个凹槽
-      // 需要计算凹槽的体积
-      while (
-        singleStack.length > 0 &&
-        height[i] > height[singleStack[singleStack.length - 1]]
-      ) {
-        // 栈顶元素下标
-        let index: any = singleStack.pop();
-        // 取出栈顶元素后，保证栈不为空，也就是栈的左边还有值，这样左右两边能把中间包住，才能蓄水
-        if (singleStack.length > 0) {
-          // 宽度为当前元素下标到栈顶元素下标的距离
-          let w = i - index - 1;
-          // 高度为左右两边中较矮的将去当前栈顶元素高度
-          let h =
-            Math.min(height[i], height[singleStack[singleStack.length - 1]]) -
-            height[index];
-          // 计算体积
-          result += w * h;
-        }
-      }
-
-      singleStack.push(i);
-    }
+  const len = height.length;
+  if (len <= 2) return 0;
+  const maxLeft = new Array(len).fill(0);
+  const maxRight = new Array(len).fill(0);
+  // 记录每个柱子左边柱子最大高度
+  maxLeft[0] = height[0];
+  for (let i = 1; i < len; i++) {
+    maxLeft[i] = Math.max(height[i], maxLeft[i - 1]);
   }
+  // 记录每个柱子右边柱子最大高度
+  maxRight[len - 1] = height[len - 1];
+  for (let i = len - 2; i >= 0; i--) {
+    maxRight[i] = Math.max(height[i], maxRight[i + 1]);
+  }
+  // 求和
+  let sum = 0;
+  for (let i = 0; i < len; i++) {
+    let count = Math.min(maxLeft[i], maxRight[i]) - height[i];
+    if (count > 0) sum += count;
+  }
+  return sum;
+};
+trap([2, 1, 3])
+// @lc code=end
 
-  return result;
-}
+
 // @lc code=end
