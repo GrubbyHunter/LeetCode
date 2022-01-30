@@ -1,3 +1,8 @@
+/*
+* @lc app=leetcode.cn id=84 lang=typescript
+*
+* [84] 柱状图中最大的矩形
+*/
 
 // @lc code=start
 function largestRectangleArea(heights: number[]): number {
@@ -10,7 +15,10 @@ function largestRectangleArea(heights: number[]): number {
   for (let i = 1; i < size; i++) {
     let t = i - 1
     while (t >= 0 && heights[t] >= heights[i]) {
-      t--
+      // 这里当前t下标元素的高度大于等于heights[i]
+      // 那么下次计算直接从leftIndex[t]开始，也就是第一个比heights[t]低的元素
+      // 不需要一直t--，这样可以减少重复计算
+      t = leftIndex[t]
     }
     // 找到左边比他小的高度元素的下标，如果是-1，则左边所有元素都比他大
     // 如果左边所有元素都比他大，那么此时t=-1
@@ -20,7 +28,7 @@ function largestRectangleArea(heights: number[]): number {
   for (let i = size - 2; i >= 0; i--) {
     let t = i + 1
     while (t < size && heights[t] >= heights[i]) {
-      t++
+      t = rightIndex[t]
     }
     // 找到右边比他小的高度元素的下标，如果是-1，则右边所有元素都比他大
     // 如果有变速鱿鱼酥都比他大，那么t=size
@@ -37,6 +45,5 @@ function largestRectangleArea(heights: number[]): number {
 
   return sum
 };
-largestRectangleArea([1, 1])
 // @lc code=end
 
