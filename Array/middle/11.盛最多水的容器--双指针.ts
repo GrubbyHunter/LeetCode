@@ -1,3 +1,8 @@
+/*
+ * @lc app=leetcode.cn id=11 lang=typescript
+ *
+ * [11] 盛最多水的容器
+ */
 
 // @lc code=start
 function maxArea(height: number[]): number {
@@ -8,8 +13,10 @@ function maxArea(height: number[]): number {
 
   while (left < right) {
     let h = 0
+    // 宽度
     let w = right - left
 
+    // 使用较矮的高度畸形计算面积
     if (height[left] > height[right]) {
       h = height[right]
       right--
@@ -18,12 +25,11 @@ function maxArea(height: number[]): number {
       left++
     }
 
-
+    // 宽乘以高
     max = Math.max(max, h * w)
   }
 
   return max
 };
-maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7])
 // @lc code=end
 
