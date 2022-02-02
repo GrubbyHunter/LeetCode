@@ -1,3 +1,8 @@
+/*
+ * @lc app=leetcode.cn id=22 lang=typescript
+ *
+ * [22] 括号生成
+ */
 
 // @lc code=start
 function generateParenthesis(n: number): string[] {
@@ -27,6 +32,5 @@ function generateParenthesis(n: number): string[] {
   dfs(0, 0, "")
   return result
 };
-generateParenthesis(3)
 // @lc code=end
 
