@@ -1,4 +1,13 @@
+/*
+ * @lc app=leetcode.cn id=31 lang=typescript
+ *
+ * [31] 下一个排列
+ */
 
+// @lc code=start
+/**
+ Do not return anything, modify nums in-place instead.
+ */
 // @lc code=start
 function nextPermutation(nums: number[]): void {
   let i = nums.length - 2
@@ -11,13 +20,20 @@ function nextPermutation(nums: number[]): void {
     }
   }
 
-
+  if (i === -1) {
+    nums.sort((a, b) => a - b)
+    return
+  }
 
   let min = nums[i + 1], j = i + 1
   let index = j
-  // 找到i+1到length-1之间大于nums[i]且最小的数
+  // 找到i+1到length-1之间大于nums[i]且最小的数，记录下标index
   for (; j < nums.length; j++) {
     if (nums[j] > nums[i]) {
+      // 这里增加等于，如果两个一样的数，使用靠后的一个，避免影响排序
+      // 比如2133，这里如果1跟他后面的3直接换，那么变成了2313，这里13变成了升序
+      // 不符合最后一步将降序转化为升序的要求
+      // 所以需要先变成2331 => 2313
       if (nums[j] <= min) {
         index = j
         min = nums[j]
@@ -42,6 +58,5 @@ function nextPermutation(nums: number[]): void {
     right--
   }
 };
-nextPermutation([2, 3, 1, 3, 3])
 // @lc code=end
 
