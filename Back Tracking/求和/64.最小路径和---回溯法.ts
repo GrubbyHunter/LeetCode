@@ -1,3 +1,8 @@
+/*
+ * @lc app=leetcode.cn id=64 lang=typescript
+ *
+ * [64] 最小路径和
+ */
 
 // @lc code=start
 function minPathSum(grid: number[][]): number {
@@ -8,7 +13,7 @@ function minPathSum(grid: number[][]): number {
   const backTracking = (x: number, y: number, aSum: number): number => {
     let down = Number.MAX_SAFE_INTEGER
     let right = Number.MAX_SAFE_INTEGER
-    // 和加上当前的值
+    // 之前的和和加上当前的值
     let sum = aSum + grid[x][y]
 
     if (x === m - 1 && y === n - 1) {
@@ -36,6 +41,7 @@ function minPathSum(grid: number[][]): number {
     }
 
     let result = Math.min(down, right)
+
     // 结果减去之前的和 === x,y坐标到右下角的和
     cache[x][y] = result - aSum
 
@@ -45,6 +51,5 @@ function minPathSum(grid: number[][]): number {
 
   return backTracking(0, 0, 0)
 };
-minPathSum([[1, 3, 1], [1, 5, 1], [4, 2, 1]])
 // @lc code=end
 
