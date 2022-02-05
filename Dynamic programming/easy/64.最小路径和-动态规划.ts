@@ -1,3 +1,8 @@
+/*
+ * @lc app=leetcode.cn id=64 lang=typescript
+ *
+ * [64] 最小路径和
+ */
 
 // @lc code=start
 function minPathSum(grid: number[][]): number {
@@ -24,6 +29,5 @@ function minPathSum(grid: number[][]): number {
 
   return dp[m - 1][n - 1]
 };
-minPathSum([[1, 3, 1], [1, 5, 1], [4, 2, 1]])
 // @lc code=end
 
