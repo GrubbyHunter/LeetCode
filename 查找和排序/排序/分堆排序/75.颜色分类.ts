@@ -1,5 +1,13 @@
+/*
+ * @lc app=leetcode.cn id=75 lang=typescript
+ *
+ * [75] 颜色分类
+ */
 
 // @lc code=start
+/**
+ Do not return anything, modify nums in-place instead.
+ */
 function sortColors(nums: number[]): void {
   let left = 0, i = 0
   let right = nums.length - 1
@@ -20,6 +28,5 @@ function sortColors(nums: number[]): void {
     }
   }
 };
-sortColors([2, 0, 2, 1, 1, 0])
 // @lc code=end
 
