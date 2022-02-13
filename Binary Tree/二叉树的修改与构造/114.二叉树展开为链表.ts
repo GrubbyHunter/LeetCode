@@ -27,7 +27,7 @@ function flatten(root: TreeNode | null): void {
     return
   }
 
-  // 先处理left
+  // 后序遍历
   flatten(root.left)
   flatten(root.right)
 
@@ -41,6 +41,7 @@ function flatten(root: TreeNode | null): void {
     root = root.right
   }
   // 将原先的右子节点衔接到结尾，组成链表
+  // PS: 这里由于是后序遍历，衔接之前左子节点的右节点已经被处理过
   root.right = temp
 };
 // @lc code=end
