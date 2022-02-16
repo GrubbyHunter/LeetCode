@@ -1,45 +1,34 @@
-// @lc code=start
-class TreeNode {
-  val: number;
-  left: TreeNode | null;
-  right: TreeNode | null;
-  constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
-    this.val = val === undefined ? 0 : val;
-    this.left = left === undefined ? null : left;
-    this.right = right === undefined ? null : right;
+// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+function leastInterval(tasks: string[], n: number): number {
+  let map: any = {};
+  let maxCount = 0;
+  let maxSize = 0;
+
+  if (n === 0) {
+    return tasks.length;
   }
+
+  for (let task of tasks) {
+    if (map[task]) {
+      // 统计每种任务出现的数量
+      map[task] = map[task] + 1;
+      // 记录出现最多的任务次数
+      maxCount = Math.max(maxCount, map[task]);
+    } else {
+      map[task] = 1;
+    }
+  }
+
+  // 出现最多的有maxCount次，记录有maxCount次的任务个数
+  for (let key in map) {
+    if (map[key] === maxCount) {
+      maxSize++;
+    }
+  }
+
+  let result = (maxCount - 1) * (n + 1) + maxSize;
+
+  return Math.max(result, tasks.length);
 }
-
-function maxPathSum(root: TreeNode | null): number {
-  let max = Number.MIN_SAFE_INTEGER;
-
-  const endTraversal = (tree: TreeNode | null): number => {
-    //base case
-    if (!tree) return 0;
-
-    //divide
-    // 如果子树路径和为负则应当置0，表示最大路径不包含子树
-    // dfs(root.left) 根节点 + 左子树的和
-    // dfs(root.right) 根节点 + 右子树的和
-    let left = Math.max(0, endTraversal(tree.left));
-    let right = Math.max(0, endTraversal(tree.right));
-
-    // 判断在该节点包含左右子树的路径和是否大于当前最大路径和
-    max = Math.max(max, tree.val + left + right);
-
-    // 返回大的那个节点作为一端 + 根节点的值，即路径和大到边
-    return Math.max(left, right) + tree.val;
-  };
-
-  endTraversal(root);
-
-  return max;
-}
-maxPathSum(
-  new TreeNode(
-    -2,
-    new TreeNode(-1)
-    // new TreeNode(20, new TreeNode(15), new TreeNode(7))
-  )
-);
+leastInterval(["A", "A", "A", "B", "B", "B"], 2);
 // @lc code=end
