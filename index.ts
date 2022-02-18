@@ -1,50 +1,42 @@
 // @lc code=startfunction leastInterval(tasks: string[], n: number): number {
-class TreeNode {
-  val: number;
-  left: TreeNode | null;
-  right: TreeNode | null;
-  constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
-    this.val = val === undefined ? 0 : val;
-    this.left = left === undefined ? null : left;
-    this.right = right === undefined ? null : right;
-  }
-}
-function pathSum(root: TreeNode | null, targetSum: number): number {
+function coinChange(coins: number[], amount: number): number {
   let count = 0;
+  // 降序排列
+  coins.sort((a, b) => b - a);
 
-  let middleTraversal = (tree: TreeNode | null, sum: number) => {
-    if (!tree) {
-      return;
+  if (amount === 0) {
+    return count;
+  }
+
+  const backTracking = (sum: number, index: number) => {
+    if (sum === 0) {
+      return true;
     }
-    let result = sum + tree.val;
 
-    if (result === targetSum) {
-      count++;
+    let size = Math.floor(sum / coins[index]);
+
+    for (let i = size; i > 0; i--) {
+      if (sum < coins[i]) {
+        continue;
+      }
+
+      count += a;
+      sum = sum - a * coins[i];
+
+      if (backTracking(sum, index)) {
+        return true;
+      }
+
+      count--;
+      sum = sum + coins[i];
     }
 
-    middleTraversal(tree.left, result);
-    middleTraversal(tree.right, result);
-
-    middleTraversal(tree.left, tree.val);
-    middleTraversal(tree.right, tree.val);
+    return false;
   };
 
-  middleTraversal(root, 0);
+  backTracking(amount, 0);
 
-  return count;
+  return count === 0 ? -1 : count;
 }
-
-// pathSum(
-//   new TreeNode(
-//     10,
-//     new TreeNode(
-//       5,
-//       new TreeNode(3, new TreeNode(3), new TreeNode(-2)),
-//       new TreeNode(2, null, new TreeNode(1))
-//     ),
-//     new TreeNode(-3, null, new TreeNode(11))
-//   ),
-//   8
-// );
-pathSum(new TreeNode(1, new TreeNode(2), null), 2);
+coinChange([186, 419, 83, 408], 6249);
 // @lc code=end
