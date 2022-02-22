@@ -1,59 +1,42 @@
 // @lc code=startfunction leastInterval(tasks: string[], n: number): number {
-function findOrder(numCourses: number, prerequisites: number[][]): number[] {
-  let inArr = new Array(numCourses).fill(0);
-  let map = new Map();
+function decodeString(s: string): string {
+  let arr = s.split("]");
+  let leftStr = arr[0];
+  let rightArr = arr.slice(1);
 
-  for (let i = 0; i < prerequisites.length; i++) {
-    // 统计入度值
-    inArr[prerequisites[i][0]]++;
+  const handleStr = (
+    str: string,
+    count: number,
+    rightArr: string[]
+  ): string => {
+    let result = "";
+    let right = rightArr.pop();
+    let strEndIndex = 0;
+    let numberEndIndex = 0;
 
-    // 统计出度
-    let result = map.get(prerequisites[i][1]);
-    if (result) {
-      map.get(prerequisites[i][1]).push(prerequisites[i][0]);
-    } else {
-      map.set(prerequisites[i][1], [prerequisites[i][0]]);
-    }
-  }
-
-  let queue: number[] = [];
-
-  // 入度为0的，也就是起始位置，放入队列
-  for (let i = 0; i < inArr.length; i++) {
-    if (inArr[i] === 0) {
-      queue.push(i);
-    }
-  }
-
-  let result: any = [];
-  // 入度为0的作为起点开始遍历
-  while (queue.length > 0) {
-    // 入度为0的作为起点开始遍历
-    let start = queue.shift();
-    result.push(start);
-
-    // 下一个可以学的课程列表
-    let nextArr: any = map.get(start) || [];
-
-    for (let i = 0; i < nextArr.length; i++) {
-      let index = nextArr[i];
-
-      if (inArr[index]) {
-        inArr[index]--;
+    for (let i = 0; i < str.length; i++) {
+      if (strEndIndex === 0 && Number.isInteger(parseInt(str[i]))) {
+        strEndIndex = i;
       }
-
-      // 入度为0，可以作为起点
-      if (inArr[index] === 0) {
-        queue.push(index);
+      if (str[i] === "[") {
+        numberEndIndex = i;
+        break;
       }
     }
-  }
+    let left = str.substring(0, strEndIndex);
+    let childCount = parseInt(str.substring(strEndIndex, numberEndIndex));
 
-  return result.length === numCourses ? result : [];
+    for (let i = 0; i < count; i++) {
+      result +=
+        left +
+        handleStr(str.substring(0, strEndIndex), childCount, rightArr) +
+        right;
+    }
+
+    return result;
+  };
+
+  return handleStr(leftStr, 1, rightArr);
 }
-findOrder(3, [
-  [1, 0],
-  [1, 2],
-  [0, 1],
-]);
+decodeString("3[a]2[bc]");
 // @lc code=end
