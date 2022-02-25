@@ -1,94 +1,83 @@
 // @lc code=startfunction leastInterval(tasks: string[], n: number): number {
-<<<<<<< HEAD
-function numIslands(grid: string[][]): number {
-  let count = 0
-
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[i].length; j++) {
-      if (grid[i][j] === "0") {
-        continue
-      }
-
-      if (i === 0 && j === 0) {
-        count++
-        continue
-      }
-
-      if (i === 0) {
-        if (j = grid[i].length - 1) {
-          if (grid[i][j - 1] === "0" && grid[i + 1][j] === "0") {
-            count++
-          }
-        } else {
-          if (grid[i][j - 1] === "0") {
-            count++
-          }
-        }
-        continue
-      }
-
-      if (j === 0) {
-        if (i === grid.length - 1) {
-          if (grid[i - 1][j] === "0" && grid[i][j + 1] === "0") {
-            count++
-          }
-        } else {
-          if (grid[i - 1][j] === "0") {
-            count++
-          }
-        }
-        continue
-      }
-
-      if (grid[i - 1][j] === "0" && grid[i][j - 1] === "0") {
-        count++
-      }
-    }
-  };
-  return count
-}
-numIslands([["1", "1", "0", "0", "0"], ["1", "1", "0", "0", "0"], ["0", "0", "1", "0", "0"], ["0", "0", "0", "1", "1"]]
-)
-=======
-function decodeString(s: string): string {
-  let arr = s.split("]");
-  let leftStr = arr[0];
-  let rightArr = arr.slice(1);
-
-  const handleStr = (
-    str: string,
-    count: number,
-    rightArr: string[]
-  ): string => {
-    let result = "";
-    let right = rightArr.pop();
-    let strEndIndex = 0;
-    let numberEndIndex = 0;
-
-    for (let i = 0; i < str.length; i++) {
-      if (strEndIndex === 0 && Number.isInteger(parseInt(str[i]))) {
-        strEndIndex = i;
-      }
-      if (str[i] === "[") {
-        numberEndIndex = i;
-        break;
-      }
-    }
-    let left = str.substring(0, strEndIndex);
-    let childCount = parseInt(str.substring(strEndIndex, numberEndIndex));
-
-    for (let i = 0; i < count; i++) {
-      result +=
-        left +
-        handleStr(str.substring(0, strEndIndex), childCount, rightArr) +
-        right;
+function calcEquation(equations: string[][], values: number[], queries: string[][]): number[] {
+  let map = new Map()
+  let valueMap = new Map()
+  let result: any = []
+  let sum = 1.0
+  let hadFind: any = []
+  const findResult = (start: string, nextList: string[], end: string): number => {
+    if (hadFind.indexOf(start) > -1) {
+      return -1
     }
 
-    return result;
-  };
+    if (!nextList) {
+      return -1
+    }
+    // 一招过的元素追加进数组，避免死循环
+    hadFind.push(start)
 
-  return handleStr(leftStr, 1, rightArr);
-}
-decodeString("3[a]2[bc]");
->>>>>>> d4485f39b5025ee47c9d77ca9e5e6780a16ef320
-// @lc code=end
+    if (nextList.indexOf(end) > -1) {
+      sum *= valueMap.get(`${start}${end}`)
+      return sum
+    }
+
+    for (let i = 0; i < nextList.length; i++) {
+      if (!map.get(nextList[i])) {
+        continue
+      }
+
+      sum *= valueMap.get(`${start}${nextList[i]}`)
+      let next = findResult(nextList[i], map.get(nextList[i]), end)
+      if (next !== -1) {
+        return next
+      }
+
+      sum /= valueMap.get(`${start}${nextList[i]}`)
+    }
+    return -1
+  }
+
+  for (let i = 0; i < equations.length; i++) {
+    let current = equations[i]
+
+    // 记录下一个元素
+    if (!map.get(current[0])) {
+      map.set(current[0], [current[1]])
+    } else {
+      map.get(current[0]).push(current[1])
+    }
+
+    // 记录值
+    valueMap.set(`${current[0]}${current[1]}`, values[i])
+  }
+
+  for (let i = 0; i < queries.length; i++) {
+    let cur = queries[i]
+    if (cur[0] === cur[1]) {
+      result.push(1.0)
+      continue
+    }
+
+    if (valueMap.get(`${cur[0]}${cur[1]}`)) {
+      result.push(valueMap.get(`${cur[0]}${cur[1]}`))
+      continue
+    }
+
+    if (valueMap.get(`${cur[1]}${cur[0]}`)) {
+      result.push(1 / valueMap.get(`${cur[1]}${cur[0]}`))
+      continue
+    }
+    // 重置sum
+    sum = 1.0
+    // 重置统计的已遍历数组
+    hadFind = []
+    result.push(findResult(cur[0], map.get(cur[0]), cur[1]))
+  }
+
+  return result
+};// @lc code=end
+calcEquation([["a", "b"], ["b", "c"]]
+  ,
+  [2.0, 3.0]
+  ,
+  [["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"]])
