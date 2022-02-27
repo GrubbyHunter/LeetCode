@@ -1,26 +1,78 @@
 // @lc code=startfunction leastInterval(tasks: string[], n: number): number {
-function searchMatrix(matrix: number[][], target: number): boolean {
-  let i = matrix.length - 1
+class TreeNode {
+  // 一个有26个子节点（26个字母）的树
+  children: TreeNode[] | []
+  val: string | null
+  isEnd: boolean // 判断是否叶子结点，也就是一个单词的结尾
+  constructor(val?: string) {
+    this.children = new Array(26)
+    this.val = val || null
+    this.isEnd = false
+  }
+}
 
-  // 左下角第一个元素是当前列最大元素，也是当前行最小元素
-  // 所以先通过每一列第一个元素确定target在哪一行
-  while (matrix[i][0] > target && i >= 0) {
-    i--
+class Trie {
+  private root: TreeNode
+  constructor() {
+    this.root = new TreeNode()
   }
 
-  // 越界，比matrix[0][0]还小
-  if (i < 0) {
-    return false
-  }
+  insert(word: string): void {
+    let temp = this.root
 
-  // 找到哪一行后，遍历当前行找到是否属于此行
-  for (let j = 0; j < matrix[0].length; j++) {
-    if (matrix[i][j] === target) {
-      return true
+    for (let i = 0; i < word.length; i++) {
+      // 下标
+      let index = word[i].charCodeAt(0) - 97
+      // 当前字母不存在，将当前字母在当前节点生成一个新的子节点
+      if (!temp.children[index]) {
+        temp.children[index] = new TreeNode(word[i])
+      }
+      // 当前字母作为temp，继续遍历下一个字母
+      temp = temp.children[index]
+
     }
+    // 插入一个单词，将他的结尾标记一下
+    temp.isEnd = true
   }
 
-  // 当前行找不到，则不存在
-  return false
-};// @lc code=end
-searchMatrix([[1, 4, 7, 11, 15], [2, 5, 8, 12, 19], [3, 6, 9, 16, 22], [10, 13, 14, 17, 24], [18, 21, 23, 26, 30]], 5)
+  search(word: string): boolean {
+    let temp = this.root
+
+    for (let i = 0; i < word.length; i++) {
+      // 下标
+      let index = word[i].charCodeAt(0) - 97
+      // 当前字母不存在，将当前字母在当前节点生成一个新的子节点
+      if (!temp.children[index]) {
+        return false
+      } else {
+        // 当前字母作为temp，继续遍历下一个字母
+        temp = temp.children[index]
+      }
+    }
+    // search的话，找到最后，一定要是最后一个字母，才算找到
+    return temp.isEnd
+  }
+
+  startsWith(prefix: string): boolean {
+    let temp = this.root
+
+    for (let i = 0; i < prefix.length; i++) {
+      // 下标
+      let index = prefix[i].charCodeAt(0) - 97
+      // 当前字母不存在，将当前字母在当前节点生成一个新的子节点
+      if (!temp.children[index]) {
+        return false
+      } else {
+        // 当前字母作为temp，继续遍历下一个字母
+        temp = temp.children[index]
+      }
+    }
+    // 前缀的话，只要遍历完成计算找到
+    return true
+  }
+}
+// @lc code=end
+let a = new Trie()
+a.insert("app")
+a.search("app")
+a.startsWith("ap")
