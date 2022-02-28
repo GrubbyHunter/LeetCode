@@ -1,4 +1,9 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=85 lang=typescript
+ *
+ * [85] 最大矩形
+ */
+
 // @lc code=start
 function maximalRectangle(matrix: string[][]): number {
   // 寻找柱状图中最大的矩阵面积，参考leetcode 84题
@@ -13,6 +18,8 @@ function maximalRectangle(matrix: string[][]): number {
     // 从i开始遍历，因为leftArr[0]左边没有元素，一定是-1
     for (let i = 1; i < arr.length; i++) {
       let t = i - 1
+      // 这里强调一定要找到比arr[i]矮的，跟他相等的也不行
+      // 因为跟他相等的也可以容纳它的高度，跟比他高的一样的效果
       while (t >= 0 && arr[t] >= arr[i]) {
         // i-1下标的元素大于i下标的元素
         // 那么找到第一个比arr[t]小的元素的下标leftArr[t]，继续与arr[i]比较
@@ -43,6 +50,7 @@ function maximalRectangle(matrix: string[][]): number {
 
     return max
   }
+
   // 记录每一行的高度
   let max = 0
   let heightArr = new Array(matrix[0].length).fill(0)
@@ -61,5 +69,5 @@ function maximalRectangle(matrix: string[][]): number {
 
   return max
 };
-maximalRectangle([["1", "0", "1", "0", "0"], ["1", "0", "1", "1", "1"], ["1", "1", "1", "1", "1"], ["1", "0", "0", "1", "0"]]
-)
+// @lc code=end
+
