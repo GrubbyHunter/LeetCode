@@ -1,4 +1,9 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=69 lang=typescript
+ *
+ * [69] x 的平方根 
+ */
+
 // @lc code=start
 function mySqrt(x: number): number {
   if (x === 1) {
@@ -25,4 +30,5 @@ function mySqrt(x: number): number {
   // 由于题目要求向下取整，所以取
   return min
 };
-mySqrt(8)
+// @lc code=end
+
