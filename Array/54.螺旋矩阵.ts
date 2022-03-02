@@ -1,4 +1,9 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=54 lang=typescript
+ *
+ * [54] 螺旋矩阵
+ */
+
 // @lc code=start
 function spiralOrder(matrix: number[][]): number[] {
   let m = matrix.length
@@ -21,14 +26,14 @@ function spiralOrder(matrix: number[][]): number[] {
     // 遍历完右边 r-1
     r--
 
-    // 遍历下边
-    for (let i = r; i >= l; i--) {
+    // 遍历下边，增加条件up <= down，避免数组越界
+    for (let i = r; i >= l && up <= down; i--) {
       result.push(matrix[down][i])
     }
     down--
 
-    // 遍历左边
-    for (let i = down; i >= up; i--) {
+    // 遍历左边，增加条件l <= r，避免数组越界
+    for (let i = down; i >= up && l <= r; i--) {
       result.push(matrix[i][l])
     }
     l++
@@ -36,4 +41,5 @@ function spiralOrder(matrix: number[][]): number[] {
 
   return result
 };
-spiralOrder([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+// @lc code=end
+
