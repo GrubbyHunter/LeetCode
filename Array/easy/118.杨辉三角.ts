@@ -1,4 +1,9 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=118 lang=typescript
+ *
+ * [118] 杨辉三角
+ */
+
 // @lc code=start
 function generate(numRows: number): number[][] {
   let first = [1]
@@ -31,4 +36,5 @@ function generate(numRows: number): number[][] {
 
   return result
 };
-generate(5)
+// @lc code=end
+
