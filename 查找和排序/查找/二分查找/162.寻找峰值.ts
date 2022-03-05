@@ -1,4 +1,9 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=162 lang=typescript
+ *
+ * [162] 寻找峰值
+ */
+
 // @lc code=start
 function findPeakElement(nums: number[]): number {
   let left = 0
@@ -15,8 +20,13 @@ function findPeakElement(nums: number[]): number {
       // 当前元素右边比他小，那么山顶在左边
       right = mid
     }
+
+    // 这里注意两点，如果右边一直比左边大，找到最后衣蛾元素，也算峰顶
+    // 题目注释不存在nums[i] === nums[i+1]的情况，所以不用处理等于
   }
 
+  // 最后left等于right，返回其中一个即可
   return left
 };
-findPeakElement([1, 2, 3, 1])
+// @lc code=end
+
