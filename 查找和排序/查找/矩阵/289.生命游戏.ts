@@ -1,5 +1,13 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=289 lang=typescript
+ *
+ * [289] 生命游戏
+ */
+
 // @lc code=start
+/**
+ Do not return anything, modify board in-place instead.
+ */
 function gameOfLife(board: number[][]): void {
   let row = board.length
   let col = board[0].length
@@ -65,4 +73,5 @@ function gameOfLife(board: number[][]): void {
     }
   }
 };
-gameOfLife([[0, 1, 0], [0, 0, 1], [1, 1, 1], [0, 0, 0]])
+// @lc code=end
+
