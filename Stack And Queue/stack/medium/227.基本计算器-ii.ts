@@ -1,8 +1,15 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=227 lang=typescript
+ *
+ * [227] 基本计算器 II
+ */
+
 // @lc code=start
 function calculate(s: string): number {
   // 先转化为数组
   let stack: any = []
+  // 默认标记为+。让他降低一个数组push到数组
+  // 12也可以理解为+12
   let sign = "+"
   let num = 0
   s = s.trim()
@@ -14,6 +21,7 @@ function calculate(s: string): number {
       num = num * 10 + parseInt(s[i], 10)
     }
 
+    // 空格不纳入计算，同时如果是最后一个元素，也需要添加进去计算
     if ((s.charAt(i) < "0" && s[i] !== " ") || i === s.length - 1) {
       if (sign === "+") {
         // 将之前统计的结果，也就是符号之前的数字存入栈
@@ -24,9 +32,14 @@ function calculate(s: string): number {
       } else if (sign === "*" || sign === "/") {
         // 乘法和除法，需要优先计算，计算完结果，放入栈
         // 这里num是上一个数，而只有上一个元素是运算符才能进到这里来
-        num = sign === "*" ? stack.pop() * num : stack.pop() / num
-        num = num > 0 ? Math.floor(num) : Math.round(num)
-        stack.push(num)
+        let temp = stack.pop()
+        let isNegative = temp < 0
+        // 因为有限乘法和除法，所以temp/num的结果要向下取整
+        temp = Math.abs(temp)
+        num = sign === "*" ? temp * num : Math.floor(temp / num)
+
+        // temp本身小于0，放回stack中的结果也要小于0
+        stack.push(isNegative ? -num : num)
       }
 
       // 计算完一个数之后重置num，统计下一个数
@@ -39,6 +52,5 @@ function calculate(s: string): number {
   // 计算stack中元素的和
   return stack.reduce((prev: number, curr: number) => prev + curr);
 };
+// @lc code=end
 
-
-calculate("14-3/2")
