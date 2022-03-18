@@ -1,66 +1,51 @@
 // @lc code=startfunction leastInterval(tasks: string[], n: number): number {
 // @lc code=start
-function threeSumClosest(nums: number[], target: number): number {
-  // 数组生序排
-  nums.sort((a: number, b: number) => a - b)
+class ListNode {
+  val: number
+  next: ListNode | null
+  constructor(val?: number, next?: ListNode | null) {
+    this.val = (val === undefined ? 0 : val)
+    this.next = (next === undefined ? null : next)
+  }
+}
 
-  if (nums.length < 0) {
-    return 0
+function rotateRight(head: ListNode | null, k: number): ListNode | null {
+  let startNode = head.next
+  let quick = head
+  let slow = head
+
+  if (!head || !head.next) {
+    return null
   }
 
-  if (nums.length === 3) {
-    return nums[0] + nums[1] + nums[2]
+  // 快指针先走 k 步
+  while (k > 0) {
+    // 还没走到k步已经走到结尾，说明k大于链表长度，直接返回原始链表
+    if (!quick || !quick.next) {
+      return head
+    }
+    quick = quick.next
+    k--
   }
 
-  // 获取距离target更近的那个结果
-  const getResult = (a: number, b: number): number => {
-    if (Math.abs(target - a) > Math.abs(target - b)) {
-      return b
-    }
-
-    return a
-  }
-  let preSum: number = Number.MIN_SAFE_INTEGER
-  let result: number = Number.MIN_SAFE_INTEGER
-
-  const backTracking = (i: number, size: number, sum: number): void => {
-    if (result !== Number.MIN_SAFE_INTEGER) {
-      return
-    }
-
-    if (size === 3) {
-      if (sum === target) {
-        result = sum
-        return
-      }
-
-      if (sum > target && preSum < target) {
-        result = getResult(preSum, sum)
-        return
-      }
-
-      if (sum < target && preSum > target) {
-        result = getResult(preSum, sum)
-        return
-      }
-
-      preSum = sum
-      return
-    }
-
-
-
-    for (; i < nums.length; i++) {
-      sum += nums[i]
-      backTracking(i + 1, size + 1, sum)
-      sum -= nums[i]
-    }
+  // 快慢指针一起走，找到倒数第k个节点为slow
+  while (slow && slow.next && quick && quick.next) {
+    quick = quick.next
+    slow = slow.next
   }
 
-  backTracking(0, 0, 0)
+  // slow为倒数k+1个元素，slow为倒数第k个元素，他作为新的起点元素
+  let firstNode = slow.next
 
-  return result === Number.MIN_SAFE_INTEGER ? preSum : result
+  // 将倒数第k-1个元素的next清空，让它变成最后一个元素
+  slow.next = null
+  // quick为原始链表的结尾，然他跟原始链表的头部连起来
+  quick.next = startNode
+
+  head.next = firstNode
+  return head
 };
 
-
-threeSumClosest([1, 2, 4, 8, 16, 32, 64, 128], 82)
+rotateRight(new ListNode(
+  null, new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))))
+), 2)
