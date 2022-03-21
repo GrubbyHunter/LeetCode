@@ -1,9 +1,15 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=318 lang=typescript
+ *
+ * [318] 最大单词长度乘积
+ */
+
 // @lc code=start
 function maxProduct(words: string[]): number {
   const arrMap = new Map()
   let max = 0
 
+  // 判断当前str与下标为i的单词中是否有重复字母
   const hadSameLetter = (i: number, str: string): boolean => {
     let targetArr = arrMap.get(i)
 
@@ -21,6 +27,7 @@ function maxProduct(words: string[]): number {
     let arr = new Array(26).fill(0)
 
     for (let j = 0; j < word.length; j++) {
+      // 字母的ascii code作为key存入数组，数字下标为1表示当前ASCII code下标有这个字母
       arr[word.charCodeAt(j) - 97] = 1
     }
 
@@ -30,6 +37,7 @@ function maxProduct(words: string[]): number {
 
   for (let i = 0; i < words.length; i++) {
     for (let j = i + 1; j < words.length; j++) {
+      // 有重复字母，过滤
       if (hadSameLetter(i, words[j])) {
         continue
       }
@@ -40,4 +48,5 @@ function maxProduct(words: string[]): number {
 
   return max
 };
-maxProduct(["abcw", "baz", "foo", "bar", "xtfn", "abcdef"])
+// @lc code=end
+
