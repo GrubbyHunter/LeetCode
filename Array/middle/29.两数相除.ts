@@ -62,10 +62,8 @@ function divide(dividend: number, divisor: number): number {
         // count也要变小
         count--
       }
-
     }
   }
-
 
   // 两数一整一负，那么需要在结果前面加负号
   if (dividend > 0 && divisor < 0) {
