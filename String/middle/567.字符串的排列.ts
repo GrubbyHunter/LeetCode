@@ -1,4 +1,9 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=567 lang=typescript
+ *
+ * [567] 字符串的排列
+ */
+
 // @lc code=start
 function checkInclusion(s1: string, s2: string): boolean {
   if (s1.length > s2.length) {
@@ -45,4 +50,4 @@ function checkInclusion(s1: string, s2: string): boolean {
 
   return false;
 }
-checkInclusion("adc", "dcda");
+// @lc code=end
