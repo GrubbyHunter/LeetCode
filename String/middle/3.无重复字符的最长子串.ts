@@ -1,4 +1,9 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=3 lang=typescript
+ *
+ * [3] 无重复字符的最长子串
+ */
+
 // @lc code=start
 function lengthOfLongestSubstring(s: string): number {
   let map = new Map();
@@ -26,8 +31,7 @@ function lengthOfLongestSubstring(s: string): number {
       // 记录新的下标
       map.set(index, i);
 
-      // 处理上一个出现位置之前记录的下标，重置为未记录状态，例如"bacada"
-      // i = 3时候，需要把第一个啊，preIndex = 1之前记录的下标清空，不进行统计
+      // 处理上一个出现位置之前记录的下标
       for (let key of map.keys()) {
         if (map.get(key) < preIndex) {
           map.set(key, undefined);
@@ -40,4 +44,4 @@ function lengthOfLongestSubstring(s: string): number {
 
   return max;
 }
-lengthOfLongestSubstring("abcabcbb");
+// @lc code=end
