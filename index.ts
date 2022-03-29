@@ -1,43 +1,41 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
-// @lc code=start
-function lengthOfLongestSubstring(s: string): number {
-  let map = new Map();
-  let max = 1;
-  let current = 0;
-
-  if (s.length === 0) {
-    return 0;
+class TreeNode {
+  val: number;
+  left: TreeNode | null;
+  right: TreeNode | null;
+  constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+    this.val = val === undefined ? 0 : val;
+    this.left = left === undefined ? null : left;
+    this.right = right === undefined ? null : right;
   }
-
-  for (let i = 0; i < s.length; i++) {
-    // 当前字母对应的ASCII code作为下标
-    let index = s.charCodeAt(i);
-
-    // 当前字母没出现过
-    if (map.get(index) === undefined) {
-      // 记录下标，同时长度+1
-      map.set(index, i);
-      current++;
-    } else {
-      // 当前字母已经出现过，preIndex为他的上一个位置
-      let preIndex = map.get(index);
-      // 当前位置下标减去之前出现过来的位置下标 = 新的current长度
-      current = i - preIndex;
-      // 记录新的下标
-      map.set(index, i);
-
-      // 处理上一个出现位置之前记录的下标，重置为未记录状态，例如"bacada"
-      // i = 3时候，需要把第一个啊，preIndex = 1之前记录的下标清空，不进行统计
-      for (let key of map.keys()) {
-        if (map.get(key) < preIndex) {
-          map.set(key, undefined);
-        }
-      }
+}
+function pruneTree(root: TreeNode | null): TreeNode | null {
+  // 后序遍历
+  let bfs = (root: TreeNode | null): boolean => {
+    if (!root) {
+      return true;
     }
 
-    max = Math.max(max, current);
-  }
+    let isLeftZero = bfs(root.left);
+    let isRightZero = bfs(root.right);
 
-  return max;
+    if (isLeftZero) {
+      root.left = null;
+    }
+    if (isRightZero) {
+      root.right = null;
+    }
+
+    let bool = isLeftZero && isRightZero && root.val === 0;
+
+    if (bool) {
+      root = null;
+    }
+
+    return bool;
+  };
+
+  bfs(root);
+
+  return root;
 }
-lengthOfLongestSubstring("abcabcbb");
+pruneTree(new TreeNode(0, null, new TreeNode(0)));
