@@ -1,4 +1,9 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=2024 lang=typescript
+ *
+ * [2024] 考试的最大困扰度
+ */
+
 // @lc code=start
 function maxConsecutiveAnswers(answerKey: string, k: number): number {
   let getMax = (letter: string): number => {
@@ -16,10 +21,10 @@ function maxConsecutiveAnswers(answerKey: string, k: number): number {
         if (answerKey[left] === letter) {
           count--
         }
-        // 这里count--之后，左边再left--
-        // 因为区间实际上有k+1个T,left--后，区间又变成了k个T
+        // 这里count--之后，左边再left++
+        // 因为区间实际上有k+1个T,left++后，区间又变成了k个T
         // 同时，left也回到正确的位置(T后面第一个位置)
-        left--
+        left++
       }
 
       max = Math.max(max, right - left + 1)
@@ -29,4 +34,5 @@ function maxConsecutiveAnswers(answerKey: string, k: number): number {
 
   return Math.max(getMax('T'), getMax('F'))
 };
-maxConsecutiveAnswers("TFFT", 1);
+// @lc code=end
+
