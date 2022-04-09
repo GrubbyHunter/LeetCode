@@ -1,8 +1,13 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=994 lang=typescript
+ *
+ * [994] 腐烂的橘子
+ */
+
 // @lc code=start
 function orangesRotting(grid: number[][]): number {
   let sum = 0 // 统计总数
-  let minute = -1
+  let minute = -1 // 因为第一次遍历腐烂的橘子队列不统计时间，所以设置为-1，少算一分钟
   let queue: number[][] = [] // 统计当前层
   let m = grid.length, n = grid[0].length
 
@@ -33,6 +38,11 @@ function orangesRotting(grid: number[][]): number {
     }
   }
 
+  // 没有橘子，直接返回0
+  if (sum === 0) {
+    return 0
+  }
+
   while (queue.length > 0) {
     let currentLength = queue.length
     // 每分钟污染当前队列
@@ -49,9 +59,9 @@ function orangesRotting(grid: number[][]): number {
       handleItem(curX + 1, curY)
       handleItem(curX, curY - 1)
       handleItem(curX, curY + 1)
-
     }
   }
   return sum > 0 ? -1 : minute
 };
-orangesRotting([[2, 1, 1], [1, 1, 0], [0, 1, 1]]);
+// @lc code=end
+
