@@ -1,36 +1,34 @@
 // @lc code=startfunction leastInterval(tasks: string[], n: number): number {
 // @lc code=start
-function addStrings(num1: string, num2: string): string {
-  const getSum = (min: string, max: string): string => {
-    let str: string = ""
-    let preNum = 0
-    for (let i = 1; i <= max.length; i++) {
-      // 将字符串转化为数字
-      // 这里如果不是typesctipt可以使用 min.charAt(i) - "0" 将字符串转化为数字
-      let minVal: number = parseInt(min.charAt(min.length - i) || "0")
-      let maxVal: number = parseInt(max.charAt(max.length - i))
-      let result = minVal + maxVal + preNum
+function maxSubarraySumCircular(nums: number[]): number {
+  let max = Number.MIN_SAFE_INTEGER
+  let min = Number.MAX_SAFE_INTEGER
+  let sum = 0
+  let currentMax = 0
+  let currentMin = 0
 
-      if (result >= 10) {
-        result = result % 10
-      }
+  for (let i = 0; i < nums.length; i++) {
+    sum += nums[i]
+    currentMax = currentMax + nums[i]
+    currentMin = currentMin + nums[i]
 
-      str = result + str
-
-      if (minVal + maxVal + preNum >= 10) {
-        preNum = 1
-      } else {
-        preNum = 0
-      }
+    if (currentMax > max) {
+      max = currentMax
     }
 
-    if (preNum !== 0) {
-      str = preNum + str
+    if (currentMin < min) {
+      min = currentMin
     }
 
-    return str
+    if (currentMax < 0) {
+      currentMax = 0
+    }
+
+    if (currentMin > 0) {
+      currentMin = 0
+    }
   }
 
-  return num1.length > num2.length ? getSum(num2, num1) : getSum(num1, num2)
+  return max > 0 ? Math.max(max, sum - min) : max;
 };
-addStrings("584", "18");
+maxSubarraySumCircular([-3, -2, -3]);
