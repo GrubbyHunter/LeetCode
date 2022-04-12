@@ -1,4 +1,9 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=316 lang=typescript
+ *
+ * [316] 去除重复字母
+ */
+
 // @lc code=start
 function removeDuplicateLetters(s: string): string {
   let indexArr = new Array(26).fill(0)
@@ -38,4 +43,5 @@ function removeDuplicateLetters(s: string): string {
   }
   return stack.join("")
 };
-removeDuplicateLetters("abacb")
+// @lc code=end
+
