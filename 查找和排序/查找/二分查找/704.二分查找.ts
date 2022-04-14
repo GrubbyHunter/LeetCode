@@ -1,4 +1,9 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=704 lang=typescript
+ *
+ * [704] 二分查找
+ */
+
 // @lc code=start
 function search(nums: number[], target: number): number {
   const binarySearch = (left: number, right: number): number => {
@@ -19,4 +24,5 @@ function search(nums: number[], target: number): number {
 
   return binarySearch(0, nums.length - 1)
 };
-search([-1, 0, 3, 5, 9, 12], 9)
+// @lc code=end
+
