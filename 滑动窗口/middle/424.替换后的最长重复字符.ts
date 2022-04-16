@@ -1,4 +1,9 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=424 lang=typescript
+ *
+ * [424] 替换后的最长重复字符
+ */
+
 // @lc code=start
 function characterReplacement(s: string, k: number): number {
   let result = 0
@@ -20,6 +25,7 @@ function characterReplacement(s: string, k: number): number {
 
     // k + 最多次数的字母，不足区间长度，说明k次不足已替换剩下的字母
     while (right - left + 1 > k + maxCnt) {
+
       // 移动完左边区间里移出元素的个数需要-1
       countArr[s.charCodeAt(left) - 65]--
       // 滑动窗口过大，需要移动左边
@@ -33,4 +39,5 @@ function characterReplacement(s: string, k: number): number {
 
   return result
 };
-characterReplacement("ABAA", 0)
+// @lc code=end
+
