@@ -1,4 +1,9 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=767 lang=typescript
+ *
+ * [767] 重构字符串
+ */
+
 // @lc code=start
 function reorganizeString(s: string): string {
   let result = new Array(s.length)
@@ -23,7 +28,7 @@ function reorganizeString(s: string): string {
   }
 
   const arrayObj = Array.from(map);
-  // 对map进行排序，优先处理出现次数最多的字母
+  // 对map进行降序排序，优先处理出现次数最多的字母
   arrayObj.sort(function (a, b) { return b[1] - a[1] })
 
   let index = 0 // 起始下标，从0开始先填充奇数位
@@ -35,7 +40,7 @@ function reorganizeString(s: string): string {
       index += 2
 
       // 超出下标之后，重置为偶数下标，继续填充偶数位
-      if (index > s.length) {
+      if (index >= s.length) {
         // 这里由于maxCount不到s.length的一半
         // 所以index=1时候肯定已经是后面的元素填充进来了，不会出现重复
         index = 1
@@ -45,4 +50,5 @@ function reorganizeString(s: string): string {
 
   return result.join("")
 };
-reorganizeString("aab")
+// @lc code=end
+
