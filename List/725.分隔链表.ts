@@ -1,14 +1,21 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
-// @lc code=start
-class ListNode {
-  val: number;
-  next: ListNode | null;
-  constructor(val?: number, next?: ListNode | null) {
-    this.val = val === undefined ? 0 : val;
-    this.next = next === undefined ? null : next;
-  }
-}
+/*
+ * @lc app=leetcode.cn id=725 lang=typescript
+ *
+ * [725] 分隔链表
+ */
 
+// @lc code=start
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
 function splitListToParts(
   head: ListNode | null,
   k: number
@@ -68,12 +75,4 @@ function splitListToParts(
 
   return result;
 }
-let head = new ListNode();
-head.next = new ListNode(1, new ListNode(2, new ListNode(3)));
-splitListToParts(
-  new ListNode(
-    1,
-    new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))
-  ),
-  2
-);
+// @lc code=end
