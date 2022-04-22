@@ -1,4 +1,9 @@
-// @lc code=startfunction leastInterval(tasks: string[], n: number): number {
+/*
+ * @lc app=leetcode.cn id=215 lang=typescript
+ *
+ * [215] 数组中的第K个最大元素
+ */
+
 // @lc code=start
 function findKthLargest(nums: number[], k: number): number {
   let minHeap = new Array()
@@ -91,4 +96,5 @@ function findKthLargest(nums: number[], k: number): number {
 
   return minHeap[0]
 };
-findKthLargest([-1, 2, 0], 1)
+// @lc code=end
+
