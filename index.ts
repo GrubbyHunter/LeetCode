@@ -1,39 +1,42 @@
 // @lc code=startfunction leastInterval(tasks: string[], n: number): number {
 // @lc code=start
-function permutation(s: string): string[] {
-  let result: string[] = []
-  let length: number = s.length
-  let used: any = {}
-  const backTracking = (str: string): void => {
-    if (str.length === length) {
-      result.push(str)
-      return
+function validPalindrome(s: string): boolean {
+  let left = 0, right = s.length - 1
+  let count = 0
+  while (left < right) {
+    if (count > 1) {
+      return false
     }
 
-    for (let i = 0; i < length; i++) {
-
-      // used[i - 1] === false，说明上一个节点没被使用，跟他是同一层级
-      // 需要进行去重
-      if (i > 0 && s[i] === s[i - 1] && !used[i - 1]) {
-        // 这里只是当前数和上一个数相等，需要跳过当前数，到下一个数在进行回溯
-        // 所以用continue只结束当前次遍历，而不是结束整个遍历
-        continue
-      }
-
-      // 已经被使用过，不再使用
-      if (used[i]) {
-        continue
-      }
-
-      used[i] = true
-      backTracking(str + s[i])
-      // 回溯
-      used[i] = false
+    if (left + 1 === right) {
+      return count > 1 ? false : true
     }
+
+    if (s[left] === s[right]) {
+      left++
+      right--
+      continue
+    }
+
+    if (s[left] === s[right - 1] && left < right - 1) {
+      right--
+      count++
+      continue
+    }
+
+    if (s[left + 1] === s[right] && left + 1 < right) {
+      left++
+      count++
+      continue
+    }
+
+    return false
   }
-  // 字符串先生序排序，以便相同的字母在一起，方便回溯时候s[i] === s[i - 1] 条件比较
-  s = s.split("").sort((a, b) => a.localeCompare(b)).join("")
-  backTracking("")
 
-  return result
+  if (count > 1) {
+    return false
+  }
+
+  return true
 };
+validPalindrome("ebcbbececabbacecbbcbe")
