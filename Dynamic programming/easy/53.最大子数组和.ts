@@ -6,23 +6,28 @@
 
 // @lc code=start
 function maxSubArray(nums: number[]): number {
-  // dp[i]的定义为下表为i的前i个元素的最大子序列值和
-  let dp = new Array(nums.length).fill(0);
-  let max = nums[0];
-  dp[0] = nums[0];
+  // dp[i]的定义：以i为结尾的最大连续子序列和
+
+  let dp = new Array(nums.length).fill(0)
+  let max = nums[0]
+
+  dp[0] = nums[0]
 
   for (let i = 1; i < nums.length; i++) {
+    // 之前i-1的和是负数，负数加上当前数肯定越加越小，所以dp[i]直接等于当前数
+    // 相当于负数把整个数组分成一段一段
     if (dp[i - 1] < 0) {
-      dp[i] = nums[i];
+      dp[i] = nums[i]
     } else {
-      dp[i] = nums[i] + dp[i - 1];
+      // 前面的和为正数，继续累加
+      dp[i] = dp[i - 1] + nums[i]
     }
-
-    max = Math.max(dp[i], max);
+    // 以最后一个数字为结尾的连续子序列和不一定是最大的
+    // 最大和可能只是其中的一段子序列，所以需要一个max
+    max = Math.max(max, dp[i])
   }
-  // 这里结果不是dp数组最后一个，而是max
-  // 因为dp[i]是记录的整个序列的最大值
-  // 重要：而实际上连续子数组的最大值可能是整个序列的其中一小段
+
+
   return max;
 }
 // @lc code=end
