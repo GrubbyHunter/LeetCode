@@ -8,7 +8,8 @@
 function longestCommonSubsequence(text1: string, text2: string): number {
   let arr1: string[] = text1.split("");
   let arr2: string[] = text2.split("");
-
+  // dp[i][j]的定义为从0到i-1的arr1字符长度和从0到j-1的arr2的字符串长度的最长公共子序列
+  // 这里初始化时候因为是从第0个元素开始比较，所以value可以初始化为0
   let dp = new Array(arr1.length + 1)
     .fill(0)
     .map(() => new Array(arr2.length + 1).fill(0));
