@@ -6,20 +6,18 @@
 
 // @lc code=start
 function maxProfit(prices: number[]): number {
-  // 初始化一个prices.length行，2列的二维数组
+  // dp[i]的定义为0到第i天获得的最大利润
+  // 由于第一天没有获得利润，所以默认填充0，dp[0]=0，后面的通过dp[0]递推
   let dp = new Array(prices.length).fill(0)
-  let min = prices[0]
-  // dp[i]为前i天的最大收益，第一天由于没法卖，所以dp[0] = 0
-  dp[0] = 0
+  // 记录当前0-i范围的最小价格
+  let min = dp[0]
 
   for (let i = 1; i < prices.length; i++) {
-    // 第i天的最大收益 = 前i-1天的最大收益和 当前价格 - i-1天的最小价格中
-    // 较大的那个值
+    // 今天的最大收益跟昨天的最大收益比
+    // 实际上就是在中个股票区间找到波峰和波谷，然后相减
     dp[i] = Math.max(dp[i - 1], prices[i] - min)
-    // 重新赋值最小值
-    if (prices[i] < min) {
-      min = prices[i]
-    }
+    //重新同级最小价格
+    min = Math.min(min, prices[i])
   }
 
   return dp[dp.length - 1]
