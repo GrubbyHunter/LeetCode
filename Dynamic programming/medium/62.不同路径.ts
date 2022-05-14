@@ -12,21 +12,20 @@ function uniquePaths(m: number, n: number): number {
   // 其他的点根据dp公式后面会update
   let dp: any = new Array(m).fill(1).map(() => new Array(n).fill(1))
 
+  // 横纵坐标起始都是1，从第2行第2列开始遍历
   let i = 1
   while (i < m) {
     let j = 1
 
     while (j < n) {
-      // 递归填充二维数组
-      // 第行第j列的走法数 = 他左边的点[i][j - 1]走法数 + 他上面的点 dp[i - 1][j]走法数 
-      // 因为只有这两个点能最终走到 [i, j]这个点
+      // 到达当前位置存在的种数等于他左边节点到他的种数和他上面节点到他的种数
       dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
       j++
     }
+
     i++
   }
 
-  // 计算m,n点因为是数组下标，所以需要-1
   return dp[m - 1][n - 1]
 };
 // @lc code=end
