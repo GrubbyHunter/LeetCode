@@ -7,17 +7,17 @@
 // @lc code=start
 function maxProfit(prices: number[]): number {
   let dp = new Array(prices.length).fill(0)
-  // dp[i] 为第i天整到的钱
-  dp[0] = 0
+  // dp[i] 为第i天挣到的钱
+  // 默认填充0，因为  第1天没挣到钱
 
+  // 相当于统计每个波谷到波峰的差价，然后进行累加
   for (let i = 1; i < prices.length; i++) {
-    // 如果价格小于前一天，name，今天挣不到钱，挣得的钱等于i-1天
-    if (prices[i] < prices[i - 1]) {
-      dp[i] = dp[i - 1]
-    } else {
-      // 如果价格大于前一天，可以卖出，卖出的钱为前一天挣的钱+今天挣的钱
-      // 可以理解为将股票今天卖了又买回来
+    if (prices[i] > prices[i - 1]) {
+      // 今天比前一天贵，则能挣到钱，计算之前的收益 + 今天赚到的钱
       dp[i] = dp[i - 1] + prices[i] - prices[i - 1]
+    } else {
+      // 今天加个不如前一天，则没法挣钱，就等于前一天的收益
+      dp[i] = dp[i - 1]
     }
   }
 
