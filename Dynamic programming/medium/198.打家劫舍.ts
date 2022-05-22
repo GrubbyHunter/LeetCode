@@ -13,13 +13,13 @@ function rob(nums: number[]): number {
     return Math.max(nums[0], nums[1])
   }
 
-  // dp[i] 表示一个房子中能偷到的最大值
   let dp = new Array(nums.length).fill(0)
   dp[0] = nums[0]
   dp[1] = Math.max(nums[0], nums[1])
 
+
   for (let i = 2; i < nums.length; i++) {
-    // 当前最大值 = 倒数第二个的最大值和倒数第三个最大值+当前值，两者中较大的一个
+    // 上一个最大值 or 上上一个最大值与当前金额的和
     dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i])
   }
 
