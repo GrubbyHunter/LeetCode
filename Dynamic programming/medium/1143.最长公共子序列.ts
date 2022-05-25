@@ -14,12 +14,12 @@ function longestCommonSubsequence(text1: string, text2: string): number {
     .fill(0)
     .map(() => new Array(arr2.length + 1).fill(0));
 
-  // 由于数组每次都是从第一个元素开始比较是否相同，所以i和j都从1开始方便计算
+  // 从1开始遍历
   for (let i = 1; i <= arr1.length; i++) {
     for (let j = 1; j <= arr2.length; j++) {
       // 当前两个字符相等，取两个数组的上一个字符，二维数组前一行和前一列的值 + 1
       if (arr1[i - 1] === arr2[j - 1]) {
-        dp[i][j] += dp[i - 1][j - 1] + 1;
+        dp[i][j] = dp[i - 1][j - 1] + 1
       } else {
         // 字符串不相等，但是当前数组的字符串可能与另一个数组的前一个字符串相等
         // 例如 abca 和acab
@@ -32,6 +32,7 @@ function longestCommonSubsequence(text1: string, text2: string): number {
       }
     }
   }
+
   return dp[arr1.length][arr2.length];
 }
 // @lc code=end
