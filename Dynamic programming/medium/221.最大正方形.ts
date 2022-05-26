@@ -26,7 +26,7 @@ function maximalSquare(matrix: string[][]): number {
 
   for (let i = 1; i < matrix.length; i++) {
     for (let j = 1; j < matrix[i].length; j++) {
-      // "0" 的边长都是0，不用计算
+      // 只处理1的部分
       if (matrix[i][j] === "1") {
         // 以坐标为i,j的点作为右下角的最大正方形
         // 边长取决于i,j的左边，上边以及左上边三个点作为右下角的最大正方形边长中的最小值
@@ -35,7 +35,7 @@ function maximalSquare(matrix: string[][]): number {
         // 参考图片 https://pic.leetcode-cn.com/8c4bf78cf6396c40291e40c25d34ef56bd524313c2aa863f3a20c1f004f32ab0-image.png
         dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1;
       }
-      maxSize = Math.max(maxSize, dp[i][j]);
+      maxSize = Math.max(maxSize, dp[i][j])
     }
   }
 
