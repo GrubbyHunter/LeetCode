@@ -36,11 +36,11 @@ function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
     for (let j = 1; j < n; j++) {
       if (obstacleGrid[i][j] === 1) {
         // 碰到障碍物，直接设置为0，这句可不写，因为之前初始化时候就是0
+        // 有障碍物，堵死了，无法行舟，直接设置为0种走法
         dp[i][j] = 0
-        continue
+      } else {
+        dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
       }
-      // 动态规划公式：当前节点 = 左边数量 + 上边数量
-      dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
     }
   }
 
