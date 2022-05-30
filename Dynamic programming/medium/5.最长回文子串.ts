@@ -16,20 +16,19 @@ function longestPalindrome(s: string): string {
   for (let i = s.length - 1; i >= 0; i--) {
     for (let j = i; j < s.length; j++) {
       if (s[i] !== s[j]) {
-        dp[i][j] = false;
+        dp[i][j] = false
       } else {
         if (j - i <= 1) {
-          dp[i][j] = true;
+          dp[i][j] = true
         } else {
-          dp[i][j] = dp[i + 1][j - 1];
+          dp[i][j] = dp[i + 1][j - 1]
         }
       }
 
-      if (dp[i][j]) {
-        if (j - i + 1 > maxLength) {
-          maxLength = j - i + 1;
-          resultStr = s.substring(i, j + 1);
-        }
+      // 如果是回文子串，与最大长度比较，是否需要重新统计赋值
+      if (dp[i][j] && j - i + 1 > maxLength) {
+        maxLength = j - i + 1
+        resultStr = s.substring(i, j + 1)
       }
     }
   }
