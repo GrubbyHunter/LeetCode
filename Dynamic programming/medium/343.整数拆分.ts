@@ -13,6 +13,7 @@ function integerBreak(n: number): number {
   dp[2] = 1 // 1 * 1
 
   for (let i = 3; i <= n; i++) {
+    // j与i相等时候，i-j为0，所以就不能等于i
     for (let j = 1; j < i; j++) {
       // 这里 获取dp[i]的所有方式：(i-1)*1,(i-2)*2,(i-3)*3, (i-3)*2*1等等
       // 我们把它归类为两种
