@@ -12,22 +12,17 @@ function wordBreak(s: string, wordDict: string[]): boolean {
   // 默认空字符串为true
   dp[0] = true
 
-  for (let i = 1; i < s.length + 1; i++) {
+  for (let i = 1; i <= s.length; i++) {
     for (let j = 0; j < wordDict.length; j++) {
-      // 当前字符串长度小于当前字典元素长度，不满足条件
-      if (i < wordDict[j].length) {
-        continue
-      }
-      // s[i]的长度字符中，j-i这段长度的字符串
-      let tempStr = s.slice(i - wordDict[j].length, i)
-      // j到i这段与当前字符串相等，同时0-j这段也就是dp[i - wordDict[j].length]字典能够满足
-      if (tempStr === wordDict[j] && dp[i - wordDict[j].length]) {
-        // 则0-i这段字典能够满足
+      let len = wordDict[j].length
+      // i长度大于等于当前字符串长度，表示背包有足够的容量放wordDict[j]  
+      // 当前i容量的背包不放wordDict[j]时候，当前字典能够满足
+      // 当前容量i放入wordDict[j]后，wordDict[j]与不放wordDict[j]的下标到结尾这之间的字符串相等
+      if (i >= len && dp[i - len] && s.substring(i - len, i) === wordDict[j]) {
         dp[i] = true
       }
     }
   }
-
   return dp[s.length]
 };
 // @lc code=end
