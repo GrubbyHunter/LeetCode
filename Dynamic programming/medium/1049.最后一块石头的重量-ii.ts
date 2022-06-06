@@ -13,23 +13,26 @@ function lastStoneWeightII(stones: number[]): number {
     sum += stones[i]
   }
 
-
   // 一半的和作为背包的容量
   halfSum = Math.floor(sum / 2)
 
   // dp[i]的定义为背包容量为i时候能放置数组最大的和
   let dp = new Array(halfSum + 1).fill(0)
-  // 解法类似 416.分割等和子集.ts
+  // 先遍历物品
   for (let i = 0; i < stones.length; i++) {
-    // j >= stones[i]表示当前容量足够放入i元素的值
+    // 再遍历背包，背包容量不能超过当前物品大小
     for (let j = halfSum; j >= stones[i]; j--) {
-      // 当前0到i个元素，存入容量为J的背包，和的最大值为dp[j]
-      // 不放i时候的最大值 dp[j - stones[i]] 加上i的值stones[i]
+      // 通过轮询，找到容量为j时候最多能放的大小
+      // dp[j - stones[i]]为背包容量是j - stones[i]时候·1最多能放的大小，此时，剩余容量还剩stones[i]
+      // 所以dp[j] 也可能是dp[j - stones[i]] 加上 stones[i]的大小，统计最大的一个
       dp[j] = Math.max(dp[j], dp[j - stones[i]] + stones[i])
     }
   }
 
-  return sum - 2 * dp[dp.length - 1]
+  // 一半的背包容量，最多能装dp[halfSum]，那么数组中剩下一半的和为sum - dp[halfSum]
+  // 同时剩下的一半的和一定大于等于dp[halfSum]，因为dp[halfSum]可能未装满
+  // sum - dp[halfSum] - dp[halfSum]即为最后碰撞后的剩余大小
+  return sum - 2 * dp[halfSum]
 };
 // @lc code=end
 
