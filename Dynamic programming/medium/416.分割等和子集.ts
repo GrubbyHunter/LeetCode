@@ -21,17 +21,15 @@ function canPartition(nums: number[]): boolean {
 
   // 和的一半，作为背包的容量，dp[i]的定义为背包容量为i时候能放置数组最大的和
   let dp = new Array(halfSum + 1).fill(0)
-
-  // 分别计算从第一个数到最后一个数，halfSum的容量最大能存放的和为多少
+  // 一个元素只能放一次，那么需要先遍历物品
   for (let i = 0; i < nums.length; i++) {
-    // j的容量如果币当前数值还小，没发存放，直接不进入循环
+    // 再遍历背包，，用单个物品计算当前背包的容量
+    // 背包容量要大于等于物品才能放物品
     for (let j = halfSum; j >= nums[i]; j--) {
-      // 如果能放入nums[i], 那么容量是j - nums[i] 的和为dp[j - nums[i]]
-      // dp[j - nums[i]] + 放入的第i个元素的值nums[i]，即为dp[j]
+      // 当前背包容量 = 之前同级的最大容量和放入nums[i]时候最大的容量
       dp[j] = Math.max(dp[j], dp[j - nums[i]] + nums[i])
     }
   }
-
   // halfSum容量的时候，值是否等于和的一半，是的话满足条件
   return dp[halfSum] === halfSum
 };
