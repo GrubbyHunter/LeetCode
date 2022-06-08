@@ -6,6 +6,7 @@
 
 // @lc code=start
 function minDistance(word1: string, word2: string): number {
+  // dp[i][j]的定义为以0到i-1范围和0到j-1范围的最长公共子序列长度
   let dp = new Array(word1.length + 1)
     .fill(0)
     .map(() => new Array(word2.length + 1).fill(0));
@@ -14,9 +15,9 @@ function minDistance(word1: string, word2: string): number {
   for (let i = 1; i <= word1.length; i++) {
     for (let j = 1; j <= word2.length; j++) {
       if (word1[i - 1] === word2[j - 1]) {
-        dp[i][j] = dp[i - 1][j - 1] + 1;
+        dp[i][j] = dp[i - 1][j - 1] + 1
       } else {
-        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1])
       }
     }
   }
