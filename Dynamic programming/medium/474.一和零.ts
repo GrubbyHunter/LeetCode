@@ -26,9 +26,7 @@ function findMaxForm(strs: string[], m: number, n: number): number {
     // 由于是通过i - zeroNum和j - oneNum完成递推，所以采用倒序遍历
     for (let i = m; i >= zeroNum; i--) {
       for (let j = n; j >= oneNum; j--) {
-        // 之前的最大值和放当前字符串的情况比较
-        // dp[i - zeroNum][j - oneNum]为不放当前字符串的数量，+1，即为加上当前字符串的数量
-        dp[i][j] = Math.max(dp[i][j], dp[i - zeroNum][j - oneNum] + 1);
+        dp[i][j] = Math.max(dp[i][j], dp[i - zeroNum][j - oneNum] + 1)
       }
     }
   }
