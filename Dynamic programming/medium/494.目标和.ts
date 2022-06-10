@@ -19,7 +19,8 @@ function findTargetSumWays(nums: number[], target: number): number {
     return 0;
   }
 
-  // 目标+和除以2为小数，无法满足条件
+  // left - (sum-left) = target => left = (target + sum)/2
+  // 目标+和无法被2整除的话，无法满足条件
   if ((target + sum) % 2 === 1) {
     return 0;
   }
@@ -33,23 +34,26 @@ function findTargetSumWays(nums: number[], target: number): number {
 
   // 初始化第一行：第一个元素就等于当前容量，那么第一个元素，能够填满left容量背包的方式有1种
   for (let j = 0; j <= left; j++) {
+    // 只有和他相等，第一个数字才能填满背包容积
     if (nums[0] === j) {
       // 这里如果是[0,0,0,0,0,0,0,0,1]，那么需要在当前存在次数的基础上+1
-      // 所以不是等于，而是 + 1
-      dp[0][j] += 1;
+      // 由于容量为0时算一种方法，所以不是等于，而是 + 1
+      dp[0][j] += 1
     }
   }
 
+  // 先遍历物品
   for (let i = 1; i < nums.length; i++) {
+    // 再遍历背包大小
     for (let j = 0; j <= left; j++) {
-      // 容量小于当前元素的体积
+      // 背包放不下nums[i]
       if (j < nums[i]) {
         // 则方式种数跟不放入i时候的一致
-        dp[i][j] = dp[i - 1][j];
+        dp[i][j] = dp[i - 1][j]
       } else {
         // 容量大于当前元素
         // 种数 = 不需要nums[i]就可填满背包的情况数量 + 需要nums[i]填满背包的情况数量
-        dp[i][j] = dp[i - 1][j] + dp[i - 1][j - nums[i]];
+        dp[i][j] = dp[i - 1][j] + dp[i - 1][j - nums[i]]
       }
     }
   }
