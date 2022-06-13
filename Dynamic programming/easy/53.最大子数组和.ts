@@ -28,6 +28,6 @@ function maxSubArray(nums: number[]): number {
   }
 
 
-  return max;
+  return max
 }
 // @lc code=end
