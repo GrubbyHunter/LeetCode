@@ -38,24 +38,23 @@ function detectCycle(head: ListNode | null): ListNode | null {
     // 2、fast在slow后1步，下一次走到slow前面1步，然后slow走1步，和fast相遇
     if (slow === fast) {
       // 重新从头部开始走
-      let start = head
-
+      slow = head
       // 起点到环入口点距离为x，入口点到相遇点距离为y,相遇点到入口点距离为z
       // 那么两个指针相遇时候，slow走了x+y，fast走了x+y+z+y
       // 而slow的速度只有fast的一半，相当于slow走了fast一半的距离
       // 2*(x+y) =x+y+z+y
       // x=z 
 
-      while (start !== fast) {
+      while (slow !== fast) {
         // 重新设立两个指针，一个从头部开始走，走x
         // 一个从相遇点开始走，走z，因为x=z，所以相遇时候就是环的入口
         // 从头部开始走每次走一步
-        start = start.next
+        slow = slow.next
         // 从相遇点开始走，每次走一步
         fast = fast.next
       }
 
-      return start
+      return slow
     }
   }
   return null
