@@ -25,18 +25,18 @@ function reverseList(head: ListNode | null): ListNode | null {
   // pre记录上一个节点，所以，这里以null开始
   let pre = null
   let current = head
+  let firstNode = null
 
-  while (current.next) {
-    // 新建一个节点作为当前的头结点
-    head = new ListNode(current.val, pre)
+  while (current && current.next) {
+    // 新建一个节点作为当前的头结
+    firstNode = new ListNode(current.val, pre)
     // 头节点（也就是当前节点）作为下一次遍历的pre节点
-    pre = head
+    pre = firstNode
     // 继续下一次遍历
     current = current.next
   }
 
   // 遍历到最后一个节点跳出循环，手动赋值最后一个节点到表头
-  let firstNode = head
   head = new ListNode(current.val, firstNode)
 
   return head
