@@ -34,7 +34,9 @@ function reverseBetween(head: ListNode | null, left: number, right: number): Lis
     // 当前节点的下一个节点指向下下个节点
     head.next = temp.next
     // 当前节点的下个节点的下一个节点指向前置节点的下一个节点
-    temp.next = pre.next;
+    // 这里temp.next不能等于head，因为head一直没变，
+    // 需要指向left-right区间第一节点，也就是pre.next
+    temp.next = pre.next
     // 前置节点的next指向当前节点的·下一个节点
     // 相当于把下一个节点移动到开始反转位置的头部
     pre.next = temp
