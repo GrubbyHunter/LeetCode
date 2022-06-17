@@ -35,7 +35,6 @@ function reverseList(head: ListNode | null): ListNode | null {
     // 继续下一次遍历
     current = current.next
   }
-
   // 遍历到最后一个节点跳出循环，手动赋值最后一个节点到表头
   head = new ListNode(current.val, firstNode)
 
