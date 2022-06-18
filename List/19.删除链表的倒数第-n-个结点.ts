@@ -20,29 +20,28 @@
 // 快指针先走n-1步，然后慢指针和快指针每次走一步
 // 快指针到结尾，慢指针到了倒数n-1个节点，删除慢指针的next即可·
 function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {
-  let fast = new ListNode(null, head)
-  let slow = new ListNode(null, head)
+  let fast = head
+  let slow = head
 
-  while (fast.next) {
-    // 快慢指针每次各走一步
-    slow = slow.next
-    fast = fast.next
-
-    // 这里的循环相当于快指针先走 n-1 步
-    while (n > 0) {
-      // 还没有到第 n-1 个节点，但是fast指针已经走完，说明n大于链表长度，
-      if (!fast.next) {
-        // 直接删除第一个节点
-        head = head.next
-        return head
-
-      }
-
-      fast = fast.next
-      n--
+  // 快指针先走n步
+  while (n > 0) {
+    // n依然大于0，但是已经走到了结尾，说明n大于链表长度
+    if (!fast.next) {
+      // 直接删除第一个节点
+      head = head.next
+      return head
     }
+
+    fast = fast.next
+    n--
   }
 
+
+  // 一起走，每次走一步，fast走到结尾时候，slow的next就是倒数第n个节点
+  while (fast.next) {
+    slow = slow.next
+    fast = fast.next
+  }
   // 结束循环，此时slow指向倒数第n-1个节点
   // 删除slow.next即可
   slow.next = slow.next.next
