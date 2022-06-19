@@ -26,8 +26,9 @@ function swapPairs(head: ListNode | null): ListNode | null {
   let temp = result
 
   while (temp.next && temp.next.next) {
-    // 由于设置了temp，虚拟头结点，所以cur为第二个节点，pre为第一个节点
-    let second = temp.next.next, first = temp.next
+    // 由于设置了temp，虚拟头结点，所以temp.next为第1个节点，temp为per上一个节点
+    let first = temp.next
+    let second = first.next
     let third = second.next
 
     // 虚拟指针指向第二个节点
