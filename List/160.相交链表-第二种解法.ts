@@ -30,9 +30,10 @@ function getIntersectionNode(headA: ListNode | null, headB: ListNode | null): Li
   while (curA !== curB) {
     // 这里A链表走完了，就跳到B链表上走
     curA = curA ? curA.next : headB
+
     curB = curB ? curB.next : headA
   }
-
+  // 随便返回哪一个都行
   return curA
 }
 
