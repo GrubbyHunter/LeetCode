@@ -43,20 +43,20 @@ function getIntersectionNode(headA: ListNode | null, headB: ListNode | null): Li
   if (lenA < lenB) {
     // ES6解构，这里等同于
     // A和B的值互换
+    // 使用ES6解构互换，保证A为较长的链表
     [curA, curB] = [curB, curA];
     [lenA, lenB] = [lenB, lenA];
   }
-  // lenA - lenB为长度差
-  let i = lenA - lenB;
-  // name较长的那个链表可以先走i步，从第i不开始比较节点
-  while (i-- > 0) {
-    curA = curA.next || null
+
+  let len = lenA - lenB
+  // 由于A比B长，A先走两个长度的差的步数
+  while (len > 0) {
+    curA = curA.next
+    len--
   }
 
-  // 这里A和B长度一样，所以判断条件只要一个不为空即可
-  // 同时由于节点的指向要求一致
-  // 这里不需要比较值，直接比较两个节点是否相同即可
-  while (curA && curA !== curB) {
+  // 此时两者一样长，直接比较节点一样即可返回
+  while (curA !== curB && curA) {
     curA = curA.next
     curB = curB.next
   }
