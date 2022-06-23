@@ -6,7 +6,7 @@
 
 // @lc code=start
 function findDuplicate(nums: number[]): number {
-  // 这里前提是1-n得数，不会发生数组越界，才可以使用快慢指针
+  // 这里前提是1-n的数，不会发生数组越界，才可以使用快慢指针
   let fast = 0;
   let slow = 0;
 
@@ -27,10 +27,8 @@ function findDuplicate(nums: number[]): number {
   // 找到相遇点，之后，fast从0开始，slow从相遇点开始
   fast = 0;
   while (fast !== slow) {
-    //两者每次都只走一步，再次相遇即为环的入口，也就是重复的数
-    fast = nums[fast];
-    // slow 每次走一步
-    slow = nums[slow];
+    fast = nums[fast]
+    slow = nums[slow]
   }
 
   return slow;
