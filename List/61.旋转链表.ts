@@ -30,33 +30,34 @@ function rotateRight(head: ListNode | null, k: number): ListNode | null {
   while (k > 0) {
     k--
 
-    // 还没走到k步已经走到结尾，说明k大于链表长度
+    // 走完链表
     if (!quick.next) {
       // 遍历到结尾k等于0，说明k是长度的n被，所以移动完最后不变，直接返回
       if (k === 0) {
         return head
       }
-      // quick回到头部位置
+
+      // K还有值，那么从头开始走，相当于k等于10，length为6的话，quick走完了一个6还要走一个4
       quick = head
+      // 继续下一轮循环
       continue
     }
-
     quick = quick.next
   }
 
-
   // 快慢指针一起走，找到倒数第k个节点为slow
+  // 快慢指针一起走，快指针走到头，那么慢指针为倒数第k+1个节点
   while (quick && quick.next) {
     quick = quick.next
     slow = slow.next
   }
 
-  // slow为倒数k+1个元素，slow为倒数第k个元素，他作为新的起点元素
+  // slow.next为倒数第k个节点，也就实现的开始节点
   let firstNode = slow.next
-
-  // 将倒数第k-1个元素的next清空，让它变成最后一个元素
+  // 切断原来slow（倒数k+1个节点）与slow.next（倒数第k个节点）的联系
+  // slow为新的结尾
   slow.next = null
-  // quick为原始链表的结尾，然他跟原始链表的头部连起来
+  // 原来的结尾指向头部，连起来
   quick.next = startNode
 
   return firstNode
