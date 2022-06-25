@@ -29,48 +29,52 @@ function splitListToParts(
     length++;
   }
 
-  let sizeArr: number[] = [];
-  // 链表长度
+  let sizeArr: number[] = new Array(k).fill(1)
+  // 链表长度小于k，每部分长度为1
   if (length <= k) {
-    // 长度为k的数组，每个元素为1
-    sizeArr = new Array(k).fill(1);
+    // 这句可以不写，为了方便理解逻辑还是写上
+    sizeArr = new Array(k).fill(1)
   } else {
-    // 每段的长度为Math.floor(length / k)
-    sizeArr = new Array(k).fill(Math.floor(length / k));
-    // 前 frontSize 段长度为 Math.floor(length / k) + 1
-    let frontSize = length % k;
-    for (let i = 0; i < frontSize; i++) {
-      sizeArr[i]++;
+    // 链表长度大于k，分割的数组长度为count
+    let count = Math.floor(length / k)
+    // 分成k段，每段放count个
+    sizeArr = new Array(k).fill(count)
+    // 先数组每段放count个元素，剩余length - k * count 个元素
+
+    let preSize = length - k * count
+    // 剩余元素，前面的每段加一个
+    for (let i = 0; i < preSize; i++) {
+      sizeArr[i]++
     }
   }
 
-  // 需要先设置数组元素，因为不足数组长度的用null补充
-  let result: any = new Array(k).fill(null);
-  let pre = null;
-  let index = 0;
+  let result = new Array(k).fill(null)
+  let pre = head
+  let index = 0
 
   while (head) {
-    let size: number = sizeArr.shift() || 0;
-    // 不用push，设置对应数组下标链表的头指针
-    result[index] = head;
+    // index为当前段下标，sizeArr[index]为当前段链表长度
+    // 不用push 直接赋值
+    result[index] = head
 
-    // 处理当前链表需要分割的元素个数
-    for (let i = 0; i < size; i++) {
-      // 这里的pre指针很重要，用来分割完之后与原来的链表切断
-      pre = head;
 
-      // 记录切断位置之后再遍历下一个位置，顺序不能反，否则外层的while循环，head无法继续遍历
+    for (let i = 0; i < sizeArr[index]; i++) {
+      // 记录当前遍历到的位置，遍历两次，pre就是第二个元素
+      // 所以pre实际上是当前段的结尾元素
+      pre = head
+
       if (head) {
-        head = head.next;
+        head = head.next
       }
     }
 
-    // 切断链表
     if (pre) {
-      pre.next = null;
+      // pre指针为当前段最后一个节点，需要切除与后面的关联
+      pre.next = null
     }
-    // 下标 + 1
-    index++;
+
+    // 遍历完一段，下标加 +1
+    index++
   }
 
   return result;
