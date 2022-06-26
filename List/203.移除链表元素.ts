@@ -31,10 +31,10 @@ function removeElements(head: ListNode | null, val: number): ListNode | null {
       //当前元素的指针指向当前元素的下一个元素的指针
       // 这样就把当前元素的下一个元素(current.next)从链表中剔除了
       current.next = current.next.next
-      continue
+    } else {
+      // 正常的获取下一个元素进行遍历
+      current = current.next
     }
-    // 正常的获取下一个元素进行遍历
-    current = current.next
   }
 
   return result.next
