@@ -37,23 +37,26 @@ function findAnagrams(s: string, p: string): number[] {
 
   // 使用滑动窗口进行遍历
   while (right < s.length) {
+    // 当前右边字母的下标
     let index = s[right].charCodeAt(0) - 97;
     // 右边先走，先走的字母次数统计进去
     window[index] += 1;
 
+    // 长度相等，才比较两个窗口中出现的字母数量是否一致
     if (right - left + 1 === p.length) {
-      // 左右长度等于p的长度时候，比较数组是否相同
-      if (equalArr(pArray, window)) {
-        result.push(left);
+      // 这里window中是当前窗口的每个字母出现次数，而pArray是所有字母的出现次数
+      // 所以window的次数很定小于等于pArray，equalArr时候window作为入参要放前面
+      // 因为 equalArr中遍历的是第一个参数
+      if (equalArr(window, pArray)) {
+        // 满足条件，结果记录开始位置
+        result.push(left)
       }
-      // 比较完之后，左测的字母次数-1
-      let leftIndex = s[left].charCodeAt(0) - 97;
-      window[leftIndex] -= 1;
-
-      // 左测移动1步，这样，等下长度不相等了，右侧需要在走一步，才能长度相等
-      left++;
+      // 左边记录结果后会移出窗口
+      // 所以左边字母的次数 - 1
+      window[s[left].charCodeAt(0) - 97] -= 1
+      left++
     }
-
+    // 右边边界 + 1，保证窗口跟目标长度一致，右边字母次数在开头已经 + 1了，所以这里不加
     right++;
   }
 
