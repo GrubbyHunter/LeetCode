@@ -25,6 +25,7 @@ function characterReplacement(s: string, k: number): number {
       countArr[s.charCodeAt(left) - 65]--
       // 滑动窗口过大，需要移动左边
       left++
+
     }
 
     // 满足条件
