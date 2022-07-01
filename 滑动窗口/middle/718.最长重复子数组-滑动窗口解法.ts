@@ -29,18 +29,21 @@ function findLength(nums1: number[], nums2: number[]): number {
     let lengthB = b.length
     let max = 0
 
-    // 滑动窗口，A的左侧和B的右侧对接,A的左侧靠近B的右侧
+    // A的左侧对接B的右侧
     for (let i = 1; i <= lengthA; i++) {
+      // 最后一个参数，比对的长度从1增大到lengthA
       max = Math.max(max, maxLength(a, b, 0, lengthB - i, i))
     }
 
-    // 滑动窗口，A和B重叠
-    for (let i = lengthB - lengthA; i >= 0; i--) {
-      max = Math.max(max, maxLength(a, b, 0, i, lengthA))
+    //  滑动窗口，A和B重叠 A完全正在B的内部
+    for (let i = 1; i <= lengthB - lengthA; i++) {
+      //最后一个参数，比对的长度一直是lengthA
+      max = Math.max(max, maxLength(a, b, 0, lengthB - lengthA - i, lengthA))
     }
 
-    // 滑动窗口，A的右侧和B的左侧对接,A的右远离B的左侧
+    // A的右侧从B的左侧退出
     for (let i = 1; i <= lengthA; i++) {
+      // 最后一个参数，比对的长度从lengthA减小到1
       max = Math.max(max, maxLength(a, b, i, 0, lengthA - i))
     }
 
