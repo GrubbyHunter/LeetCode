@@ -13,20 +13,22 @@ function maxConsecutiveAnswers(answerKey: string, k: number): number {
     for (let left = 0, right = 0; right < answerKey.length; right++) {
       // 滑动窗口右边先走
       if (answerKey[right] === letter) {
+        // 统计letter的数量
         count++
       }
-      // 当count === k，跳过左边，直接获取长度
-      // 当count > k.走左边，让区间中的T数量恢复到k个
+
+      // letter次数超过翻转次数k，需要减少letter的次数
       while (count > k) {
+        // 移动左指针
         if (answerKey[left] === letter) {
+          // letter的数量减少
           count--
         }
-        // 这里count--之后，左边再left++
-        // 因为区间实际上有k+1个T,left++后，区间又变成了k个T
-        // 同时，left也回到正确的位置(T后面第一个位置)
         left++
       }
 
+      // 到这里count的数量 <= k ,nameleft 到right的区间内
+      // letter的数量 足够使用K翻转，区间长度满足条件
       max = Math.max(max, right - left + 1)
     }
     return max
