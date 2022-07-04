@@ -22,13 +22,12 @@ function reverseStr(s: string, k: number): string {
     let left = i
     let right = 0
 
-    // 当前不足k个，全部反转
-    if (i + k > s.length) {
-      // 下标都需要 -1
-      right = s.length - 1
-    } else {
-      // 只反转前k个
+    // 剩余个数超过k个，依然翻转前k个
+    if (s.length - i > k) {
       right = i + k - 1
+    } else {
+      // 不足k个，翻转全部
+      right = s.length - 1
     }
     // 反转数组
     reverseString(stringArr, left, right)
