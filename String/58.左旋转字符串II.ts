@@ -16,7 +16,7 @@
 function reverseLeftWords(s: string, n: number): string {
   const arr = s.split("")
 
-  const reverseString = (s: string[], left: number, right: number): void {
+  const reverseString = (s: string[], left: number, right: number): void => {
     while (left < right) {
       [s[left], s[right]] = [s[right], s[left]]
       left++
@@ -24,12 +24,12 @@ function reverseLeftWords(s: string, n: number): string {
     }
   }
 
-  // 整个字符串反转abcdefg => gfedcba
+  // 翻转整个字符串
   reverseString(arr, 0, arr.length - 1)
-  // 反转前length - n 个 gfedcba => cdefgba
-  reverseString(arr, 0, arr.length - n)
-  // 反转后n 个 gfedcba => cdefgab
-  reverseString(arr, n, arr.length - 1)
+  // 继续反转 前arr.length - n 个字符串，变成正常顺序
+  reverseString(arr, 0, arr.length - n - 1)
+  // 继续反转 后n个字符串，变成正常顺序
+  reverseString(arr, arr.length - n, arr.length - 1)
 
   return arr.join("")
 };
