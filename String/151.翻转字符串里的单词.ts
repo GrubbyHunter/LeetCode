@@ -11,21 +11,21 @@ function reverseWords(s: string): string {
   let slow = 1
   let fast = 1
 
-  // 可以采用双指针法，由于最少是连续两个空格才开始减空格
+  // 可以采用双指针法，由于最少是连续两个空格才开始减空格，最终处理完的数组单词之间都只剩一个空格
   // 所以第一个数可定满足条件，快慢指针的下标可以从1，也就是第二个数开始
   // 这样可以少一个 fast > 0 的判断
   for (; fast < arr.length; fast++) {
-    // 如果fast和fast-1都是空格，那么需要找到下一个不是空格的元素
+    // 如果连续出现两个空格以上，需要找到第一个不是空格的元素
     while (arr[fast] === " " && arr[fast - 1] === " ") {
       fast++
     }
-    // 移动到前面
+    // 找到第一个不是空格的元素，移动到slow的位置
     arr[slow] = arr[fast]
-    // 移动之后慢指针走到下一个元素
+    // 移动完，原先两个单词间的多个空格变成了一个空格，slow位置已经被处理为正确的值，他需要++
     slow++
   }
 
-  // 前面到下标为slow的元素，为去掉空格后的长度，然后拼接，在去掉首尾空格
+  // 最终处理完，还要处理首位的一个空格，slow后面的元素可不处理，都是原字符串中多余空格的长度
   s = arr.slice(0, slow).join("").trim()
   arr = s.split("")
 
@@ -44,10 +44,10 @@ function reverseWords(s: string): string {
   let currentIndex = 0
 
   for (let i = 0; i < arr.length; i++) {
+    // 碰到空格，翻转单词
     if (arr[i] === " ") {
-      // 语句中的每个单词翻转一边
       reverseStr(arr, currentIndex, i - 1)
-      // 记录当前单词的起始位置，空格之后的位置
+      // 重新记录当前不为空格的位置，用来下一次遍历的左边范围下标
       currentIndex = i + 1
     }
   }
