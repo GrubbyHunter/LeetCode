@@ -32,16 +32,15 @@ function replaceSpace(s: string): string {
     // 如果原来位置是空格，则填充%20，相当于将空格移动到后面
     if (strArr[left] === " ") {
       strArr[right] = "0"
-      strArr[right - 1] = "2"
-      strArr[right - 2] = "%"
-      // 同时右指针进3
-      right = right - 3
+      strArr[--right] = "2"
+      strArr[--right] = "%"
     } else {
-      // 不是空格，左右互换
+      // 不是空格，左右互换，将现在的字母移动到数组新长度的后面位置
       [strArr[left], strArr[right]] = [strArr[right], strArr[left]]
-      right--
+
     }
-    // 移动完不管是不是空格，左指针都要进1，方便进行下一次移动
+    // 移动完不管是不是空格，左右指针都要进1，方便进行下一次移动
+    right--
     left--
   }
   return strArr.join("")
