@@ -19,17 +19,15 @@ function reverseWords(s: string): string {
   for (let i = 0; i < sArr.length; i++) {
     let end = i
 
-    // 找到单词分界点
     while (sArr[end] !== " " && end < sArr.length) {
-      end = end + 1
+      end++
     }
-    // 左邊
     let start = i
-
-    i = end // 记录当前空格位置，下次进来之前i+1跳过空格，则是最新的开始诶之
-    // 回退到上一个非空格位置
+    // 记录空格位置，为下一次的start的位置，
+    // 这里下一次遍历会进行i++，跳过当前空格位置，所以不需要end+1
+    i = end
+    // 当前end为空给位置，退回到非空格位置
     end--
-
     // 反转
     reverseStr(start, end)
   }
