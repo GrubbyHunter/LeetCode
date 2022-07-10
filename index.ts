@@ -32,7 +32,7 @@ function characterReplacement(s: string, k: number): number {
     // k + 最多次数的字母，大于等于区间长度，说明k次足以替换剩下的字母
     result = Math.max(right - left + 1, result)
   }
-
+  // 开始回溯算法
   return result
 };
 characterReplacement("AAAABBCCCCC", 2)
