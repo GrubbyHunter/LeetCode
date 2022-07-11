@@ -6,21 +6,22 @@
 
 // @lc code=start
 function combine(n: number, k: number): number[][] {
-  let sum = []
+  let sum: number[][] = []
 
-  const backTracking = (start: number, result: number[]): void => {
-    // 终止条件数组已经达到k个元素
-    if (result.length === k) {
-      // 由于数组是引用传递，这里需要构建一个新的数组来作为结果保存
-      sum.push([...result])
+  const backTracking = (index: number, arr: number[]) => {
+    if (arr.length === k) {
+      // 注意这里需要使用解构重新生成一个数组
+      // 避免引用修改之后影响到已经push到sum的结构
+      sum.push([...arr])
       return
     }
-
-    for (let i = start; i <= n; i++) {
-      result.push(i)
-      backTracking(++start, result)
-      // 元素用完进行回溯移除
-      result.pop()
+    // i <= n的剪枝操作，k - arr.length为剩余个数
+    // 如果i到n剩余不足k - arr.length个，则不需要遍历
+    for (let i = index; i <= n - (k - arr.length) + 1; i++) {
+      arr.push(i)
+      backTracking(i + 1, arr)
+      // 回溯
+      arr.pop()
     }
   }
 
