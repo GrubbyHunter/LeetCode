@@ -13,21 +13,22 @@ function combinationSum3(k: number, n: number): number[][] {
       result.push([...arr])
       return
     }
+
     // 剪枝操作：
     // 1、如果当前和+下一个需要计算的 > 总和
     // 2、当前数量已经大于等于k
-    if (currentSum + start > n || arr.length > k - 1) {
+    if (arr.length >= k) {
       return
     }
 
-    for (let i = start; i <= 9 && i <= n - currentSum; i++) {
-      currentSum += i
-      arr.push(i)
+    if (currentSum >= n) {
+      return
+    }
 
-      backTracking(arr, i + 1, currentSum)
-      // 回溯操作
+    for (let i = start; i <= 9 - (k - arr.length) + 1; i++) {
+      arr.push(i)
+      backTracking(arr, i + 1, currentSum + i)
       arr.pop()
-      currentSum -= i
     }
   }
 
