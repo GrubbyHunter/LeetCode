@@ -6,7 +6,7 @@
 
 // @lc code=start
 function combinationSum(candidates: number[], target: number): number[][] {
-  const result = []
+  const result: number[][] = []
 
   const backTracking = (arr: number[], sum: number, start: number) => {
     if (sum === target) {
@@ -14,25 +14,16 @@ function combinationSum(candidates: number[], target: number): number[][] {
       return
     }
 
+    // 排序后才有使用此处的剪枝操作，越往后数字越大，所以不需要继续加了
     if (sum > target) {
       return
     }
 
-    // 已经超过target，不继续计算
-    if (candidates[start] + sum > target) {
-      return
-    }
-    // 由于是不能存在重复的
-    // 所以第一个数试完之后，第二个数肯定跟第一个数组合试过了
-    // 第二个数的回溯从第二个数开始，不用从第一个数开始，这样就不会有重复组合了
     for (let i = start; i < candidates.length; i++) {
       arr.push(candidates[i])
-      sum += candidates[i]
-
-      backTracking(arr, sum, i)
-
+      // 元素可以重复，所以此处是i而不是i+1
+      backTracking(arr, sum + candidates[i], i)
       arr.pop()
-      sum -= candidates[i]
     }
   }
   // 对数组升序排列，方便下一步进行剪枝操作，注意，升序之后才能剪枝
