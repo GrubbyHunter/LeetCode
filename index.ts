@@ -1,38 +1,44 @@
 // @lc code=startfunction leastInterval(tasks: string[], n: number): number {
 // @lc code=start
-function characterReplacement(s: string, k: number): number {
-  let result = 0
-  // 滑动窗口解法
-  let maxCnt = 0
-  // 数组下标记录字母ascii code 位置，数组值记录字母出现次数
-  let countArr = new Array(26).fill(0)
-  let left = 0, right = 0
+function letterCombinations(digits: string): string[] {
+  const result: any = []
+  const phoneObj: any = {
+    "2": ["a", "b", "c"],
+    "3": ["d", "e", "f"],
+    "4": ["g", "h", "i"],
+    "5": ["j", "k", "l"],
+    "6": ["m", "n", "o"],
+    "7": ["p", "q", "r", "s"],
+    "8": ["t", "u", "v"],
+    "9": ["w", "x", "y", "z"]
+  }
+  const digitsArr = digits.split("")
+  // n为结果数组中每个元素的长度，输入2个数字，name每个元素长度为2
+  const n = digitsArr.length
 
-  for (; right < s.length; right++) {
-    // 由于是大写字母，所以生成下标这里是-65，不是-97
-    countArr[s.charCodeAt(right) - 65]++ // 计算出现次数
-    // 当前left到right直接出现次数最大的字母
-    maxCnt = Math.max(maxCnt, countArr[s.charCodeAt(right) - 65])
+  if (n === 0) {
+    return []
+  }
 
-    // 这里有点贪心算法的思维，left到right之间出现最多的字母出现了maxCnt次
-    // 我们尽可能利用k来翻转left到right之间的其他字母，这样尽可能的让k充分利用
-    // 例如：“AABAB”,k=2,这时候最多的是A，出现了3次，我们肯定是去翻转B，来让A达到更多
-
-    // k + 最多次数的字母，不足区间长度，说明k次不足已替换剩下的字母
-    while (right - left + 1 > k + maxCnt) {
-
-      // 移动完左边区间里移出元素的个数需要-1
-      countArr[s.charCodeAt(left) - 65]--
-      // 滑动窗口过大，需要移动左边
-      left++
-
+  const backTracking = (arrStr: string[], start: number): void => {
+    // 每个按键选一个字母，长度满足条件
+    if (arrStr.length === n) {
+      result.push(arrStr.join(""))
+      return
     }
 
-    // 满足条件
-    // k + 最多次数的字母，大于等于区间长度，说明k次足以替换剩下的字母
-    result = Math.max(right - left + 1, result)
+    for (let i = start; i < digitsArr.length; i++) {
+      const strArr = phoneObj[digitsArr[i]]
+
+      for (let j = 0; j < strArr.length; j++) {
+        arrStr.push(strArr[j])
+        backTracking(arrStr, start + 1)
+        arrStr.pop()
+      }
+    }
   }
-  // 开始回溯算法
+
+  backTracking([], 0)
   return result
 };
-characterReplacement("AAAABBCCCCC", 2)
+letterCombinations("23")

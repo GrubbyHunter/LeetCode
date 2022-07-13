@@ -26,6 +26,7 @@ function letterCombinations(digits: string): string[] {
   }
 
   const backTracking = (arrStr: string[], start: number): void => {
+    // 每个按键选一个字母，长度满足条件
     if (arrStr.length === n) {
       result.push(arrStr.join(""))
       return
@@ -33,6 +34,7 @@ function letterCombinations(digits: string): string[] {
 
     // 当前按键的下标
     const index = digitsArr[start]
+
     // 当前遍历的按键
     const arr = phoneObj[index]
     for (let i = 0; i < arr.length; i++) {
@@ -41,6 +43,7 @@ function letterCombinations(digits: string): string[] {
       arrStr.pop()
     }
   }
+
   backTracking([], 0)
   return result
 };
