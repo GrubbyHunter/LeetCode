@@ -6,7 +6,8 @@
 
 // @lc code=start
 function combinationSum2(candidates: number[], target: number): number[][] {
-  const result = []
+  const result: number[][] = []
+  const used: boolean[] = new Array(candidates.length).fill(false)
 
   const backTracking = (sum: number, arr: number[], start: number) => {
     if (sum === target) {
@@ -17,23 +18,19 @@ function combinationSum2(candidates: number[], target: number): number[][] {
     if (sum > target) {
       return
     }
-    const used: any = {}
+
     // 剪枝操作
     for (let i = start; i < candidates.length && target >= candidates[i] + sum; i++) {
       // 如果当前元素等于上一个元素，同时上一个元素没有被使用，则跳过此元素，以免发生重复
       // 因为此时两个一样的元素在同一次遍历中，会引发重复
-      if (i > 0 && candidates[i] === candidates[i - 1] && !used[i - 1]) {
+      if (i > 0 && candidates[i] === candidates[i - 1] && used[i - 1] === false) {
         continue
       }
-
-      sum += candidates[i]
-      arr.push(candidates[i])
-      // 记录当前元素被使用
+      // 同一次回溯中，记录当前下标使用过
       used[i] = true
-      backTracking(sum, arr, i + 1)
-
-      // 回溯操作
-      sum -= candidates[i]
+      arr.push(candidates[i])
+      backTracking(sum + candidates[i], arr, i + 1)
+      used[i] = false
       arr.pop()
     }
   }
