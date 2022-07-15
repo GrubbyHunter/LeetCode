@@ -6,9 +6,9 @@
 
 // @lc code=start
 function partition(s: string): string[][] {
-  let result = []
-  const arrStr = s.split("")
+  const arrStr: string[] = s.split("")
   const size = arrStr.length
+  let result: string[][] = []
 
   if (size === 0) {
     return result
@@ -36,16 +36,15 @@ function partition(s: string): string[][] {
     }
 
     for (let i = start; i < size; i++) {
-      // 切割的位置在当前元素的后面，所以要 i + 1
-      const currentArr = arrStr.slice(start, i + 1)
-      // 当前切割的字符不是回文，直接进行下一次循环
-      if (!isPalindrome(currentArr)) {
-        continue
+      // 从start到i+1之间止否是回文字符串
+      let str: string[] = arrStr.slice(start, i + 1)
+
+      // 是回文，记录结果
+      if (isPalindrome(str)) {
+        arr.push(str.join(""))
+        backTracking(arr, i + 1)
+        arr.pop()
       }
-      // join组成字符创，放入结果数组
-      arr.push(currentArr.join(""))
-      backTracking(arr, i + 1)
-      arr.pop()
     }
   }
 
