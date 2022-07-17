@@ -6,7 +6,7 @@
 
 // @lc code=start
 function restoreIpAddresses(s: string): string[] {
-  const result = []
+  const result: string[] = []
   let sArr = s.split("")
   const length = sArr.length
   if (length === 0) {
@@ -27,17 +27,26 @@ function restoreIpAddresses(s: string): string[] {
     }
 
     for (let i = start; i < length; i++) {
-      // 分割的字符串
-      const str = sArr.slice(start, i + 1)
+      let str = sArr.slice(start, i + 1)
+      // 超过999
       // 因为条件已经不满足，当前层的遍历继续已经无意义
       // 所以直接使用break
+      if (str.length > 3) {
+        break
+      }
 
-      // 单个字段大于3 或者超过255
-      if (str.length > 3 || +str.join("") > 255) break;
+      let numberStr = str.join("")
+      if (str.length === 3) {
+        // 超过256
+        if (parseInt(numberStr, 10) > 255) {
+          break
+        }
+      }
+
       // 大于1，但是以0位开头
-      if (str.length > 1 && str[0] === "0") break;
+      if (str.length > 1 && str[0] === "0") break
 
-      arr.push(str.join(""))
+      arr.push(numberStr)
       backTracking(arr, i + 1)
       arr.pop()
     }
