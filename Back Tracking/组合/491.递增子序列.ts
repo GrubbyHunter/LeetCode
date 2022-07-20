@@ -6,23 +6,28 @@
 
 // @lc code=start
 function findSubsequences(nums: number[]): number[][] {
-  const result: any = []
+  const result: number[][] = []
 
   if (nums.length <= 1) {
     return result
   }
-
+  // 此题由于是在现有数组里面找升序子序列，所以不能对现有数组进行排序
   const backTracking = (arr: number[], start: number) => {
-    // 保存之前的递增序列
     if (arr.length >= 2) {
       result.push([...arr])
     }
 
-    const used = []
+    // 记录本层遍历中的使用情况
+    // 例如 123111，实际上1出现过之后
+    // 后面的三个1不能作为递增序列，[1,1,1]不满足条件，需要过滤掉
+    const used = new Array(nums.length).fill(false)
+
     for (let i = start; i < nums.length; i++) {
-      // 上一个数大于当前，跳过当前这个数
-      // 这里上一个数不是i-1，而是当前数组arr的最后一个数
-      if (arr.length > 0 && arr[arr.length - 1] > nums[i]) {
+      if (i > 0 && arr[arr.length - 1] > nums[i]) {
+        continue
+      }
+
+      if (used[nums[i] + 100]) {
         continue
       }
 
@@ -32,14 +37,11 @@ function findSubsequences(nums: number[]): number[][] {
       if (used[nums[i] + 100]) {
         continue
       }
+      used[nums[i] + 100] = true
 
       arr.push(nums[i])
-      // 数组范围[-100,100]，这里将他的值转换为正整数作为key
-      // 使用了的话，标记为true
-      used[nums[i] + 100] = true
       backTracking(arr, i + 1)
-      // 这里由于是当前层级记录used，所以不需要回溯时候重置为false
-      // 跳出当前层级遍历直接会清空
+      // 由于是记录本层使用状态，所以不需要回溯used的状态
       arr.pop()
     }
   }
