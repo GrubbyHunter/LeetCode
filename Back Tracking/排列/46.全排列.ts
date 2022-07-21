@@ -8,7 +8,7 @@
 function permute(nums: number[]): number[][] {
   const result: any = []
   const length = nums.length
-  const used: any = {}
+  const used: boolean[] = new Array(nums.length).fill(false)
   if (length === 0) {
     return result
   }
@@ -21,14 +21,14 @@ function permute(nums: number[]): number[][] {
     }
 
     for (let i = 0; i < length; i++) {
-      // 数组中不存在重复元素，所以如果已经被使用了，不在放入arr
+      // 当前下标元素已使用，跳过
       if (used[i]) {
         continue
       }
 
-      // 如果当前元素和前一个相同，name把他取出来和把前一个元素取出来
-      // 跟后面元素组成的排列结果是一样的，这时候需要去重
-      if (i > 0 && nums[i] === nums[i - 1]) {
+      // 如果想领的两个元素相同，则跳过
+      // 例如211，遍历第一个1时候下一次回溯已经会包含第二个1，第2个1直接跳过，避免重复
+      if (i > 0 && nums[i] == nums[i - 1]) {
         continue
       }
 
