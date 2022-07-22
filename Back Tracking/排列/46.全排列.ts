@@ -26,12 +26,6 @@ function permute(nums: number[]): number[][] {
         continue
       }
 
-      // 如果想领的两个元素相同，则跳过
-      // 例如211，遍历第一个1时候下一次回溯已经会包含第二个1，第2个1直接跳过，避免重复
-      if (i > 0 && nums[i] == nums[i - 1]) {
-        continue
-      }
-
       arr.push(nums[i])
       used[i] = true
       backTracking(arr)

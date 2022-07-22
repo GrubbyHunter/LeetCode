@@ -24,7 +24,11 @@ function permuteUnique(nums: number[]): number[][] {
       if (used[i]) {
         continue
       }
-
+      // 如果相邻的两个元素相同，同时上一个元素跟当前元素不在同一次DFS中，则跳过
+      // 例如211，遍历第一个1时候下一次回溯已经会包含第二个1，第2个1直接跳过，避免重复
+      if (i > 0 && nums[i] == nums[i - 1] && used[i - 1] === false) {
+        continue
+      }
       arr.push(nums[i])
       used[i] = true
       backTracking(arr)
