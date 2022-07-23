@@ -39,19 +39,17 @@ function findItinerary(tickets: string[][]): string[] {
     for (let i = 0; i < endCityList.length; i++) {
       const endCity = endCityList[i]
 
-      // 删除已走过城市，防止死循环
+      // 删除结束城市的第i个元素，最为新的起始元素
       endCityList.splice(i, 1)
-      size++
-      // 结尾城市增加到数组
+      // 记录行程
       result.push(endCity)
-      // endCity在下一次中满足条件，则本次不需要回溯操作
-      if (backTracking(size, endCity)) {
+      // 继续递归能够找到最终的结果，返回true
+      if (backTracking(size + 1, endCity)) {
         return true
       }
-      // 回溯
+      // 回溯行程
       result.pop()
-      size--
-      // 已有航线走不通，回溯当前target 城市
+      // 找不到结果需要进行回溯，将删除的元素回溯追加回数组endCityList
       endCityList.splice(i, 0, endCity)
     }
     // 这里return false 可不写，因为上面length === 0 已经处理了，防止TS校验报错，还是写一下
