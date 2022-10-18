@@ -39,12 +39,29 @@ function reorderList(head: ListNode | null): void {
   preMid.next = null
 
   // 将链表的后半部分倒序
-  
-  let pre = new ListNode(-1,slow)
-  let halfList = pre
-  while(slow && slow.next){
-    
+  let pre = null
+  let current = slow
+
+  while (current) {
+    // 临时节点，记录下一个节点
+    let temp  = current.next
+    // 当前节点指向它的上一个节点
+    current.next = pre
+    // 记录上一个节点
+    pre = current
+    // 继续下一次遍历
+    current = temp
   }
+
+
+  // 将 head 和 pre 两个链表合并
+  let start = head
+  while(start){
+    start.next = pre
+    
+    start = start.next
+  }
+
 
 };
 // @lc code=end
