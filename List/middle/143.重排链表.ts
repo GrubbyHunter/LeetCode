@@ -24,11 +24,12 @@ function reorderList(head: ListNode | null): void {
   if (!head || !head.next) {
     return
   }
-  let slow = head
-  let fast = head
-  let preMid = slow
-  // 快慢指针，找到链表的中间点
-  while (fast && fast.next) {
+  let slow: ListNode | null = head
+  let fast: ListNode | null = head
+  let preMid: ListNode | null = slow
+
+  // 一、快慢指针，找到链表的中间点
+  while (slow && fast && fast.next) {
     // 先记录中间节点的前一个节点
     preMid = slow
     slow = slow.next
@@ -38,13 +39,14 @@ function reorderList(head: ListNode | null): void {
   // 切断原有链表中间
   preMid.next = null
 
-  // 将链表的后半部分倒序
-  let pre = null
-  let current = slow
+  // 二、将链表的后半部分倒序
+  // 这里当前的头结点徽标为倒序后的尾节点的next，所以初始化为空
+  let pre: ListNode | null = null
+  let current: ListNode | null = slow
 
   while (current) {
     // 临时节点，记录下一个节点
-    let temp  = current.next
+    let temp = current.next
     // 当前节点指向它的上一个节点
     current.next = pre
     // 记录上一个节点
@@ -53,16 +55,27 @@ function reorderList(head: ListNode | null): void {
     current = temp
   }
 
+  // 三、将 head 和 pre 两个链表合并
+  let start: ListNode | null = head
 
-  // 将 head 和 pre 两个链表合并
-  let start = head
-  while(start){
+  // 但是为了避免typescript报错，需要留着
+  while (start && pre) {
+    let startNext: ListNode | null = start.next
+    let preNext: ListNode | null = pre.next
+
     start.next = pre
-    
-    start = start.next
+    // 这里start.next已经为空了，pre.next还有值
+    // 直接将剩下的部分接到start的尾部，不需要继续遍历了
+    if (!startNext) {
+      break
+    }
+
+    pre.next = startNext
+
+    // 继续下一个
+    start = startNext
+    pre = preNext
   }
-
-
 };
 // @lc code=end
 
