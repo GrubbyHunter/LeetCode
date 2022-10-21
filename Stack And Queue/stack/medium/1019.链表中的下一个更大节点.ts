@@ -1,3 +1,9 @@
+/*
+ * @lc app=leetcode.cn id=1019 lang=typescript
+ *
+ * [1019] 链表中的下一个更大节点
+ */
+
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -11,18 +17,7 @@
  * }
  */
 
-/**
- Do not return anything, modify head in-place instead.
- */
-class ListNode {
-  val: number
-  next: ListNode | null
-  constructor(val?: number, next?: ListNode | null) {
-    this.val = (val === undefined ? 0 : val)
-    this.next = (next === undefined ? null : next)
-  }
-}
-function nextLargerNodes(head: ListNode | null): number[] {
+ function nextLargerNodes(head: ListNode | null): number[] {
   if (!head) {
     return []
   }
@@ -65,10 +60,5 @@ function nextLargerNodes(head: ListNode | null): number[] {
   return result
 };
 
+// @lc code=end
 
-
-
-
-
-
-nextLargerNodes(new ListNode(2, new ListNode(7, new ListNode(4, new ListNode(3,new ListNode(5))))))
