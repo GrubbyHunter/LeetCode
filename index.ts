@@ -22,7 +22,6 @@ class ListNode {
     this.next = (next === undefined ? null : next)
   }
 }
-
 function nextLargerNodes(head: ListNode | null): number[] {
   if (!head) {
     return []
