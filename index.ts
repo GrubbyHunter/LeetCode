@@ -42,8 +42,7 @@ function nextLargerNodes(head: ListNode | null): number[] {
   let result: number[] = new Array(tempList.length)
   // 使用数组模拟单调栈
   let stack: number[] = []
-  
-  // 从右往左遍历
+    // 从右往左遍历
   for (let i = tempList.length - 1; i >= 0; i--) {
     // 移除掉单调栈中小于当前元素的数字
     // 因为单调栈是从右往左放入进去的，所以放进去的元素一定在当前元素的右边
