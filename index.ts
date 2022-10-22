@@ -38,6 +38,7 @@ function nextLargerNodes(head: ListNode | null): number[] {
     head = head.next
   }
 
+  
   // 记录结果
   let result: number[] = new Array(tempList.length)
   // 使用数组模拟单调栈
