@@ -29,6 +29,7 @@ const quickSort = (list: number[], left: number, right: number): void => {
     while (start < end && list[end] >= middleVal) {
       end--;
     }
+
     // 找到右边第一个比基准小的元素
     while (start < end && list[start] <= middleVal) {
       start++;
