@@ -39,6 +39,7 @@ const quickSort = (list: number[], left: number, right: number): void => {
       [list[start], list[end]] = [list[end], list[start]];
     }
   }
+
   // 遍历完成，此时start === end，相遇点就是基准middleVal真正的位置
   // 由于是右边end先走，所以最终left的位置一定小于等于middleVal
   list[left] = list[start];
